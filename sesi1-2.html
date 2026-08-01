@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jenis-Jenis Komputer — Materi Pendalaman Sesi 1</title>
+<style>
+  :root{
+    --ink:#16203a; --paper:#f1efe6; --paper-2:#e8e4d4; --line:#c9c2a8;
+    --teal:#2f6f6b; --teal-dark:#204c49; --amber:#c98a2c; --amber-soft:#f3e3c4; --red:#a4432c;
+    --font-display:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --font-body:'Charter',Georgia,'Iowan Old Style',serif;
+    --font-mono:'IBM Plex Mono','SFMono-Regular',Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); line-height:1.65; -webkit-font-smoothing:antialiased;}
+  body::before{content:""; position:fixed; inset:0; background-image:radial-gradient(circle at 15% 8%, rgba(47,111,107,0.06), transparent 40%), radial-gradient(circle at 92% 78%, rgba(201,138,44,0.07), transparent 45%); pointer-events:none; z-index:0;}
+  .wrap{max-width:800px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  .breadcrumb{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em; padding:22px 0 0; color:#6b6552;}
+  .breadcrumb a{color:var(--teal-dark); text-decoration:none; border-bottom:1px solid var(--teal);}
+
+  header.masthead{border-bottom:3px solid var(--ink); padding:18px 0 22px; margin-bottom:36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--teal-dark); margin-bottom:14px;}
+  h1.title{font-family:var(--font-display); font-weight:400; font-size:clamp(28px,5vw,42px); line-height:1.1; margin:0 0 10px; letter-spacing:-.01em;}
+  h1.title em{font-style:normal; color:var(--teal-dark); border-bottom:2px solid var(--amber);}
+  .subtitle{font-size:15.5px; color:#4b4636; max-width:62ch;}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+  .meta-chip{font-family:var(--font-mono); font-size:11.5px; padding:5px 11px; border:1px solid var(--line); border-radius:2px; background:var(--paper-2);}
+
+  section{margin-bottom:46px;}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:16px;}
+  .sec-num{font-family:var(--font-mono); font-size:13px; color:var(--amber); border:1px solid var(--amber); border-radius:50%; width:26px; height:26px; min-width:26px; display:flex; align-items:center; justify-content:center;}
+  .sec-head h2{font-family:var(--font-display); font-weight:400; font-size:22px; margin:0; color:var(--ink);}
+  .sec-head .sec-line{flex:1; height:1px; background:var(--line);}
+  p{margin:0 0 14px; font-size:15px;}
+  ul,ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:6px; font-size:15px;}
+  .lede{font-size:17px; color:#332f22; font-family:var(--font-display); line-height:1.55; margin-bottom:8px;}
+
+  /* Scale bar visualizing processing power / user scope */
+  .scale{
+    display:flex; align-items:flex-end; gap:6px; height:70px; margin:22px 0 6px;
+    border-bottom:1px solid var(--line);
+  }
+  .scale .bar{
+    background:var(--teal); flex:1; position:relative; border-radius:2px 2px 0 0;
+  }
+  .scale .bar span{
+    position:absolute; bottom:6px; left:0; right:0; text-align:center;
+    font-family:var(--font-mono); font-size:10px; color:#fff;
+  }
+  .scale-labels{display:flex; gap:6px; margin-bottom:26px;}
+  .scale-labels span{flex:1; text-align:center; font-family:var(--font-mono); font-size:10.5px; color:#6b6552;}
+
+  .type-detail{
+    background:#fff; border:1px solid var(--line); border-left:4px solid var(--teal);
+    padding:18px 20px; margin-bottom:14px;
+  }
+  .type-detail h3{font-family:var(--font-display); font-size:17px; margin:0 0 6px; font-weight:600;}
+  .type-detail .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; display:block;}
+  .type-detail p{font-size:14px; margin:0 0 8px; color:#453f2f;}
+  .type-detail .ex{font-size:13px; color:#6b6552; font-style:italic;}
+
+  .compare-table{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; margin-bottom:8px;}
+  .compare-table th, .compare-table td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  .compare-table thead th{background:var(--ink); color:var(--paper); font-family:var(--font-mono); font-size:11px; text-transform:uppercase; font-weight:400;}
+
+  .callout{background:var(--amber-soft); border-left:4px solid var(--amber); padding:16px 20px; font-size:14.5px; margin-bottom:20px;}
+  .callout .ck{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--red); display:block; margin-bottom:6px;}
+
+  .refleksi{list-style:none; margin:0; padding:0;}
+  .refleksi li{display:flex; gap:12px; padding:11px 0; border-bottom:1px dashed var(--line); font-size:14.5px;}
+  .refleksi li:last-child{border-bottom:none;}
+  .refleksi li::before{content:"?"; font-family:var(--font-mono); color:var(--teal); border:1px solid var(--teal); border-radius:50%; width:20px; height:20px; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:12px;}
+
+  .prep-box{background:var(--ink); color:var(--paper); padding:22px 24px; border-radius:2px;}
+  .prep-box h2{font-family:var(--font-display); font-weight:400; font-size:18px; margin:0 0 10px; color:var(--amber-soft);}
+  .prep-box p{font-size:14px; margin:0; color:var(--paper-2);}
+
+  .nav-footer{display:flex; justify-content:space-between; gap:16px; border-top:1px solid var(--line); padding-top:20px; margin-top:52px; flex-wrap:wrap;}
+  .nav-footer a{font-family:var(--font-mono); font-size:12.5px; text-decoration:none; color:var(--teal-dark); border:1px solid var(--line); padding:9px 14px; background:#fff;}
+  .nav-footer a:hover{border-color:var(--teal);}
+  .nav-footer .next{margin-left:auto;}
+
+  footer.page-footer{border-top:1px solid var(--line); padding-top:18px; margin-top:24px; font-family:var(--font-mono); font-size:11px; color:#7a735c;}
+
+  @media (max-width:600px){
+    .scale{overflow-x:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="Panduan_Sesi1_Pengantar_TI.html">← Kembali ke Panduan Sesi 1</a></div>
+
+  <header class="masthead">
+    <div class="eyebrow">Materi Pendalaman · Sesi 1 · Modul 1</div>
+    <h1 class="title">Jenis-Jenis <em>Komputer</em></h1>
+    <p class="subtitle">Dari superkomputer yang mensimulasikan cuaca dunia hingga jam tangan pintar di pergelangan tangan — mengenal ragam komputer berdasarkan skala dan perannya.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Estimasi baca: 10–12 menit</span>
+      <span class="meta-chip">Ref: Discovering Computers, Modul 1</span>
+    </div>
+  </header>
+
+  <section id="pengantar">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Satu Kata, Banyak Wujud</h2><span class="sec-line"></span></div>
+    <p class="lede">Kata "komputer" mencakup rentang perangkat yang sangat luas — dari mesin seukuran ruangan yang melayani ribuan pengguna sekaligus, sampai chip kecil tertanam di dalam mesin cuci. Yang menyatukan semuanya adalah kemampuan menerima input, memproses data, dan menghasilkan output.</p>
+    <p>Cara paling umum mengelompokkan jenis komputer adalah berdasarkan <b>skala kekuatan pemrosesan & jumlah pengguna yang dilayani</b>, dan berdasarkan <b>tingkat portabilitas/mobilitasnya</b>.</p>
+  </section>
+
+  <section id="skala">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Berdasarkan Skala & Kekuatan Pemrosesan</h2><span class="sec-line"></span></div>
+
+    <div class="scale">
+      <div class="bar" style="height:100%; background:var(--red);"><span>SC</span></div>
+      <div class="bar" style="height:80%; background:var(--amber);"><span>MF</span></div>
+      <div class="bar" style="height:60%; background:var(--teal);"><span>SV</span></div>
+      <div class="bar" style="height:40%; background:var(--teal);"><span>WS</span></div>
+      <div class="bar" style="height:25%; background:var(--teal-dark);"><span>PC</span></div>
+    </div>
+    <div class="scale-labels">
+      <span>Superkomputer</span><span>Mainframe</span><span>Server</span><span>Workstation</span><span>PC</span>
+    </div>
+
+    <div class="type-detail">
+      <span class="role">Kekuatan pemrosesan tertinggi</span>
+      <h3>Superkomputer</h3>
+      <p>Komputer dengan daya pemrosesan terbesar, mampu menjalankan miliaran perhitungan per detik secara paralel. Digunakan untuk masalah yang sangat kompleks: prakiraan cuaca dan iklim, simulasi nuklir, riset genom, hingga pemodelan astrofisika.</p>
+      <span class="ex">Contoh penggunaan: badan meteorologi, lembaga riset sains, laboratorium pertahanan.</span>
+    </div>
+
+    <div class="type-detail">
+      <span class="role">Melayani ribuan pengguna sekaligus</span>
+      <h3>Mainframe</h3>
+      <p>Dirancang untuk memproses volume data sangat besar dan melayani ratusan hingga ribuan pengguna secara bersamaan tanpa henti. Keandalan dan keamanan menjadi prioritas utama karena biasanya menangani data krusial dalam skala nasional.</p>
+      <span class="ex">Contoh penggunaan: sistem perbankan, maskapai penerbangan, instansi pemerintah.</span>
+    </div>
+
+    <div class="type-detail">
+      <span class="role">Mengatur akses data & layanan</span>
+      <h3>Server</h3>
+      <p>Bertugas menyediakan sumber daya, data, atau layanan kepada komputer lain (klien) dalam suatu jaringan — mulai dari menyimpan file, menjalankan situs web, hingga mengelola email organisasi.</p>
+      <span class="ex">Contoh penggunaan: server web kampus, penyimpanan cloud, layanan email institusi.</span>
+    </div>
+
+    <div class="type-detail">
+      <span class="role">Performa tinggi untuk tugas spesifik</span>
+      <h3>Workstation</h3>
+      <p>Komputer personal dengan spesifikasi performa tinggi, dirancang untuk pekerjaan yang menuntut daya komputasi besar seperti desain grafis 3D, rendering video, atau analisis data ilmiah.</p>
+      <span class="ex">Contoh penggunaan: studio animasi, arsitek, insinyur, data scientist.</span>
+    </div>
+
+    <div class="type-detail">
+      <span class="role">Untuk penggunaan individu sehari-hari</span>
+      <h3>Desktop & Laptop (Personal Computer)</h3>
+      <p>Komputer yang paling akrab dengan mahasiswa: dirancang untuk penggunaan satu individu, di rumah, kampus, maupun kantor. Desktop menawarkan performa lebih tinggi dengan harga lebih terjangkau, sedangkan laptop mengutamakan portabilitas.</p>
+      <span class="ex">Contoh penggunaan: belajar, bekerja, hiburan, pekerjaan kreatif ringan.</span>
+    </div>
+  </section>
+
+  <section id="mobilitas">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Berdasarkan Portabilitas & Konteks Penggunaan</h2><span class="sec-line"></span></div>
+    <p>Selain berdasarkan skala pemrosesan, komputer juga bisa dikelompokkan berdasarkan seberapa mudah dibawa dan di mana ia digunakan:</p>
+    <table class="compare-table">
+      <thead><tr><th>Jenis</th><th>Ciri Utama</th><th>Contoh Penggunaan</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tablet</b></td><td>Layar sentuh, tanpa keyboard fisik, sangat portabel</td><td>Membaca, presentasi ringan, menggambar digital</td></tr>
+        <tr><td><b>Smartphone</b></td><td>Komputer genggam dengan konektivitas seluler penuh</td><td>Komunikasi, media sosial, produktivitas ringan</td></tr>
+        <tr><td><b>Wearable</b></td><td>Komputer yang dikenakan di tubuh, sangat kecil, sensor bawaan</td><td>Smartwatch, pelacak kebugaran</td></tr>
+        <tr><td><b>Embedded System</b></td><td>Komputer tertanam di dalam perangkat lain, tak terlihat pengguna</td><td>Mesin cuci pintar, mobil, alat kesehatan</td></tr>
+      </tbody>
+    </table>
+    <p class="ex" style="font-size:13px; color:#6b6552; font-style:italic;">Perhatikan bahwa batas antar-kategori ini semakin kabur — smartphone modern kini punya daya proses setara workstation satu dekade lalu.</p>
+  </section>
+
+  <div class="callout">
+    <span class="ck">Poin Kunci</span>
+    Semakin besar skala pemrosesan (superkomputer, mainframe), semakin sedikit jumlah unitnya dan semakin banyak pengguna yang dilayani sekaligus. Semakin portabel (wearable, smartphone), semakin personal dan semakin banyak jumlah unitnya di dunia.
+  </div>
+
+  <section id="refleksi">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Pertanyaan Reflektif</h2><span class="sec-line"></span></div>
+    <ul class="refleksi">
+      <li>Sebutkan tiga perangkat komputer yang Anda gunakan hari ini — termasuk kategori apa masing-masing?</li>
+      <li>Mengapa bank dan maskapai penerbangan masih mengandalkan mainframe, bukan sekadar server biasa?</li>
+      <li>Apakah smartwatch Anda (atau teman Anda) sebenarnya adalah "komputer"? Jelaskan alasannya.</li>
+    </ul>
+  </section>
+
+  <section id="ringkasan">
+    <div class="prep-box">
+      <h2>Ringkasan Singkat</h2>
+      <p>Komputer dapat dikelompokkan berdasarkan skala pemrosesan (superkomputer → mainframe → server → workstation → PC) dan berdasarkan portabilitas (tablet, smartphone, wearable, embedded system). Semua kategori ini semakin saling tumpang tindih seiring kemajuan teknologi.</p>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="Materi_Sesi1_Sejarah_Generasi_Komputer.html">← Sejarah & Generasi Komputer</a>
+    <a class="next" href="Materi_Sesi1_Literasi_Digital.html">Topik berikutnya: Literasi Digital →</a>
+  </div>
+
+  <footer class="page-footer">Pengantar Teknologi Informasi — Materi Pendalaman Sesi 1</footer>
+</div>
+</body>
+</html>
