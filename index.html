@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengantar Teknologi Informasi — Ruang Kelas</title>
+<style>
+  :root{
+    --ink:#16203a;
+    --paper:#f1efe6;
+    --paper-2:#e8e4d4;
+    --line: #c9c2a8;
+    --teal:#2f6f6b;
+    --teal-dark:#204c49;
+    --amber:#c98a2c;
+    --amber-soft:#f3e3c4;
+    --red:#a4432c;
+    --grey:#9a9481;
+    --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+    --font-body: 'Charter', Georgia, 'Iowan Old Style', serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(47,111,107,0.06), transparent 40%),
+      radial-gradient(circle at 92% 78%, rgba(201,138,44,0.07), transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:960px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  /* ===== Header ===== */
+  header.masthead{
+    border-bottom:3px solid var(--ink);
+    padding:44px 0 24px;
+    margin-bottom:40px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:16px;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(32px,5.5vw,50px);
+    line-height:1.06;
+    margin:0 0 12px;
+    letter-spacing:-.01em;
+  }
+  h1.title em{
+    font-style:normal;
+    color:var(--teal-dark);
+    border-bottom:2px solid var(--amber);
+  }
+  .subtitle{
+    font-size:16.5px;
+    color:#4b4636;
+    max-width:66ch;
+    margin-bottom:20px;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .meta-chip{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:.03em;
+    padding:5px 11px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:var(--paper-2);
+  }
+
+  /* ===== Sections ===== */
+  section{margin-bottom:52px;}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:18px;
+  }
+  .sec-num{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--amber);
+    border:1px solid var(--amber);
+    border-radius:50%;
+    width:26px; height:26px;
+    min-width:26px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sec-head h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:24px;
+    margin:0;
+    color:var(--ink);
+  }
+  .sec-head .sec-line{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+  p{margin:0 0 14px;}
+
+  /* ===== Quick links (silabus / dokumen) ===== */
+  .doc-links{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  .doc-card{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    padding:18px 20px;
+    text-decoration:none;
+    color:var(--ink);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .doc-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 16px rgba(22,32,58,0.08);
+  }
+  .doc-card .dk{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    margin-bottom:6px;
+  }
+  .doc-card h3{
+    font-family:var(--font-display);
+    font-size:19px;
+    font-weight:600;
+    margin:0 0 6px;
+  }
+  .doc-card p{font-size:13.5px; color:#453f2f; margin:0;}
+  .doc-card .arrow{
+    align-self:flex-end;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--amber);
+    margin-top:10px;
+  }
+
+  /* ===== Pertemuan list ===== */
+  .meet-list{
+    border-top:1px solid var(--line);
+  }
+  .meet-row{
+    display:grid;
+    grid-template-columns:52px 1fr;
+    align-items:center;
+    gap:16px;
+    padding:14px 4px;
+    border-bottom:1px solid var(--line);
+    font-size:14.5px;
+  }
+  .meet-row.exam{background:var(--amber-soft);}
+  .meet-row .num{
+    font-family:var(--font-mono);
+    font-size:16px;
+    color:var(--amber);
+    text-align:center;
+  }
+  .meet-row.exam .num{color:var(--red);}
+  .meet-row .topik b{display:block; font-size:14.5px;}
+  .meet-row .topik span{font-size:12.5px; color:#6b6552;}
+
+  @media (max-width:680px){
+    .doc-links{grid-template-columns:1fr;}
+    .meet-row{grid-template-columns:36px 1fr;}
+  }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:18px;
+    margin-top:60px;
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:#7a735c;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Ruang Kelas Daring</span>
+      <span>Semester I</span>
+    </div>
+    <h1 class="title">Pengantar Teknologi <em>Informasi</em></h1>
+    <p class="subtitle">Mata kuliah pengantar yang memperkenalkan konsep dasar teknologi informasi — perangkat keras, perangkat lunak, internet, keamanan digital, sistem operasi, jaringan, basis data, hingga pengembangan sistem dan web — sekaligus membangun peran mahasiswa sebagai warga digital yang bertanggung jawab.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Dosen Pengampu: Philipus Suryo Subandoro</span>
+      <span class="meta-chip">3 SKS (Teori)</span>
+      <span class="meta-chip">16 Pertemuan</span>
+      <span class="meta-chip">Ref: Discovering Computers, 17th Ed.</span>
+    </div>
+  </header>
+
+  <section id="dokumen">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Dokumen Perkuliahan</h2><span class="sec-line"></span></div>
+    <div class="doc-links">
+      <a class="doc-card" href="Silabus_Pengantar_Teknologi_Informasi.html">
+        <div>
+          <div class="dk">Dokumen Resmi</div>
+          <h3>Silabus Lengkap</h3>
+          <p>RPS, CPMK, komponen penilaian, dan jadwal 16 minggu secara rinci.</p>
+        </div>
+        <span class="arrow">Buka silabus →</span>
+      </a>
+      <a class="doc-card" href="Panduan_Sesi1_Pengantar_TI.html">
+        <div>
+          <div class="dk">Panduan Awal</div>
+          <h3>Panduan Pertemuan 1</h3>
+          <p>Kontrak perkuliahan & pengantar menjadi warga digital — panduan referensi mahasiswa untuk memulai perkuliahan.</p>
+        </div>
+        <span class="arrow">Buka panduan →</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="pertemuan">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Daftar Pertemuan</h2><span class="sec-line"></span></div>
+    <div class="meet-list">
+
+      <div class="meet-row">
+        <span class="num">1</span>
+        <span class="topik"><b>Kontrak Perkuliahan & Menjadi Warga Digital</b><span>Modul 1 — sejarah komputer, literasi digital, hak & tanggung jawab</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">2</span>
+        <span class="topik"><b>Internet & Komunikasi Online</b><span>Modul 2 — internet, browsing, e-commerce, media sosial, cloud computing</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">3</span>
+        <span class="topik"><b>Evaluasi Perangkat Keras (Hardware)</b><span>Modul 3 — komponen komputer, kriteria memilih perangkat</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">4</span>
+        <span class="topik"><b>Program dan Aplikasi</b><span>Modul 4 — aplikasi produktivitas, lisensi & jenis software</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">5</span>
+        <span class="topik"><b>Keamanan Digital, Etika, dan Privasi</b><span>Modul 5 — malware, cybercrime, autentikasi, enkripsi</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">6</span>
+        <span class="topik"><b>Perangkat Input dan Output</b><span>Modul 6 — perangkat input & output</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">7</span>
+        <span class="topik"><b>Penyimpanan Digital</b><span>Modul 7 — media penyimpanan, backup data, review UTS</span></span>
+      </div>
+
+      <div class="meet-row exam">
+        <span class="num">8</span>
+        <span class="topik"><b>Ujian Tengah Semester (UTS)</b><span>Materi: Modul 1–7</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">9</span>
+        <span class="topik"><b>Sistem Operasi</b><span>Modul 8 — fungsi OS, jenis-jenis sistem operasi</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">10</span>
+        <span class="topik"><b>Jaringan dan Perangkat Jaringan</b><span>Modul 9 — topologi, jenis jaringan, perangkat jaringan</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">11</span>
+        <span class="topik"><b>Basis Data (Database)</b><span>Modul 10 — DBMS, model data relasional, big data</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">12</span>
+        <span class="topik"><b>Pengembangan Sistem dan Aplikasi</b><span>Modul 11 — SDLC, waterfall & agile</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">13</span>
+        <span class="topik"><b>Pengembangan Web</b><span>Modul 12 — dasar HTML/CSS, web hosting & domain</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">14</span>
+        <span class="topik"><b>Tren Teknologi Terkini & Karier di Bidang TI</b><span>AI, cloud computing, IoT, big data, cybersecurity</span></span>
+      </div>
+
+      <div class="meet-row">
+        <span class="num">15</span>
+        <span class="topik"><b>Presentasi Tugas Akhir & Review Perkuliahan</b><span>Presentasi proyek, review Modul 8–14</span></span>
+      </div>
+
+      <div class="meet-row exam">
+        <span class="num">16</span>
+        <span class="topik"><b>Ujian Akhir Semester (UAS)</b><span>Materi: Modul 8–12 & Tren Teknologi</span></span>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Pengantar Teknologi Informasi — Semester I</span>
+    <span>Sumber: Campbell et al., Discovering Computers, 17th Ed. (Cengage Learning, 2023)</span>
+  </footer>
+
+</div>
+</body>
+</html>
