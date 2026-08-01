@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesi 1 — Kontrak Perkuliahan & Menjadi Warga Digital</title>
+<style>
+  :root{
+    --ink:#16203a;
+    --paper:#f1efe6;
+    --paper-2:#e8e4d4;
+    --line: #c9c2a8;
+    --teal:#2f6f6b;
+    --teal-dark:#204c49;
+    --amber:#c98a2c;
+    --amber-soft:#f3e3c4;
+    --red:#a4432c;
+    --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+    --font-body: 'Charter', Georgia, 'Iowan Old Style', serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* subtle paper texture via layered gradients */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(47,111,107,0.05), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(201,138,44,0.06), transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:880px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  /* ===== Header / masthead ===== */
+  header.masthead{
+    border-bottom:3px solid var(--ink);
+    padding:38px 0 20px;
+    margin-bottom:36px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(30px,5vw,46px);
+    line-height:1.08;
+    margin:0 0 10px;
+    letter-spacing:-.01em;
+  }
+  h1.title em{
+    font-style:normal;
+    color:var(--teal-dark);
+    border-bottom:2px solid var(--amber);
+  }
+  .subtitle{
+    font-size:16px;
+    color:#4b4636;
+    max-width:60ch;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+  }
+  .meta-chip{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:.03em;
+    padding:5px 11px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:var(--paper-2);
+    color:var(--ink);
+  }
+
+  /* ===== Section labels ===== */
+  section{margin-bottom:52px;}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:18px;
+  }
+  .sec-num{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--amber);
+    border:1px solid var(--amber);
+    border-radius:50%;
+    width:26px; height:26px;
+    min-width:26px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sec-head h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:24px;
+    margin:0;
+    color:var(--ink);
+  }
+  .sec-head .sec-line{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  p{margin:0 0 14px;}
+  ul, ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:6px;}
+
+  /* ===== Objectives ===== */
+  .objectives{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  .obj-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    padding:16px 18px;
+    font-size:14.5px;
+  }
+  .obj-card .k{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--teal-dark);
+    letter-spacing:.06em;
+    display:block;
+    margin-bottom:4px;
+  }
+
+  /* ===== Timeline (session agenda) ===== */
+  .timeline{
+    position:relative;
+    border-left:2px solid var(--line);
+    padding-left:26px;
+    margin-left:6px;
+  }
+  .t-item{
+    position:relative;
+    margin-bottom:26px;
+  }
+  .t-item:last-child{margin-bottom:0;}
+  .t-item::before{
+    content:"";
+    position:absolute;
+    left:-33px;
+    top:4px;
+    width:12px; height:12px;
+    background:var(--paper);
+    border:2px solid var(--teal);
+    border-radius:50%;
+  }
+  .t-time{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--teal-dark);
+    letter-spacing:.04em;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:3px;
+  }
+  .t-dur{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--amber);
+    border:1px solid var(--amber);
+    border-radius:2px;
+    padding:1px 7px;
+    letter-spacing:.02em;
+  }
+  .t-title{font-weight:600; font-size:15.5px; margin-bottom:3px;}
+  .t-desc{font-size:14px; color:#453f2f;}
+
+  /* ===== Generations of computers strip ===== */
+  .gen-strip{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-bottom:10px;
+  }
+  .gen-cell{
+    background:#fff;
+    padding:14px 10px;
+    text-align:center;
+  }
+  .gen-cell .g-no{
+    font-family:var(--font-mono);
+    font-size:20px;
+    color:var(--amber);
+    display:block;
+  }
+  .gen-cell .g-yr{
+    font-size:11px;
+    color:#6b6552;
+    font-family:var(--font-mono);
+    display:block;
+    margin-bottom:4px;
+  }
+  .gen-cell .g-desc{font-size:12.5px; line-height:1.4;}
+  .gen-caption{font-size:12.5px; color:#6b6552; font-style:italic;}
+  .readmore{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:6px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--teal-dark);
+    text-decoration:none;
+    border-bottom:1px solid var(--teal);
+    padding-bottom:1px;
+  }
+  .readmore:hover{color:var(--amber); border-color:var(--amber);}
+
+  /* ===== Concept grid: types of computers ===== */
+  .type-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+  }
+  .type-card{
+    border:1px solid var(--line);
+    background:#fff;
+    padding:14px 16px;
+  }
+  .type-card h3{
+    font-family:var(--font-display);
+    font-size:16px;
+    margin:0 0 6px;
+    font-weight:600;
+  }
+  .type-card p{font-size:13.5px; margin:0; color:#453f2f;}
+
+  /* ===== Rights & responsibilities two-column ===== */
+  .duo{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    border:1px solid var(--line);
+  }
+  .duo > div{padding:20px 22px;}
+  .duo .rights{background:#eef4f2; border-right:1px solid var(--line);}
+  .duo .resp{background:#fbf3e6;}
+  .duo h3{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin:0 0 12px;
+  }
+  .duo .rights h3{color:var(--teal-dark);}
+  .duo .resp h3{color:var(--amber);}
+  .duo ul{margin:0; padding-left:18px; font-size:14px;}
+
+  /* ===== Glossary ===== */
+  dl.glossary{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:10px 18px;
+    font-size:14.5px;
+  }
+  dl.glossary dt{
+    font-weight:700;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--teal-dark);
+  }
+  dl.glossary dd{margin:0; color:#3a3527;}
+
+  /* ===== Self-check ===== */
+  .checklist{list-style:none; padding:0; margin:0;}
+  .checklist li{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding:9px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:14.5px;
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .box{
+    width:16px; height:16px;
+    border:1.5px solid var(--ink);
+    flex:none;
+    margin-top:3px;
+    border-radius:2px;
+  }
+
+  .prep-box{
+    background:var(--ink);
+    color:var(--paper);
+    padding:24px 26px;
+    border-radius:2px;
+  }
+  .prep-box h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:20px;
+    margin:0 0 12px;
+    color:var(--amber-soft);
+  }
+  .prep-box ol{padding-left:20px; margin:0;}
+  .prep-box li{margin-bottom:8px; font-size:14.5px;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:18px;
+    margin-top:60px;
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:#7a735c;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  @media (max-width:640px){
+    .objectives, .type-grid{grid-template-columns:1fr;}
+    .duo{grid-template-columns:1fr;}
+    .duo .rights{border-right:none; border-bottom:1px solid var(--line);}
+    dl.glossary{grid-template-columns:1fr;}
+    dl.glossary dt{margin-top:6px;}
+    .gen-strip{grid-template-columns:repeat(2,1fr);}
+    .meta-row{gap:8px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Pengantar Teknologi Informasi · Semester I</span>
+      <span>Panduan Mahasiswa</span>
+    </div>
+    <h1 class="title">Sesi 01 — Kontrak Perkuliahan &<br><em>Menjadi Warga Digital</em></h1>
+    <p class="subtitle">Panduan referensi untuk pertemuan pertama: menyepakati aturan main perkuliahan dan membuka wawasan tentang sejarah komputer serta peran kita sebagai warga digital.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Modul 1 — Being a Digital Citizen</span>
+      <span class="meta-chip">Ref: Discovering Computers, 17th Ed.</span>
+      <span class="meta-chip">Metode: Ceramah, Diskusi, Ice Breaking</span>
+      <span class="meta-chip">Pertemuan 1 dari 16</span>
+    </div>
+  </header>
+
+  <section id="tujuan">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Tujuan Pembelajaran</h2><span class="sec-line"></span></div>
+    <div class="objectives">
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menjelaskan alur perkuliahan, sistem penilaian, dan tata tertib kelas (RPS & kontrak belajar).</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menguraikan sejarah singkat dan generasi perkembangan komputer.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Membedakan jenis-jenis komputer berdasarkan ukuran dan fungsinya.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menjelaskan konsep literasi digital serta hak & tanggung jawab sebagai warga digital.</div>
+    </div>
+  </section>
+
+  <section id="agenda">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Agenda Pertemuan <span style="font-family:var(--font-mono); font-size:13px; color:#6b6552; font-weight:400;">— total 150 menit (3 JP)</span></h2><span class="sec-line"></span></div>
+    <div class="timeline">
+      <div class="t-item">
+        <span class="t-time">Bagian 1 · Pembukaan <span class="t-dur">15 menit</span></span>
+        <div class="t-title">Perkenalan dosen-mahasiswa & ice breaking</div>
+        <div class="t-desc">Perkenalan singkat, penjelasan alur pertemuan hari ini, dan aktivitas ice breaking ringan untuk mencairkan suasana kelas.</div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">Bagian 2 · Survei Awal <span class="t-dur">10 menit</span></span>
+        <div class="t-title">Jajak pengetahuan & harapan mahasiswa</div>
+        <div class="t-desc">Survei singkat (lisan/kertas/aplikasi) mengenai latar belakang, pengetahuan awal TI, dan harapan mahasiswa terhadap mata kuliah.</div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">Bagian 3 · Kontrak Perkuliahan <span class="t-dur">25 menit</span></span>
+        <div class="t-title">RPS, kontrak belajar & sistem penilaian</div>
+        <div class="t-desc">Penjelasan capaian pembelajaran, komponen nilai (kehadiran, tugas, UTS, UAS), tata tertib kelas, dan kesepakatan bersama.</div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">Bagian 4 · Materi Inti (1/4) <span class="t-dur">20 menit</span></span>
+        <div class="t-title">Sejarah & generasi komputer</div>
+        <div class="t-desc">Ceramah interaktif mengacu tabel lima generasi komputer (Modul 1), disertai contoh dan tanya jawab singkat.</div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">Bagian 5 · Materi Inti (2/4) <span class="t-dur">15 menit</span></span>
+        <div class="t-title">Jenis-jenis komputer</div>
+        <div class="t-desc">Pengenalan supercomputer hingga perangkat wearable, dikaitkan dengan perangkat yang mahasiswa gunakan sehari-hari.</div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">Bagian 6 · Materi Inti (3/4) <span class="t-dur">15 menit</span></span>
+        <div class="t-title">Literasi digital</div>
+        <div class="t-desc">Konsep literasi digital dan mengapa keterampilan ini penting di dunia kerja maupun kehidupan sehari-hari.</div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">Bagian 7 · Materi Inti (4/4) <span class="t-dur">20 menit</span></span>
+        <div class="t-title">Hak & tanggung jawab warga digital + diskusi kelompok kecil</div>
+        <div class="t-desc">Pemaparan hak & tanggung jawab warga digital, dilanjutkan diskusi kelompok kecil (3–4 orang) berbagi satu contoh pengalaman pribadi.</div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">Bagian 8 · Kuis Singkat <span class="t-dur">15 menit</span></span>
+        <div class="t-title">Cek pemahaman lisan/tertulis</div>
+        <div class="t-desc">3–5 pertanyaan singkat (generasi komputer, jenis komputer, hak & tanggung jawab warga digital) untuk mengukur pemahaman di akhir sesi.</div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">Bagian 9 · Penutup <span class="t-dur">15 menit</span></span>
+        <div class="t-title">Rangkuman & pengantar sesi berikutnya</div>
+        <div class="t-desc">Rangkuman poin-poin kunci, refleksi singkat, dan pratinjau topik Sesi 2: Internet & Komunikasi Online.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="generasi">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Sejarah & Generasi Komputer</h2><span class="sec-line"></span></div>
+    <p>Perkembangan komputer umumnya dibagi menjadi lima generasi berdasarkan teknologi komponen utamanya:</p>
+    <div class="gen-strip">
+      <div class="gen-cell"><span class="g-no">I</span><span class="g-yr">1940–1956</span><span class="g-desc">Tabung vakum. Ukuran sangat besar, konsumsi daya tinggi.</span></div>
+      <div class="gen-cell"><span class="g-no">II</span><span class="g-yr">1956–1963</span><span class="g-desc">Transistor. Lebih kecil, cepat, dan hemat energi.</span></div>
+      <div class="gen-cell"><span class="g-no">III</span><span class="g-yr">1964–1971</span><span class="g-desc">Sirkuit terpadu (IC). Kinerja meningkat, harga menurun.</span></div>
+      <div class="gen-cell"><span class="g-no">IV</span><span class="g-yr">1971–2010</span><span class="g-desc">Mikroprosesor. Lahirnya PC (personal computer).</span></div>
+      <div class="gen-cell"><span class="g-no">V</span><span class="g-yr">2010–kini</span><span class="g-desc">Kecerdasan buatan (AI), komputasi paralel & cloud.</span></div>
+    </div>
+    <p class="gen-caption">Gunakan tabel ini sebagai kerangka cepat sebelum membaca uraian lengkap di Modul 1 buku wajib.</p>
+    <a class="readmore" href="Materi_Sesi1_Sejarah_Generasi_Komputer.html">Baca pendalaman lengkap →</a>
+  </section>
+
+  <section id="jenis">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Jenis-Jenis Komputer</h2><span class="sec-line"></span></div>
+    <div class="type-grid">
+      <div class="type-card"><h3>Supercomputer</h3><p>Kekuatan pemrosesan terbesar; dipakai untuk riset ilmiah, prakiraan cuaca, dan simulasi kompleks.</p></div>
+      <div class="type-card"><h3>Mainframe</h3><p>Melayani banyak pengguna sekaligus; umum di perbankan dan instansi pemerintah berskala besar.</p></div>
+      <div class="type-card"><h3>Server</h3><p>Mengatur akses data/aplikasi bagi perangkat lain dalam suatu jaringan.</p></div>
+      <div class="type-card"><h3>Desktop & Laptop</h3><p>Komputer pribadi untuk penggunaan individu, di rumah, kampus, maupun kantor.</p></div>
+      <div class="type-card"><h3>Tablet & Smartphone</h3><p>Perangkat mobile dengan layar sentuh, mengutamakan portabilitas dan konektivitas.</p></div>
+      <div class="type-card"><h3>Wearable & Embedded</h3><p>Komputer tertanam pada perangkat lain (smartwatch, peralatan rumah tangga pintar, dsb).</p></div>
+    </div>
+    <a class="readmore" href="Materi_Sesi1_Jenis_Komputer.html">Baca pendalaman lengkap →</a>
+  </section>
+
+  <section id="literasi">
+    <div class="sec-head"><span class="sec-num">5</span><h2>Literasi Digital</h2><span class="sec-line"></span></div>
+    <p>Literasi digital adalah kemampuan menemukan, mengevaluasi, menggunakan, dan menciptakan informasi secara efektif serta bertanggung jawab menggunakan teknologi digital — mencakup literasi informasi, komunikasi, keamanan, dan penciptaan konten.</p>
+    <a class="readmore" href="Materi_Sesi1_Literasi_Digital.html">Baca pendalaman lengkap →</a>
+  </section>
+
+  <section id="warga-digital">
+    <div class="sec-head"><span class="sec-num">6</span><h2>Hak & Tanggung Jawab Warga Digital</h2><span class="sec-line"></span></div>
+    <p>Menjadi warga digital berarti memahami literasi digital sekaligus menyeimbangkan hak yang dimiliki dengan tanggung jawab yang harus dijalankan saat menggunakan teknologi.</p>
+    <div class="duo">
+      <div class="rights">
+        <h3>Hak Warga Digital</h3>
+        <ul>
+          <li>Mengakses informasi dan teknologi secara adil</li>
+          <li>Privasi atas data pribadi</li>
+          <li>Kebebasan berekspresi secara bertanggung jawab</li>
+          <li>Keamanan dari ancaman siber (cybercrime)</li>
+        </ul>
+      </div>
+      <div class="resp">
+        <h3>Tanggung Jawab Warga Digital</h3>
+        <ul>
+          <li>Menggunakan teknologi secara etis dan legal</li>
+          <li>Menghormati privasi & karya orang lain (etika, hak cipta)</li>
+          <li>Menjaga keamanan data diri dan orang lain</li>
+          <li>Berpartisipasi aktif & positif dalam komunitas digital</li>
+        </ul>
+      </div>
+    </div>
+    <a class="readmore" href="Materi_Sesi1_Warga_Digital.html">Baca pendalaman lengkap →</a>
+  </section>
+
+  <section id="glosarium">
+    <div class="sec-head"><span class="sec-num">6</span><h2>Glosarium Singkat</h2><span class="sec-line"></span></div>
+    <dl class="glossary">
+      <dt>Digital Citizen</dt><dd>Individu yang menggunakan teknologi informasi secara bertanggung jawab untuk berpartisipasi dalam masyarakat.</dd>
+      <dt>Literasi Digital</dt><dd>Kemampuan menemukan, mengevaluasi, dan menggunakan informasi digital secara efektif dan etis.</dd>
+      <dt>RPS</dt><dd>Rencana Pembelajaran Semester — dokumen acuan capaian dan aktivitas belajar selama satu semester.</dd>
+      <dt>CPMK</dt><dd>Capaian Pembelajaran Mata Kuliah — target kompetensi yang harus dicapai mahasiswa.</dd>
+      <dt>Generasi Komputer</dt><dd>Klasifikasi perkembangan komputer berdasarkan teknologi komponen utamanya (tabung vakum hingga AI).</dd>
+    </dl>
+  </section>
+
+  <section id="cek-mandiri">
+    <div class="sec-head"><span class="sec-num">7</span><h2>Cek Pemahaman Mandiri</h2><span class="sec-line"></span></div>
+    <ul class="checklist">
+      <li><span class="box"></span>Saya dapat menyebutkan komponen penilaian mata kuliah dan bobotnya masing-masing.</li>
+      <li><span class="box"></span>Saya dapat menjelaskan urutan lima generasi komputer beserta ciri utamanya.</li>
+      <li><span class="box"></span>Saya dapat membedakan minimal tiga jenis komputer berdasarkan fungsi/ukurannya.</li>
+      <li><span class="box"></span>Saya dapat memberi contoh satu hak dan satu tanggung jawab sebagai warga digital dalam keseharian saya.</li>
+    </ul>
+  </section>
+
+  <section id="persiapan">
+    <div class="prep-box">
+      <h2>Persiapan Sebelum Sesi 2</h2>
+      <ol>
+        <li>Baca Modul 2 — <em>The Internet</em> pada buku Discovering Computers, 17th Edition.</li>
+        <li>Bawa catatan hasil kontrak belajar yang telah disepakati di Sesi 1.</li>
+        <li>Siapkan satu contoh pengalaman pribadi menggunakan internet (browsing, e-commerce, atau media sosial) untuk bahan diskusi kelompok.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <span>Pengantar Teknologi Informasi — Semester I</span>
+    <span>Sumber: Campbell et al., Discovering Computers, 17th Ed. (Cengage Learning, 2023)</span>
+  </footer>
+
+</div>
+</body>
+</html>
