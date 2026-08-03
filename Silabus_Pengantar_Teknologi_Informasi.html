@@ -140,9 +140,8 @@
   li{margin-bottom:6px;}
 
   /* ===== CPMK list ===== */
-  .cpmk-list{list-style:none; margin:0; padding:0; counter-reset:cpmk;}
+  .cpmk-list{list-style:none; margin:0; padding:0;}
   .cpmk-list li{
-    counter-increment:cpmk;
     display:flex;
     gap:14px;
     padding:12px 0;
@@ -150,8 +149,7 @@
     font-size:14.5px;
   }
   .cpmk-list li:last-child{border-bottom:none;}
-  .cpmk-list li::before{
-    content:"CPMK " counter(cpmk);
+  .cpmk-list .code{
     font-family:var(--font-mono);
     font-size:11px;
     color:var(--teal-dark);
@@ -332,10 +330,10 @@
 
     <div id="info" class="infogrid">
       <div class="info-cell"><span class="k">Mata Kuliah</span><span class="v">Pengantar Teknologi Informasi</span></div>
-      <div class="info-cell"><span class="k">Kode Mata Kuliah</span><span class="v">INF104</span></div>
+      <div class="info-cell"><span class="k">Kode Mata Kuliah</span><span class="v placeholder">[diisi sesuai kurikulum program studi]</span></div>
       <div class="info-cell"><span class="k">Bobot SKS</span><span class="v">3 SKS (2 SKS Teori, 1 SKS Praktik) — sesuaikan dengan kurikulum</span></div>
       <div class="info-cell"><span class="k">Semester</span><span class="v">I (Satu)</span></div>
-      <div class="info-cell"><span class="k">Program Studi</span><span class="v">S1-Informatika</span></div>
+      <div class="info-cell"><span class="k">Program Studi</span><span class="v placeholder">[diisi sesuai program studi]</span></div>
       <div class="info-cell"><span class="k">Jumlah Pertemuan</span><span class="v">16 kali (14 tatap muka reguler, 1 UTS, 1 UAS)</span></div>
       <div class="info-cell" style="grid-column:1 / -1;"><span class="k">Buku Wajib</span><span class="v">Campbell, J.T., Ciampa, M., Freund, S.M., Frydenberg, M., & Vermaat, M.E. (2023). <i>Discovering Computers: Digital Technology, Data, and Devices</i>, 17th Edition. Cengage Learning.</span></div>
     </div>
@@ -349,12 +347,10 @@
   <section id="cpmk">
     <div class="sec-head"><span class="sec-num">2</span><h2>Capaian Pembelajaran Mata Kuliah (CPMK)</h2><span class="sec-line"></span></div>
     <ul class="cpmk-list">
-      <li>Mahasiswa mampu menjelaskan konsep dasar teknologi informasi dan peran warga digital.</li>
-      <li>Mahasiswa mampu mengidentifikasi dan mengevaluasi perangkat keras dan perangkat lunak komputer.</li>
-      <li>Mahasiswa mampu menjelaskan konsep keamanan digital, etika, dan privasi dalam penggunaan TI.</li>
-      <li>Mahasiswa mampu menjelaskan konsep sistem operasi, jaringan komputer, dan basis data.</li>
-      <li>Mahasiswa mampu menjelaskan tahapan pengembangan sistem, aplikasi, dan situs web secara umum.</li>
-      <li>Mahasiswa mampu mengaitkan tren teknologi terkini dengan peluang karier di bidang TI.</li>
+      <li><span class="code">CPMK007</span>Mahasiswa mampu menjelaskan konsep dasar teknologi informasi termasuk sejarah, perkembangan, dan peranannya dalam kehidupan modern.</li>
+      <li><span class="code">CPMK008</span>Mahasiswa mampu mengidentifikasi dan menjelaskan komponen utama sistem teknologi informasi, seperti hardware, software, jaringan, dan data, serta fungsinya dalam sistem komputer.</li>
+      <li><span class="code">CPMK009</span>Mahasiswa mampu menerapkan pemahaman dasar keamanan informasi dan etika digital dalam penggunaan teknologi informasi.</li>
+      <li><span class="code">CPMK010</span>Mahasiswa mampu menggunakan tools teknologi informasi, termasuk teknologi terkini, untuk menyelesaikan masalah komputasional.</li>
     </ul>
   </section>
 
