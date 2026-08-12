@@ -129,7 +129,7 @@
   /* ===== Quick links (silabus / dokumen) ===== */
   .doc-links{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:minmax(0,380px);
     gap:14px;
   }
   .doc-card{
@@ -177,7 +177,7 @@
   }
   .meet-row{
     display:grid;
-    grid-template-columns:52px 1fr;
+    grid-template-columns:52px 1fr 130px;
     align-items:center;
     gap:16px;
     padding:14px 4px;
@@ -194,10 +194,38 @@
   .meet-row.exam .num{color:var(--red);}
   .meet-row .topik b{display:block; font-size:14.5px;}
   .meet-row .topik span{font-size:12.5px; color:#6b6552;}
+  .meet-row .panduan a{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.03em;
+    text-decoration:none;
+    color:var(--teal-dark);
+    border:1px solid var(--teal);
+    padding:5px 10px;
+    display:inline-block;
+    white-space:nowrap;
+  }
+  .meet-row .panduan a:hover{background:var(--teal); color:#fff;}
+  .meet-row .panduan .segera{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.03em;
+    color:var(--grey);
+    border:1px solid var(--line);
+    padding:5px 10px;
+    display:inline-block;
+    white-space:nowrap;
+  }
+  .meet-row .panduan .dash{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--grey);
+  }
 
   @media (max-width:680px){
     .doc-links{grid-template-columns:1fr;}
-    .meet-row{grid-template-columns:36px 1fr;}
+    .meet-row{grid-template-columns:36px 1fr; row-gap:8px;}
+    .meet-row .panduan{grid-column:2 / 3;}
   }
 
   footer{
@@ -243,14 +271,6 @@
         </div>
         <span class="arrow">Buka silabus →</span>
       </a>
-      <a class="doc-card" href="sesi1.html">
-        <div>
-          <div class="dk">Panduan Awal</div>
-          <h3>Panduan Pertemuan 1</h3>
-          <p>Kontrak perkuliahan & pengantar menjadi warga digital — panduan referensi mahasiswa untuk memulai perkuliahan.</p>
-        </div>
-        <span class="arrow">Buka panduan →</span>
-      </a>
     </div>
   </section>
 
@@ -261,81 +281,97 @@
       <div class="meet-row">
         <span class="num">1</span>
         <span class="topik"><b>Kontrak Perkuliahan & Menjadi Warga Digital</b><span>Modul 1 — sejarah komputer, literasi digital, hak & tanggung jawab</span></span>
+        <span class="panduan"><a href="Panduan_Sesi1_Pengantar_TI.html">Buka Panduan</a></span>
       </div>
 
       <div class="meet-row">
         <span class="num">2</span>
         <span class="topik"><b>Internet & Komunikasi Online</b><span>Modul 2 — internet, browsing, e-commerce, media sosial, cloud computing</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">3</span>
         <span class="topik"><b>Evaluasi Perangkat Keras (Hardware)</b><span>Modul 3 — komponen komputer, kriteria memilih perangkat</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">4</span>
         <span class="topik"><b>Program dan Aplikasi</b><span>Modul 4 — aplikasi produktivitas, lisensi & jenis software</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">5</span>
         <span class="topik"><b>Keamanan Digital, Etika, dan Privasi</b><span>Modul 5 — malware, cybercrime, autentikasi, enkripsi</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">6</span>
         <span class="topik"><b>Perangkat Input dan Output</b><span>Modul 6 — perangkat input & output</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">7</span>
         <span class="topik"><b>Penyimpanan Digital</b><span>Modul 7 — media penyimpanan, backup data, review UTS</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row exam">
         <span class="num">8</span>
         <span class="topik"><b>Ujian Tengah Semester (UTS)</b><span>Materi: Modul 1–7</span></span>
+        <span class="panduan"><span class="dash">—</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">9</span>
         <span class="topik"><b>Sistem Operasi</b><span>Modul 8 — fungsi OS, jenis-jenis sistem operasi</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">10</span>
         <span class="topik"><b>Jaringan dan Perangkat Jaringan</b><span>Modul 9 — topologi, jenis jaringan, perangkat jaringan</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">11</span>
         <span class="topik"><b>Basis Data (Database)</b><span>Modul 10 — DBMS, model data relasional, big data</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">12</span>
         <span class="topik"><b>Pengembangan Sistem dan Aplikasi</b><span>Modul 11 — SDLC, waterfall & agile</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">13</span>
         <span class="topik"><b>Pengembangan Web</b><span>Modul 12 — dasar HTML/CSS, web hosting & domain</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">14</span>
         <span class="topik"><b>Tren Teknologi Terkini & Karier di Bidang TI</b><span>AI, cloud computing, IoT, big data, cybersecurity</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row">
         <span class="num">15</span>
         <span class="topik"><b>Presentasi Tugas Akhir & Review Perkuliahan</b><span>Presentasi proyek, review Modul 8–14</span></span>
+        <span class="panduan"><span class="segera">Segera</span></span>
       </div>
 
       <div class="meet-row exam">
         <span class="num">16</span>
         <span class="topik"><b>Ujian Akhir Semester (UAS)</b><span>Materi: Modul 8–12 & Tren Teknologi</span></span>
+        <span class="panduan"><span class="dash">—</span></span>
       </div>
 
     </div>
