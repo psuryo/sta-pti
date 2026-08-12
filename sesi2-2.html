@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mesin Pencari & Evaluasi Sumber — Materi Pendalaman Sesi 2</title>
+<style>
+  :root{
+    --ink:#16203a; --paper:#f1efe6; --paper-2:#e8e4d4; --line:#c9c2a8;
+    --teal:#2f6f6b; --teal-dark:#204c49; --amber:#c98a2c; --amber-soft:#f3e3c4; --red:#a4432c;
+    --font-display:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --font-body:'Charter',Georgia,'Iowan Old Style',serif;
+    --font-mono:'IBM Plex Mono','SFMono-Regular',Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); line-height:1.65; -webkit-font-smoothing:antialiased;}
+  body::before{content:""; position:fixed; inset:0; background-image:radial-gradient(circle at 15% 8%, rgba(47,111,107,0.06), transparent 40%), radial-gradient(circle at 92% 78%, rgba(201,138,44,0.07), transparent 45%); pointer-events:none; z-index:0;}
+  .wrap{max-width:800px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  .breadcrumb{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em; padding:22px 0 0; color:#6b6552;}
+  .breadcrumb a{color:var(--teal-dark); text-decoration:none; border-bottom:1px solid var(--teal);}
+
+  header.masthead{border-bottom:3px solid var(--ink); padding:18px 0 22px; margin-bottom:36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--teal-dark); margin-bottom:14px;}
+  h1.title{font-family:var(--font-display); font-weight:400; font-size:clamp(28px,5vw,42px); line-height:1.1; margin:0 0 10px; letter-spacing:-.01em;}
+  h1.title em{font-style:normal; color:var(--teal-dark); border-bottom:2px solid var(--amber);}
+  .subtitle{font-size:15.5px; color:#4b4636; max-width:62ch;}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+  .meta-chip{font-family:var(--font-mono); font-size:11.5px; padding:5px 11px; border:1px solid var(--line); border-radius:2px; background:var(--paper-2);}
+
+  section{margin-bottom:46px;}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:16px;}
+  .sec-num{font-family:var(--font-mono); font-size:13px; color:var(--amber); border:1px solid var(--amber); border-radius:50%; width:26px; height:26px; min-width:26px; display:flex; align-items:center; justify-content:center;}
+  .sec-head h2{font-family:var(--font-display); font-weight:400; font-size:22px; margin:0; color:var(--ink);}
+  .sec-head .sec-line{flex:1; height:1px; background:var(--line);}
+  p{margin:0 0 14px; font-size:15px;}
+  ul,ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:6px; font-size:15px;}
+  .lede{font-size:17px; color:#332f22; font-family:var(--font-display); line-height:1.55; margin-bottom:8px;}
+
+  .operator-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px;}
+  .op-card{background:#fff; border:1px solid var(--line); padding:13px 15px;}
+  .op-card code{font-family:var(--font-mono); font-size:13px; color:var(--teal-dark); background:var(--paper-2); padding:2px 6px; border-radius:2px;}
+  .op-card p{font-size:13px; margin:6px 0 0; color:#453f2f;}
+
+  .criteria-list{list-style:none; margin:0; padding:0;}
+  .criteria-list li{display:flex; gap:12px; padding:12px 0; border-bottom:1px dashed var(--line); font-size:14.5px;}
+  .criteria-list li:last-child{border-bottom:none;}
+  .criteria-list .cn{font-family:var(--font-mono); font-size:12px; color:var(--teal-dark); border:1px solid var(--teal); border-radius:50%; width:22px; height:22px; min-width:22px; display:flex; align-items:center; justify-content:center;}
+  .criteria-list b{display:block; margin-bottom:2px;}
+  .criteria-list span.d{color:#453f2f; font-size:13.5px;}
+
+  .callout{background:var(--amber-soft); border-left:4px solid var(--amber); padding:16px 20px; font-size:14.5px; margin-bottom:20px;}
+  .callout.warn{background:#f5e0da; border-left-color:var(--red);}
+  .callout .ck{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--red); display:block; margin-bottom:6px;}
+
+  .refleksi{list-style:none; margin:0; padding:0;}
+  .refleksi li{display:flex; gap:12px; padding:11px 0; border-bottom:1px dashed var(--line); font-size:14.5px;}
+  .refleksi li:last-child{border-bottom:none;}
+  .refleksi li::before{content:"?"; font-family:var(--font-mono); color:var(--teal); border:1px solid var(--teal); border-radius:50%; width:20px; height:20px; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:12px;}
+
+  .prep-box{background:var(--ink); color:var(--paper); padding:22px 24px; border-radius:2px;}
+  .prep-box h2{font-family:var(--font-display); font-weight:400; font-size:18px; margin:0 0 10px; color:var(--amber-soft);}
+  .prep-box p{font-size:14px; margin:0; color:var(--paper-2);}
+
+  .nav-footer{display:flex; justify-content:space-between; gap:16px; border-top:1px solid var(--line); padding-top:20px; margin-top:52px; flex-wrap:wrap;}
+  .nav-footer a{font-family:var(--font-mono); font-size:12.5px; text-decoration:none; color:var(--teal-dark); border:1px solid var(--line); padding:9px 14px; background:#fff;}
+  .nav-footer a:hover{border-color:var(--teal);}
+  .nav-footer .next{margin-left:auto;}
+
+  footer.page-footer{border-top:1px solid var(--line); padding-top:18px; margin-top:24px; font-family:var(--font-mono); font-size:11px; color:#7a735c;}
+
+  @media (max-width:600px){.operator-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="sesi2.html">← Kembali ke Panduan Sesi 2</a></div>
+
+  <header class="masthead">
+    <div class="eyebrow">Materi Pendalaman · Sesi 2 · Modul 2 · Topik 2/4</div>
+    <h1 class="title">Mesin Pencari & <em>Evaluasi Sumber</em></h1>
+    <p class="subtitle">Mencari informasi itu mudah — yang sulit adalah memastikan informasi yang Anda temukan benar-benar bisa dipercaya.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Estimasi baca: 10–12 menit</span>
+      <span class="meta-chip">Ref: Discovering Computers, Modul 2</span>
+    </div>
+  </header>
+
+  <section id="mesin-pencari">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Cara Kerja Mesin Pencari</h2><span class="sec-line"></span></div>
+    <p class="lede">Mesin pencari seperti Google bekerja dengan menjelajahi (crawling) miliaran halaman web, mengindeksnya ke dalam basis data raksasa, lalu menampilkan hasil yang paling relevan berdasarkan kata kunci yang Anda masukkan — menggunakan algoritme yang mempertimbangkan relevansi, kualitas, dan popularitas halaman.</p>
+    <p>Hasil pencarian yang muncul di halaman pertama <b>tidak otomatis berarti paling benar</b> — bisa jadi hanya paling populer, paling banyak diklik, atau bahkan hasil iklan berbayar. Karena itu, keterampilan menyaring hasil pencarian menjadi sama pentingnya dengan keterampilan mencarinya.</p>
+  </section>
+
+  <section id="operator">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Teknik Pencarian Lanjutan</h2><span class="sec-line"></span></div>
+    <p>Beberapa operator pencarian berikut membantu mempersempit hasil agar lebih relevan:</p>
+    <div class="operator-grid">
+      <div class="op-card"><code>"frasa persis"</code><p>Mencari kalimat/frasa yang persis sama, bukan kata-kata terpisah.</p></div>
+      <div class="op-card"><code>site:domain.com</code><p>Membatasi pencarian hanya pada satu situs tertentu.</p></div>
+      <div class="op-card"><code>filetype:pdf</code><p>Mencari hanya file dengan format tertentu, misalnya PDF.</p></div>
+      <div class="op-card"><code>kata -pengecualian</code><p>Tanda minus mengecualikan kata tertentu dari hasil pencarian.</p></div>
+    </div>
+  </section>
+
+  <section id="evaluasi">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Kriteria Mengevaluasi Kredibilitas Sumber</h2><span class="sec-line"></span></div>
+    <ul class="criteria-list">
+      <li><span class="cn">1</span><div><b>Siapa penulisnya?</b><span class="d">Cek apakah penulis/lembaga memiliki kredibilitas atau keahlian di bidang yang dibahas.</span></div></li>
+      <li><span class="cn">2</span><div><b>Kapan diterbitkan?</b><span class="d">Informasi yang sudah usang bisa menyesatkan, terutama untuk topik yang cepat berubah (teknologi, kesehatan, hukum).</span></div></li>
+      <li><span class="cn">3</span><div><b>Apa buktinya?</b><span class="d">Klaim yang kredibel biasanya didukung data, kutipan sumber lain, atau tautan rujukan yang bisa ditelusuri.</span></div></li>
+      <li><span class="cn">4</span><div><b>Apakah bisa dikonfirmasi silang?</b><span class="d">Bandingkan dengan sumber independen lain — jika hanya satu sumber yang menyebutkan klaim tersebut, perlu diwaspadai.</span></div></li>
+      <li><span class="cn">5</span><div><b>Apa tujuan sumber ini?</b><span class="d">Kenali apakah tulisan bertujuan menginformasikan secara netral, atau justru menjual/meyakinkan/memprovokasi.</span></div></li>
+    </ul>
+    <div class="callout warn">
+      <span class="ck">Perlu Diwaspadai</span>
+      Domain resmi (.gov, .ac.id, .edu) umumnya lebih dapat dipercaya dibanding blog pribadi atau situs tanpa identitas penulis yang jelas — namun tetap perlu dicek isinya, bukan sekadar percaya pada nama domainnya saja.
+    </div>
+  </section>
+
+  <section id="refleksi">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Pertanyaan Reflektif</h2><span class="sec-line"></span></div>
+    <ul class="refleksi">
+      <li>Pernahkah Anda mempercayai hasil pencarian di halaman pertama tanpa memeriksa sumbernya lebih jauh?</li>
+      <li>Dari lima kriteria evaluasi sumber di atas, mana yang paling sering Anda lewatkan saat mencari informasi?</li>
+      <li>Bagaimana cara Anda membedakan iklan/hasil berbayar dari hasil pencarian organik di halaman mesin pencari?</li>
+    </ul>
+  </section>
+
+  <section id="ringkasan">
+    <div class="prep-box">
+      <h2>Ringkasan Singkat</h2>
+      <p>Mesin pencari menampilkan hasil berdasarkan relevansi dan popularitas, bukan jaminan kebenaran. Gunakan operator pencarian untuk mempersempit hasil, dan selalu evaluasi sumber dengan lima kriteria: penulis, waktu terbit, bukti pendukung, konfirmasi silang, dan tujuan penulisan.</p>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="sesi2-1.html">← Sejarah & Cara Kerja Internet</a>
+    <a class="next" href="sesi2-3.html">Topik berikutnya: Layanan Daring →</a>
+  </div>
+
+  <footer class="page-footer">Pengantar Teknologi Informasi — Materi Pendalaman Sesi 2</footer>
+</div>
+</body>
+</html>

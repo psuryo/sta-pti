@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layanan Daring — Materi Pendalaman Sesi 2</title>
+<style>
+  :root{
+    --ink:#16203a; --paper:#f1efe6; --paper-2:#e8e4d4; --line:#c9c2a8;
+    --teal:#2f6f6b; --teal-dark:#204c49; --amber:#c98a2c; --amber-soft:#f3e3c4; --red:#a4432c;
+    --font-display:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --font-body:'Charter',Georgia,'Iowan Old Style',serif;
+    --font-mono:'IBM Plex Mono','SFMono-Regular',Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); line-height:1.65; -webkit-font-smoothing:antialiased;}
+  body::before{content:""; position:fixed; inset:0; background-image:radial-gradient(circle at 15% 8%, rgba(47,111,107,0.06), transparent 40%), radial-gradient(circle at 92% 78%, rgba(201,138,44,0.07), transparent 45%); pointer-events:none; z-index:0;}
+  .wrap{max-width:800px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  .breadcrumb{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em; padding:22px 0 0; color:#6b6552;}
+  .breadcrumb a{color:var(--teal-dark); text-decoration:none; border-bottom:1px solid var(--teal);}
+
+  header.masthead{border-bottom:3px solid var(--ink); padding:18px 0 22px; margin-bottom:36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--teal-dark); margin-bottom:14px;}
+  h1.title{font-family:var(--font-display); font-weight:400; font-size:clamp(28px,5vw,42px); line-height:1.1; margin:0 0 10px; letter-spacing:-.01em;}
+  h1.title em{font-style:normal; color:var(--teal-dark); border-bottom:2px solid var(--amber);}
+  .subtitle{font-size:15.5px; color:#4b4636; max-width:62ch;}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+  .meta-chip{font-family:var(--font-mono); font-size:11.5px; padding:5px 11px; border:1px solid var(--line); border-radius:2px; background:var(--paper-2);}
+
+  section{margin-bottom:46px;}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:16px;}
+  .sec-num{font-family:var(--font-mono); font-size:13px; color:var(--amber); border:1px solid var(--amber); border-radius:50%; width:26px; height:26px; min-width:26px; display:flex; align-items:center; justify-content:center;}
+  .sec-head h2{font-family:var(--font-display); font-weight:400; font-size:22px; margin:0; color:var(--ink);}
+  .sec-head .sec-line{flex:1; height:1px; background:var(--line);}
+  p{margin:0 0 14px; font-size:15px;}
+  ul,ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:6px; font-size:15px;}
+  .lede{font-size:17px; color:#332f22; font-family:var(--font-display); line-height:1.55; margin-bottom:8px;}
+
+  .service-card{background:#fff; border:1px solid var(--line); border-left:4px solid var(--teal); padding:18px 20px; margin-bottom:14px;}
+  .service-card h3{font-family:var(--font-display); font-size:17px; margin:0 0 6px; font-weight:600;}
+  .service-card .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; display:block;}
+  .service-card p{font-size:14px; margin:0 0 8px; color:#453f2f;}
+  .service-card .ex{font-size:13px; color:#6b6552; font-style:italic;}
+
+  .callout{background:var(--amber-soft); border-left:4px solid var(--amber); padding:16px 20px; font-size:14.5px; margin-bottom:20px;}
+  .callout.warn{background:#f5e0da; border-left-color:var(--red);}
+  .callout .ck{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--red); display:block; margin-bottom:6px;}
+
+  .refleksi{list-style:none; margin:0; padding:0;}
+  .refleksi li{display:flex; gap:12px; padding:11px 0; border-bottom:1px dashed var(--line); font-size:14.5px;}
+  .refleksi li:last-child{border-bottom:none;}
+  .refleksi li::before{content:"?"; font-family:var(--font-mono); color:var(--teal); border:1px solid var(--teal); border-radius:50%; width:20px; height:20px; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:12px;}
+
+  .prep-box{background:var(--ink); color:var(--paper); padding:22px 24px; border-radius:2px;}
+  .prep-box h2{font-family:var(--font-display); font-weight:400; font-size:18px; margin:0 0 10px; color:var(--amber-soft);}
+  .prep-box p{font-size:14px; margin:0; color:var(--paper-2);}
+
+  .nav-footer{display:flex; justify-content:space-between; gap:16px; border-top:1px solid var(--line); padding-top:20px; margin-top:52px; flex-wrap:wrap;}
+  .nav-footer a{font-family:var(--font-mono); font-size:12.5px; text-decoration:none; color:var(--teal-dark); border:1px solid var(--line); padding:9px 14px; background:#fff;}
+  .nav-footer a:hover{border-color:var(--teal);}
+  .nav-footer .next{margin-left:auto;}
+
+  footer.page-footer{border-top:1px solid var(--line); padding-top:18px; margin-top:24px; font-family:var(--font-mono); font-size:11px; color:#7a735c;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="sesi2.html">← Kembali ke Panduan Sesi 2</a></div>
+
+  <header class="masthead">
+    <div class="eyebrow">Materi Pendalaman · Sesi 2 · Modul 2 · Topik 3/4</div>
+    <h1 class="title">Layanan <em>Daring</em></h1>
+    <p class="subtitle">E-commerce, media sosial, dan cloud computing — tiga layanan yang paling banyak mengubah cara kita berbelanja, bersosialisasi, dan menyimpan data.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Estimasi baca: 10–12 menit</span>
+      <span class="meta-chip">Ref: Discovering Computers, Modul 2</span>
+    </div>
+  </header>
+
+  <section id="pengantar">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Tiga Layanan yang Mengubah Kebiasaan Kita</h2><span class="sec-line"></span></div>
+    <p class="lede">Internet tidak hanya menghubungkan komputer — ia melahirkan model bisnis, interaksi sosial, dan cara menyimpan data yang sama sekali baru. E-commerce, media sosial, dan cloud computing adalah tiga contoh paling nyata dari perubahan tersebut.</p>
+  </section>
+
+  <section id="layanan">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Mengenal Tiap Layanan</h2><span class="sec-line"></span></div>
+
+    <div class="service-card">
+      <span class="role">Model Bisnis Digital</span>
+      <h3>E-Commerce</h3>
+      <p>E-commerce adalah aktivitas jual-beli barang/jasa yang dilakukan secara elektronik melalui internet, tanpa memerlukan tatap muka langsung antara penjual dan pembeli. Transaksi mencakup pencarian produk, pembayaran digital, hingga pengiriman barang yang dilacak secara daring.</p>
+      <span class="ex">Contoh: marketplace, toko daring resmi suatu merek, platform reservasi jasa.</span>
+    </div>
+
+    <div class="service-card">
+      <span class="role">Interaksi & Berbagi Konten</span>
+      <h3>Media Sosial</h3>
+      <p>Media sosial adalah platform yang memungkinkan pengguna membuat profil, berbagi konten, dan berinteraksi dengan pengguna lain secara daring. Berbeda dengan website statis, media sosial dirancang agar konten mengalir cepat dan mudah disebarluaskan (viral).</p>
+      <span class="ex">Contoh: platform berbagi foto/video, forum diskusi daring, platform microblogging.</span>
+    </div>
+
+    <div class="service-card">
+      <span class="role">Penyimpanan & Pemrosesan Jarak Jauh</span>
+      <h3>Cloud Computing</h3>
+      <p>Cloud computing memungkinkan Anda menyimpan data dan menjalankan aplikasi di server milik penyedia layanan, diakses kapan saja melalui internet — bukan tersimpan di perangkat lokal Anda sendiri. Ini yang membuat file bisa diakses dari berbagai perangkat sekaligus.</p>
+      <span class="ex">Contoh: penyimpanan file daring, aplikasi produktivitas berbasis web, layanan backup otomatis.</span>
+    </div>
+  </section>
+
+  <section id="pertimbangan">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Hal yang Perlu Dipertimbangkan</h2><span class="sec-line"></span></div>
+    <ul>
+      <li><b>Keamanan transaksi</b> — pastikan platform e-commerce memiliki sistem pembayaran yang terpercaya sebelum memasukkan data kartu/rekening.</li>
+      <li><b>Jejak digital</b> — apa pun yang dibagikan di media sosial berpotensi tersimpan permanen dan bisa diakses orang lain di kemudian hari.</li>
+      <li><b>Ketergantungan pada koneksi internet</b> — layanan cloud tidak bisa diakses tanpa koneksi internet yang stabil.</li>
+      <li><b>Kebijakan privasi data</b> — data yang disimpan di cloud atau dibagikan di media sosial berada di bawah kebijakan privasi penyedia layanan, bukan sepenuhnya kendali pengguna.</li>
+    </ul>
+    <div class="callout warn">
+      <span class="ck">Perlu Diwaspadai</span>
+      Sebelum bertransaksi di platform e-commerce baru, cek ulasan dan reputasi penjual/platform — dan jangan pernah membagikan kode OTP (One-Time Password) kepada siapa pun, termasuk yang mengaku sebagai pihak platform.
+    </div>
+  </section>
+
+  <section id="refleksi">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Pertanyaan Reflektif</h2><span class="sec-line"></span></div>
+    <ul class="refleksi">
+      <li>Layanan cloud apa yang paling sering Anda gunakan sehari-hari, dan data apa saja yang Anda simpan di sana?</li>
+      <li>Pernahkah Anda ragu membagikan sesuatu di media sosial karena memikirkan jejak digitalnya? Apa yang membuat Anda ragu?</li>
+      <li>Bagaimana cara Anda memastikan sebuah toko daring/marketplace dapat dipercaya sebelum bertransaksi?</li>
+    </ul>
+  </section>
+
+  <section id="ringkasan">
+    <div class="prep-box">
+      <h2>Ringkasan Singkat</h2>
+      <p>E-commerce mengubah cara kita berbelanja, media sosial mengubah cara kita berinteraksi, dan cloud computing mengubah cara kita menyimpan serta mengakses data — ketiganya berjalan di atas infrastruktur internet yang sama, namun masing-masing membawa pertimbangan keamanan dan privasi tersendiri.</p>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="sesi2-2.html">← Mesin Pencari & Evaluasi Sumber</a>
+    <a class="next" href="sesi2-4.html">Topik berikutnya: Komunikasi Digital →</a>
+  </div>
+
+  <footer class="page-footer">Pengantar Teknologi Informasi — Materi Pendalaman Sesi 2</footer>
+</div>
+</body>
+</html>

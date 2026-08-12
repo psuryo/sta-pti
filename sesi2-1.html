@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sejarah & Cara Kerja Internet — Materi Pendalaman Sesi 2</title>
+<style>
+  :root{
+    --ink:#16203a; --paper:#f1efe6; --paper-2:#e8e4d4; --line:#c9c2a8;
+    --teal:#2f6f6b; --teal-dark:#204c49; --amber:#c98a2c; --amber-soft:#f3e3c4; --red:#a4432c;
+    --font-display:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --font-body:'Charter',Georgia,'Iowan Old Style',serif;
+    --font-mono:'IBM Plex Mono','SFMono-Regular',Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); line-height:1.65; -webkit-font-smoothing:antialiased;}
+  body::before{content:""; position:fixed; inset:0; background-image:radial-gradient(circle at 15% 8%, rgba(47,111,107,0.06), transparent 40%), radial-gradient(circle at 92% 78%, rgba(201,138,44,0.07), transparent 45%); pointer-events:none; z-index:0;}
+  .wrap{max-width:800px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  .breadcrumb{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em; padding:22px 0 0; color:#6b6552;}
+  .breadcrumb a{color:var(--teal-dark); text-decoration:none; border-bottom:1px solid var(--teal);}
+
+  header.masthead{border-bottom:3px solid var(--ink); padding:18px 0 22px; margin-bottom:36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--teal-dark); margin-bottom:14px;}
+  h1.title{font-family:var(--font-display); font-weight:400; font-size:clamp(28px,5vw,42px); line-height:1.1; margin:0 0 10px; letter-spacing:-.01em;}
+  h1.title em{font-style:normal; color:var(--teal-dark); border-bottom:2px solid var(--amber);}
+  .subtitle{font-size:15.5px; color:#4b4636; max-width:62ch;}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+  .meta-chip{font-family:var(--font-mono); font-size:11.5px; padding:5px 11px; border:1px solid var(--line); border-radius:2px; background:var(--paper-2);}
+
+  section{margin-bottom:46px;}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:16px;}
+  .sec-num{font-family:var(--font-mono); font-size:13px; color:var(--amber); border:1px solid var(--amber); border-radius:50%; width:26px; height:26px; min-width:26px; display:flex; align-items:center; justify-content:center;}
+  .sec-head h2{font-family:var(--font-display); font-weight:400; font-size:22px; margin:0; color:var(--ink);}
+  .sec-head .sec-line{flex:1; height:1px; background:var(--line);}
+  p{margin:0 0 14px; font-size:15px;}
+  ul,ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:6px; font-size:15px;}
+  .lede{font-size:17px; color:#332f22; font-family:var(--font-display); line-height:1.55; margin-bottom:8px;}
+
+  .step-flow{display:flex; flex-direction:column; gap:0; margin-bottom:8px;}
+  .step{
+    display:grid; grid-template-columns:44px 1fr; gap:16px;
+    background:#fff; border:1px solid var(--line); border-left:4px solid var(--teal);
+    padding:16px 18px; position:relative;
+  }
+  .step + .step{margin-top:10px;}
+  .step .sn{font-family:var(--font-mono); font-size:20px; color:var(--amber); text-align:center;}
+  .step h3{font-family:var(--font-display); font-size:16px; margin:0 0 4px; font-weight:600;}
+  .step p{font-size:14px; margin:0; color:#453f2f;}
+
+  .callout{background:var(--amber-soft); border-left:4px solid var(--amber); padding:16px 20px; font-size:14.5px; margin-bottom:20px;}
+  .callout.warn{background:#f5e0da; border-left-color:var(--red);}
+  .callout .ck{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--red); display:block; margin-bottom:6px;}
+
+  .compare-table{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; margin-bottom:8px;}
+  .compare-table th, .compare-table td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  .compare-table thead th{background:var(--ink); color:var(--paper); font-family:var(--font-mono); font-size:11px; text-transform:uppercase; font-weight:400;}
+
+  .refleksi{list-style:none; margin:0; padding:0;}
+  .refleksi li{display:flex; gap:12px; padding:11px 0; border-bottom:1px dashed var(--line); font-size:14.5px;}
+  .refleksi li:last-child{border-bottom:none;}
+  .refleksi li::before{content:"?"; font-family:var(--font-mono); color:var(--teal); border:1px solid var(--teal); border-radius:50%; width:20px; height:20px; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:12px;}
+
+  .prep-box{background:var(--ink); color:var(--paper); padding:22px 24px; border-radius:2px;}
+  .prep-box h2{font-family:var(--font-display); font-weight:400; font-size:18px; margin:0 0 10px; color:var(--amber-soft);}
+  .prep-box p{font-size:14px; margin:0; color:var(--paper-2);}
+
+  .nav-footer{display:flex; justify-content:space-between; gap:16px; border-top:1px solid var(--line); padding-top:20px; margin-top:52px; flex-wrap:wrap;}
+  .nav-footer a{font-family:var(--font-mono); font-size:12.5px; text-decoration:none; color:var(--teal-dark); border:1px solid var(--line); padding:9px 14px; background:#fff;}
+  .nav-footer a:hover{border-color:var(--teal);}
+  .nav-footer .next{margin-left:auto;}
+
+  footer.page-footer{border-top:1px solid var(--line); padding-top:18px; margin-top:24px; font-family:var(--font-mono); font-size:11px; color:#7a735c;}
+
+  @media (max-width:600px){.step{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="sesi2.html">← Kembali ke Panduan Sesi 2</a></div>
+
+  <header class="masthead">
+    <div class="eyebrow">Materi Pendalaman · Sesi 2 · Modul 2 · Topik 1/4</div>
+    <h1 class="title">Sejarah & Cara Kerja <em>Internet</em></h1>
+    <p class="subtitle">Bagaimana miliaran perangkat di seluruh dunia bisa saling terhubung dan bertukar data dalam hitungan detik.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Estimasi baca: 10–12 menit</span>
+      <span class="meta-chip">Ref: Discovering Computers, Modul 2</span>
+    </div>
+  </header>
+
+  <section id="sejarah">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Sejarah Singkat Internet</h2><span class="sec-line"></span></div>
+    <p class="lede">Internet lahir bukan sebagai produk komersial, melainkan sebagai proyek riset militer AS bernama ARPANET pada akhir 1960-an, yang bertujuan menghubungkan beberapa komputer di universitas dan lembaga riset agar bisa saling bertukar data meski salah satu jalur terputus.</p>
+    <p>Sejak saat itu, jaringan ini terus berkembang: protokol standar TCP/IP diperkenalkan pada 1980-an sehingga berbagai jaringan bisa saling terhubung, lalu World Wide Web (WWW) diciptakan pada awal 1990-an — yang membuat internet mudah diakses publik luas lewat browser dan hyperlink, bukan lagi sekadar jaringan riset teknis.</p>
+    <div class="callout">
+      <span class="ck">Poin Kunci</span>
+      "Internet" dan "World Wide Web" sering dianggap sama, padahal berbeda: internet adalah infrastruktur jaringan globalnya, sedangkan web (WWW) adalah salah satu layanan yang berjalan di atas internet tersebut — sama seperti email dan cloud storage juga berjalan di atas internet.
+    </div>
+  </section>
+
+  <section id="cara-kerja">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Bagaimana Data Berpindah di Internet</h2><span class="sec-line"></span></div>
+    <p>Saat Anda membuka sebuah situs web, terjadi rangkaian proses berikut dalam hitungan milidetik:</p>
+    <div class="step-flow">
+      <div class="step">
+        <span class="sn">1</span>
+        <div><h3>Permintaan dikirim</h3><p>Perangkat Anda mengirim permintaan ke jaringan lewat ISP (Internet Service Provider) yang menyediakan akses internet Anda.</p></div>
+      </div>
+      <div class="step">
+        <span class="sn">2</span>
+        <div><h3>Nama domain diterjemahkan</h3><p>Sistem DNS (Domain Name System) mengubah nama domain yang mudah diingat manusia (misalnya <i>kampus.ac.id</i>) menjadi alamat IP numerik yang dipahami mesin.</p></div>
+      </div>
+      <div class="step">
+        <span class="sn">3</span>
+        <div><h3>Data dikirim ke server tujuan</h3><p>Permintaan diteruskan melalui berbagai router hingga sampai ke server yang menyimpan situs web tersebut.</p></div>
+      </div>
+      <div class="step">
+        <span class="sn">4</span>
+        <div><h3>Respons dikembalikan</h3><p>Server mengirim kembali data halaman web ke perangkat Anda, yang kemudian disusun oleh browser menjadi tampilan yang Anda lihat.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="istilah">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Istilah yang Perlu Dipahami</h2><span class="sec-line"></span></div>
+    <table class="compare-table">
+      <thead><tr><th>Istilah</th><th>Penjelasan</th></tr></thead>
+      <tbody>
+        <tr><td><b>ISP</b></td><td>Perusahaan penyedia akses internet ke rumah/kantor/kampus Anda.</td></tr>
+        <tr><td><b>IP Address</b></td><td>Alamat numerik unik yang mengidentifikasi setiap perangkat di jaringan, mirip alamat rumah.</td></tr>
+        <tr><td><b>DNS</b></td><td>Sistem yang menerjemahkan nama domain menjadi alamat IP.</td></tr>
+        <tr><td><b>Bandwidth</b></td><td>Kapasitas maksimum data yang bisa dikirim/diterima suatu koneksi dalam satu waktu.</td></tr>
+        <tr><td><b>Broadband</b></td><td>Koneksi internet berkecepatan tinggi yang selalu aktif (mis. fiber optik, kabel).</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="refleksi">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Pertanyaan Reflektif</h2><span class="sec-line"></span></div>
+    <ul class="refleksi">
+      <li>Apa yang terjadi jika sistem DNS tiba-tiba tidak berfungsi? Bagaimana pengaruhnya terhadap pengalaman Anda mengakses internet?</li>
+      <li>Mengapa internet dirancang sebagai jaringan yang terdesentralisasi (tidak bergantung pada satu titik pusat)?</li>
+      <li>ISP apa yang Anda gunakan di rumah/kos? Seberapa besar bandwidth yang Anda langgan?</li>
+    </ul>
+  </section>
+
+  <section id="ringkasan">
+    <div class="prep-box">
+      <h2>Ringkasan Singkat</h2>
+      <p>Internet bermula dari proyek riset ARPANET dan berkembang lewat protokol TCP/IP serta World Wide Web. Setiap kali kita membuka situs web, terjadi empat langkah: permintaan dikirim lewat ISP, DNS menerjemahkan nama domain ke alamat IP, data diteruskan ke server tujuan, lalu respons dikembalikan ke perangkat kita.</p>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="sesi2.html">← Kembali ke Panduan Sesi 2</a>
+    <a class="next" href="sesi2-2.html">Topik berikutnya: Mesin Pencari & Evaluasi Sumber →</a>
+  </div>
+
+  <footer class="page-footer">Pengantar Teknologi Informasi — Materi Pendalaman Sesi 2</footer>
+</div>
+</body>
+</html>
