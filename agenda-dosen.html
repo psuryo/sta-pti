@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Agenda Pertemuan — Akses Dosen</title>
+<style>
+  :root{
+    --ink:#16203a; --paper:#f1efe6; --paper-2:#e8e4d4; --line:#c9c2a8;
+    --teal:#2f6f6b; --teal-dark:#204c49; --amber:#c98a2c; --amber-soft:#f3e3c4; --red:#a4432c;
+    --font-display:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --font-body:'Charter',Georgia,'Iowan Old Style',serif;
+    --font-mono:'IBM Plex Mono','SFMono-Regular',Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  body::before{content:""; position:fixed; inset:0; background-image:radial-gradient(circle at 20% 10%, rgba(47,111,107,0.05), transparent 40%), radial-gradient(circle at 90% 80%, rgba(201,138,44,0.06), transparent 45%); pointer-events:none; z-index:0;}
+  .wrap{max-width:880px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  /* ===== Gerbang kata sandi ===== */
+  #gate{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    position:relative; z-index:2;
+  }
+  .gate-box{
+    background:#fff; border:1px solid var(--line); border-top:4px solid var(--teal-dark);
+    padding:36px 34px; max-width:380px; width:100%; text-align:center;
+  }
+  .gate-box .lock{font-size:28px; margin-bottom:10px;}
+  .gate-box h1{
+    font-family:var(--font-display); font-weight:400; font-size:22px; margin:0 0 8px;
+  }
+  .gate-box p{font-size:13.5px; color:#6b6552; margin:0 0 20px;}
+  .gate-box input{
+    width:100%; padding:11px 14px; font-family:var(--font-mono); font-size:14px;
+    border:1px solid var(--line); border-radius:2px; margin-bottom:12px; box-sizing:border-box;
+  }
+  .gate-box button{
+    width:100%; padding:11px 14px; font-family:var(--font-mono); font-size:13px;
+    letter-spacing:.04em; text-transform:uppercase; background:var(--ink); color:var(--paper);
+    border:none; border-radius:2px; cursor:pointer;
+  }
+  .gate-box button:hover{background:var(--teal-dark);}
+  .gate-error{color:var(--red); font-size:12.5px; margin-top:10px; display:none; font-family:var(--font-mono);}
+
+  /* ===== Konten setelah terbuka ===== */
+  #content{display:none;}
+
+  header.masthead{border-bottom:3px solid var(--ink); padding:38px 0 20px; margin-bottom:36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--red); display:flex; justify-content:space-between; margin-bottom:14px;}
+  h1.title{font-family:var(--font-display); font-weight:400; font-size:clamp(28px,5vw,42px); line-height:1.1; margin:0 0 10px; letter-spacing:-.01em;}
+  .subtitle{font-size:15.5px; color:#4b4636; max-width:62ch;}
+
+  .warn-box{
+    background:#f5e0da; border-left:4px solid var(--red); padding:14px 18px;
+    font-size:13.5px; margin:20px 0 0; color:#4b4636;
+  }
+  .warn-box b{color:var(--red);}
+
+  section{margin-bottom:52px;}
+  .session-head{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:20px;
+    padding-bottom:10px; border-bottom:2px solid var(--ink);
+  }
+  .session-head h2{font-family:var(--font-display); font-weight:400; font-size:24px; margin:0;}
+  .session-head .tag{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); border:1px solid var(--teal); padding:3px 9px;}
+
+  .timeline{position:relative; border-left:2px solid var(--line); padding-left:26px; margin-left:6px;}
+  .t-item{position:relative; margin-bottom:22px;}
+  .t-item:last-child{margin-bottom:0;}
+  .t-item::before{content:""; position:absolute; left:-33px; top:4px; width:12px; height:12px; background:var(--paper); border:2px solid var(--teal); border-radius:50%;}
+  .t-time{font-family:var(--font-mono); font-size:12px; color:var(--teal-dark); letter-spacing:.04em; display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;}
+  .t-dur{font-family:var(--font-mono); font-size:11px; color:var(--amber); border:1px solid var(--amber); border-radius:2px; padding:1px 7px; letter-spacing:.02em;}
+  .t-title{font-weight:600; font-size:15px; margin-bottom:3px;}
+  .t-desc{font-size:13.5px; color:#453f2f;}
+
+  footer{
+    border-top:1px solid var(--line); padding-top:18px; margin-top:60px;
+    font-family:var(--font-mono); font-size:11.5px; color:#7a735c;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= GERBANG KATA SANDI ================= -->
+  <div id="gate">
+    <div class="gate-box">
+      <div class="lock">&#128274;</div>
+      <h1>Akses Dosen</h1>
+      <p>Halaman ini berisi agenda rinci per menit untuk tiap pertemuan. Masukkan kata sandi untuk melanjutkan.</p>
+      <input type="password" id="pw" placeholder="Kata sandi" autofocus>
+      <button onclick="checkPassword()">Buka Halaman</button>
+      <div class="gate-error" id="gate-error">Kata sandi salah. Coba lagi.</div>
+    </div>
+  </div>
+
+  <!-- ================= KONTEN (tersembunyi sampai kata sandi benar) ================= -->
+  <div id="content">
+  <div class="wrap">
+
+    <header class="masthead">
+      <div class="eyebrow">
+        <span>Pengantar Teknologi Informasi · Semester I</span>
+        <span>Khusus Dosen — Jangan Dibagikan ke Mahasiswa</span>
+      </div>
+      <h1 class="title">Agenda Pertemuan (Rinci)</h1>
+      <p class="subtitle">Rincian agenda per menit untuk tiap sesi, dipisahkan dari panduan mahasiswa agar alur mengajar tidak terekspos ke mahasiswa sebelum kelas berlangsung.</p>
+      <div class="warn-box">
+        <b>Catatan keamanan:</b> halaman ini hanya dilindungi kata sandi sederhana di sisi browser (client-side) — bukan sistem login sungguhan. Siapa pun yang melihat kode sumber halaman ini secara teknis bisa menemukan kata sandinya. Cukup memadai untuk mencegah mahasiswa mengakses secara tidak sengaja, tapi <b>jangan gunakan untuk data yang benar-benar rahasia</b> (nilai, soal ujian, dsb).
+      </div>
+    </header>
+
+    <section id="sesi1">
+      <div class="session-head"><h2>Sesi 1</h2><span class="tag">Kontrak Perkuliahan & Menjadi Warga Digital</span></div>
+      <div class="timeline">
+        <div class="t-item">
+          <span class="t-time">Bagian 1 · Pembukaan <span class="t-dur">15 menit</span></span>
+          <div class="t-title">Perkenalan dosen-mahasiswa & ice breaking</div>
+          <div class="t-desc">Perkenalan singkat, penjelasan alur pertemuan hari ini, dan aktivitas ice breaking ringan untuk mencairkan suasana kelas.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 2 · Survei Awal <span class="t-dur">10 menit</span></span>
+          <div class="t-title">Jajak pengetahuan & harapan mahasiswa</div>
+          <div class="t-desc">Survei singkat (lisan/kertas/aplikasi) mengenai latar belakang, pengetahuan awal TI, dan harapan mahasiswa terhadap mata kuliah.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 3 · Kontrak Perkuliahan <span class="t-dur">25 menit</span></span>
+          <div class="t-title">RPS, kontrak belajar & sistem penilaian</div>
+          <div class="t-desc">Penjelasan capaian pembelajaran, komponen nilai (kehadiran, tugas, UTS, UAS), tata tertib kelas, dan kesepakatan bersama.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 4 · Materi Inti (1/4) <span class="t-dur">20 menit</span></span>
+          <div class="t-title">Sejarah & generasi komputer</div>
+          <div class="t-desc">Ceramah interaktif mengacu tabel lima generasi komputer (Modul 1), disertai contoh dan tanya jawab singkat.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 5 · Materi Inti (2/4) <span class="t-dur">15 menit</span></span>
+          <div class="t-title">Jenis-jenis komputer</div>
+          <div class="t-desc">Pengenalan supercomputer hingga perangkat wearable, dikaitkan dengan perangkat yang mahasiswa gunakan sehari-hari.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 6 · Materi Inti (3/4) <span class="t-dur">15 menit</span></span>
+          <div class="t-title">Literasi digital</div>
+          <div class="t-desc">Konsep literasi digital dan mengapa keterampilan ini penting di dunia kerja maupun kehidupan sehari-hari.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 7 · Materi Inti (4/4) <span class="t-dur">20 menit</span></span>
+          <div class="t-title">Hak & tanggung jawab warga digital + diskusi kelompok kecil</div>
+          <div class="t-desc">Pemaparan hak & tanggung jawab warga digital, dilanjutkan diskusi kelompok kecil (3–4 orang) berbagi satu contoh pengalaman pribadi.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 8 · Kuis Singkat <span class="t-dur">15 menit</span></span>
+          <div class="t-title">Cek pemahaman lisan/tertulis</div>
+          <div class="t-desc">3–5 pertanyaan singkat (generasi komputer, jenis komputer, hak & tanggung jawab warga digital) untuk mengukur pemahaman di akhir sesi.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 9 · Penutup <span class="t-dur">15 menit</span></span>
+          <div class="t-title">Rangkuman & pengantar sesi berikutnya</div>
+          <div class="t-desc">Rangkuman poin-poin kunci, refleksi singkat, dan pratinjau topik Sesi 2: Internet & Komunikasi Online.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sesi2">
+      <div class="session-head"><h2>Sesi 2</h2><span class="tag">Internet & Komunikasi Online</span></div>
+      <div class="timeline">
+        <div class="t-item">
+          <span class="t-time">Bagian 1 · Pembukaan <span class="t-dur">10 menit</span></span>
+          <div class="t-title">Recap Sesi 1 & pengantar topik</div>
+          <div class="t-desc">Mengulas singkat poin kunci Sesi 1 (generasi komputer, warga digital), lalu memperkenalkan topik internet & komunikasi online.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 2 · Sejarah & Cara Kerja Internet <span class="t-dur">25 menit</span></span>
+          <div class="t-title">Dari ARPANET hingga internet masa kini</div>
+          <div class="t-desc">Ceramah interaktif mengenai sejarah singkat internet, konsep dasar jaringan global, IP address, dan peran ISP (Internet Service Provider).</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 3 · Browsing & Mesin Pencari <span class="t-dur">20 menit</span></span>
+          <div class="t-title">Menggunakan mesin pencari secara efektif</div>
+          <div class="t-desc">Teknik pencarian lanjutan (operator pencarian), serta cara membaca hasil pencarian secara kritis.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 4 · Praktik: Evaluasi Sumber <span class="t-dur">30 menit</span></span>
+          <div class="t-title">Praktik pencarian & evaluasi kredibilitas sumber</div>
+          <div class="t-desc">Mahasiswa mencari informasi mengenai satu topik yang ditentukan, lalu mengevaluasi kredibilitas 2–3 sumber yang ditemukan menggunakan kriteria yang diajarkan.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 5 · Layanan Daring <span class="t-dur">25 menit</span></span>
+          <div class="t-title">E-commerce, media sosial & cloud computing</div>
+          <div class="t-desc">Pengenalan model bisnis e-commerce, karakteristik media sosial, dan konsep dasar cloud computing beserta contoh layanan yang umum digunakan.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 6 · Komunikasi Digital <span class="t-dur">20 menit</span></span>
+          <div class="t-title">Memilih kanal komunikasi yang tepat</div>
+          <div class="t-desc">Perbandingan email, chat, dan video call — kapan masing-masing paling sesuai digunakan, termasuk etika berkomunikasi digital (netiquette) secara singkat.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 7 · Diskusi Kelompok <span class="t-dur">15 menit</span></span>
+          <div class="t-title">Berbagi pengalaman menggunakan internet</div>
+          <div class="t-desc">Diskusi kelompok kecil: berbagi satu pengalaman pribadi menggunakan internet (browsing, e-commerce, atau media sosial) sebagai bahan refleksi.</div>
+        </div>
+        <div class="t-item">
+          <span class="t-time">Bagian 8 · Penutup <span class="t-dur">5 menit</span></span>
+          <div class="t-title">Rangkuman & pengantar sesi berikutnya</div>
+          <div class="t-desc">Rangkuman poin-poin kunci dan pratinjau topik Sesi 3: Evaluasi Perangkat Keras (Hardware).</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Pengantar Teknologi Informasi — Akses Dosen</span>
+      <span>Tambahkan agenda sesi berikutnya di file ini dengan pola yang sama</span>
+    </footer>
+
+  </div>
+  </div>
+
+  <script>
+    /* =====================================================================
+       KATA SANDI HALAMAN INI
+       -----------------------------------------------------------------
+       Ganti nilai di bawah ini dengan kata sandi pilihan Anda.
+       PENTING: ini BUKAN keamanan sungguhan (lihat catatan di halaman) —
+       hanya penghalang sederhana karena situs ini statis tanpa server.
+       ===================================================================== */
+    const PASSWORD = "ubah-password-ini";
+
+    function checkPassword() {
+      const input = document.getElementById("pw").value;
+      const error = document.getElementById("gate-error");
+      if (input === PASSWORD) {
+        document.getElementById("gate").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        sessionStorage.setItem("dosenUnlocked", "1");
+      } else {
+        error.style.display = "block";
+      }
+    }
+
+    document.getElementById("pw").addEventListener("keyup", function (e) {
+      if (e.key === "Enter") checkPassword();
+    });
+
+    // Tetap terbuka selama sesi browser aktif (tidak perlu ketik ulang tiap reload)
+    if (sessionStorage.getItem("dosenUnlocked") === "1") {
+      document.getElementById("gate").style.display = "none";
+      document.getElementById("content").style.display = "block";
+    }
+  </script>
+</body>
+</html>
