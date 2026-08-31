@@ -98,7 +98,7 @@
     color:var(--ink);
   }
 
-  section{margin-bottom:52px;}
+  section{margin-bottom:56px;}
   .sec-head{
     display:flex;
     align-items:baseline;
@@ -132,6 +132,18 @@
   ul, ol{margin:0 0 14px; padding-left:22px;}
   li{margin-bottom:6px;}
 
+  /* ── Sub-section header inside a component ── */
+  .sub-head{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--teal-dark);
+    margin:16px 0 6px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:4px;
+  }
+
   .objectives{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -153,14 +165,55 @@
     margin-bottom:4px;
   }
 
+  /* ── Component card with expandable detail ── */
   .component-card{
-    background:#fff; border:1px solid var(--line); border-left:4px solid var(--teal);
-    padding:18px 20px; margin-bottom:14px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    padding:20px 22px;
+    margin-bottom:18px;
   }
-  .component-card h3{font-family:var(--font-display); font-size:17px; margin:0 0 6px; font-weight:600;}
-  .component-card .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; display:block;}
-  .component-card p{font-size:14px; margin:0 0 8px; color:#453f2f;}
+  .component-card h3{
+    font-family:var(--font-display);
+    font-size:19px;
+    margin:0 0 4px;
+    font-weight:600;
+  }
+  .component-card .role{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--teal-dark);
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    margin-bottom:10px;
+    display:block;
+  }
+  .component-card p{font-size:14.5px; margin:0 0 10px; color:#3a3527;}
   .component-card .ex{font-size:13px; color:#6b6552; font-style:italic;}
+
+  /* ── Spec grid inside a card ── */
+  .spec-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:10px;
+    margin:12px 0;
+  }
+  .spec-item{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    padding:10px 13px;
+    font-size:13.5px;
+  }
+  .spec-item .sl{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--teal-dark);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    display:block;
+    margin-bottom:3px;
+  }
+  .spec-item .sv{font-weight:600;}
 
   .criteria-list{list-style:none; margin:0; padding:0;}
   .criteria-list li{display:flex; gap:12px; padding:12px 0; border-bottom:1px dashed var(--line); font-size:14.5px;}
@@ -172,6 +225,7 @@
   .compare-table{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; margin-bottom:8px;}
   .compare-table th, .compare-table td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
   .compare-table thead th{background:var(--ink); color:var(--paper); font-family:var(--font-mono); font-size:11px; text-transform:uppercase; font-weight:400;}
+  .compare-table tr:nth-child(even) td{background:var(--paper-2);}
 
   .callout{
     background:var(--amber-soft);
@@ -181,6 +235,7 @@
     margin-bottom:20px;
   }
   .callout.warn{background:#f5e0da; border-left-color:var(--red);}
+  .callout.info{background:#e2eeed; border-left-color:var(--teal);}
   .callout .ck{
     font-family:var(--font-mono);
     font-size:11px;
@@ -190,6 +245,8 @@
     display:block;
     margin-bottom:6px;
   }
+  .callout.info .ck{color:var(--teal-dark);}
+  .callout.amber .ck{color:var(--amber);}
 
   dl.glossary{
     display:grid;
@@ -227,6 +284,29 @@
   .prep-box ol{padding-left:20px; margin:0;}
   .prep-box li{margin-bottom:8px; font-size:14.5px;}
 
+  /* ── Divider inside component card ── */
+  .card-divider{border:none; border-top:1px dashed var(--line); margin:14px 0;}
+
+  /* ── Analogy box ── */
+  .analogy{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-left:4px solid var(--amber);
+    padding:13px 16px;
+    font-size:14px;
+    margin:12px 0;
+    color:#3a3527;
+  }
+  .analogy .ak{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.07em;
+    color:var(--amber);
+    display:block;
+    margin-bottom:4px;
+  }
+
   footer{
     border-top:1px solid var(--line);
     padding-top:18px; margin-top:60px;
@@ -239,6 +319,7 @@
     dl.glossary{grid-template-columns:1fr;}
     dl.glossary dt{margin-top:6px;}
     .meta-row{gap:8px;}
+    .spec-grid{grid-template-columns:1fr 1fr;}
   }
 </style>
 </head>
@@ -253,7 +334,7 @@
       <span>Panduan Mahasiswa</span>
     </div>
     <h1 class="title">Sesi 03 — Evaluasi<br><em>Perangkat Keras</em></h1>
-    <p class="subtitle">Panduan referensi untuk pertemuan ketiga: mengenal komponen utama komputer, mempelajari cara memilih perangkat sesuai kebutuhan, dan mengikuti tren perangkat mobile terkini.</p>
+    <p class="subtitle">Panduan referensi untuk pertemuan ketiga: mengenal komponen utama komputer secara mendalam, mempelajari cara memilih perangkat sesuai kebutuhan, dan mengikuti tren perangkat mobile terkini.</p>
     <div class="meta-row">
       <span class="meta-chip">Modul 3 — Evaluating Hardware</span>
       <span class="meta-chip">Ref: Discovering Computers, 17th Ed.</span>
@@ -262,98 +343,531 @@
     </div>
   </header>
 
+  <!-- ────────────────── 1. TUJUAN ────────────────── -->
   <section id="tujuan">
     <div class="sec-head"><span class="sec-num">1</span><h2>Tujuan Pembelajaran</h2><span class="sec-line"></span></div>
     <div class="objectives">
-      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Mengidentifikasi komponen utama perangkat keras komputer (CPU, memori, motherboard) beserta fungsinya.</div>
-      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Membaca dan membandingkan spesifikasi perangkat secara kritis.</div>
-      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menentukan kriteria memilih perangkat sesuai kebutuhan dan anggaran.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Mengidentifikasi dan menjelaskan komponen utama perangkat keras komputer (CPU, RAM, Motherboard, GPU, Storage, PSU) beserta cara kerjanya.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Membaca dan membandingkan spesifikasi perangkat secara kritis — termasuk istilah teknis seperti GHz, core, DDR, NVMe, TDP.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menentukan kriteria memilih perangkat sesuai kebutuhan dan anggaran berdasarkan use-case nyata.</div>
       <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menjelaskan tren perangkat mobile terkini dan arah perkembangannya.</div>
     </div>
   </section>
 
+  <!-- ────────────────── 2. KOMPONEN UTAMA ────────────────── -->
   <section id="komponen">
     <div class="sec-head"><span class="sec-num">2</span><h2>Komponen Utama Perangkat Keras</h2><span class="sec-line"></span></div>
-    <p>Setiap komputer, sebesar apa pun bentuknya, dibangun dari beberapa komponen inti yang bekerja sama:</p>
+    <p>Setiap komputer, besar maupun kecil, dibangun dari beberapa komponen inti yang bekerja sama dalam satu ekosistem. Memahami masing-masing komponen — fungsi, cara kerja, dan spesifikasi kuncinya — adalah dasar untuk mengevaluasi dan memilih perangkat secara tepat.</p>
 
-    <div class="component-card">
+    <!-- ── CPU ── -->
+    <div class="component-card" id="cpu">
       <span class="role">Otak Pemrosesan</span>
-      <h3>CPU (Central Processing Unit)</h3>
-      <p>Prosesor yang mengeksekusi instruksi dan menjalankan seluruh perhitungan komputer. Kecepatan CPU biasanya diukur dalam GHz (gigahertz), dan jumlah <i>core</i> menentukan seberapa banyak tugas yang bisa diproses secara bersamaan.</p>
-      <span class="ex">Semakin tinggi clock speed & jumlah core, semakin cepat memproses tugas berat (rendering video, gaming, multitasking).</span>
+      <h3>CPU — Central Processing Unit</h3>
+      <p>CPU adalah komponen yang mengeksekusi semua instruksi program: dari membuka aplikasi, menghitung spreadsheet, hingga merender halaman web. Setiap "langkah" yang dilakukan komputer — seperti penjumlahan, perbandingan, atau pemindahan data — diproses oleh CPU.</p>
+
+      <div class="analogy">
+        <span class="ak">Analogi</span>
+        CPU seperti kasir di supermarket — semakin banyak "meja kasir" (core) dan semakin cepat gerakannya (clock speed), semakin banyak pelanggan (tugas) yang bisa dilayani bersamaan.
+      </div>
+
+      <p class="sub-head">Cara Kerja: Siklus Fetch–Decode–Execute</p>
+      <p>CPU bekerja dalam siklus berulang: <b>Fetch</b> (mengambil instruksi dari memori), <b>Decode</b> (menerjemahkan instruksi), lalu <b>Execute</b> (menjalankan instruksi). Proses ini terjadi miliaran kali per detik.</p>
+
+      <p class="sub-head">Spesifikasi Kunci CPU</p>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="sl">Clock Speed (GHz)</span>
+          <span class="sv">Frekuensi Kerja</span>
+          <br><span style="font-size:13px">Berapa miliar siklus per detik. CPU 3.5 GHz = 3,5 miliar siklus/detik. Lebih tinggi = lebih cepat per-core.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Core &amp; Thread</span>
+          <span class="sv">Jalur Pemrosesan</span>
+          <br><span style="font-size:13px"><b>Core</b>: unit pemrosesan fisik. <b>Thread</b>: jalur virtual (biasanya 2× core via Hyper-Threading). 4-core/8-thread = bisa handle 8 tugas paralel.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Cache (L1/L2/L3)</span>
+          <span class="sv">Memori Ultra-Cepat di CPU</span>
+          <br><span style="font-size:13px"><b>L1</b> paling cepat (kecil), <b>L3</b> paling besar (lambat relatif). Cache menyimpan data yang paling sering diakses agar tidak perlu bolak-balik ke RAM.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">TDP (Watt)</span>
+          <span class="sv">Thermal Design Power</span>
+          <br><span style="font-size:13px">Panas maksimum yang dihasilkan CPU. CPU laptop ~15–28W; desktop ~65–125W. Makin tinggi TDP, makin butuh pendingin yang baik.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">IPC</span>
+          <span class="sv">Instructions Per Cycle</span>
+          <br><span style="font-size:13px">Seberapa banyak instruksi yang bisa diselesaikan dalam satu siklus. IPC tinggi = lebih efisien meskipun clock speed sama.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Arsitektur</span>
+          <span class="sv">Desain Chip</span>
+          <br><span style="font-size:13px">Generasi arsitektur menentukan efisiensi. Contoh: Intel Core Ultra (Meteor Lake), AMD Ryzen 7000 (Zen 4). Arsitektur baru = lebih efisien per watt.</span>
+        </div>
+      </div>
+
+      <p class="sub-head">Intel vs AMD: Perbandingan Singkat</p>
+      <table class="compare-table">
+        <thead><tr><th>Aspek</th><th>Intel (Core i / Core Ultra)</th><th>AMD (Ryzen)</th></tr></thead>
+        <tbody>
+          <tr><td>Segmen kuat</td><td>Single-core performance, integrasi dengan platform Windows</td><td>Multi-core (lebih banyak core per harga), efisiensi daya</td></tr>
+          <tr><td>Grafis terintegrasi</td><td>Intel Iris Xe / Intel Arc (lebih kuat)</td><td>Radeon Vega / RDNA (variatif)</td></tr>
+          <tr><td>Platform laptop</td><td>Intel Evo, Thunderbolt bawaan</td><td>AMD Advantage, konektivitas USB4</td></tr>
+          <tr><td>Harga</td><td>Cenderung lebih tinggi di kelas sama</td><td>Lebih kompetitif di mid-range</td></tr>
+        </tbody>
+      </table>
+      <span class="ex">Untuk penggunaan umum (browsing, dokumen, kuliah): Intel Core i5 / AMD Ryzen 5 sudah sangat memadai. Untuk video editing atau 3D rendering: pertimbangkan Core i7/i9 atau Ryzen 7/9.</span>
+
+      <hr class="card-divider">
+      <div class="callout info" style="margin:0;">
+        <span class="ck">Perhatikan ini</span>
+        CPU laptop (mobile CPU) sengaja dirancang dengan TDP lebih rendah agar baterai tahan lama. Jangan bandingkan langsung "Intel Core i7 laptop" dengan "Intel Core i7 desktop" — performanya bisa berbeda signifikan.
+      </div>
     </div>
 
-    <div class="component-card">
+    <!-- ── RAM ── -->
+    <div class="component-card" id="ram">
       <span class="role">Ruang Kerja Sementara</span>
-      <h3>Memori (RAM)</h3>
-      <p>RAM (Random Access Memory) menyimpan data yang sedang diproses secara sementara agar CPU bisa mengaksesnya dengan sangat cepat. Berbeda dengan penyimpanan permanen, data di RAM hilang saat komputer dimatikan.</p>
-      <span class="ex">Semakin besar kapasitas RAM (mis. 8GB, 16GB), semakin lancar menjalankan banyak aplikasi sekaligus tanpa melambat.</span>
+      <h3>RAM — Random Access Memory</h3>
+      <p>RAM adalah memori kerja jangka pendek komputer. Setiap kali kamu membuka aplikasi, file, atau tab browser, datanya dimuat ke RAM agar CPU bisa mengaksesnya dengan sangat cepat — jauh lebih cepat dibanding membaca dari storage. Saat komputer dimatikan, seluruh data di RAM hilang.</p>
+
+      <div class="analogy">
+        <span class="ak">Analogi</span>
+        RAM seperti meja kerja. Semakin besar mejamu, semakin banyak buku dan dokumen (aplikasi) yang bisa kamu buka sekaligus tanpa harus bolak-balik ke lemari arsip (storage).
+      </div>
+
+      <p class="sub-head">Spesifikasi Kunci RAM</p>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="sl">Kapasitas (GB)</span>
+          <span class="sv">Ukuran Ruang Kerja</span>
+          <br><span style="font-size:13px">8 GB: pas untuk tugas ringan. 16 GB: standar komfortabel untuk multitasking. 32 GB+: video editing, programming intensif, virtualisasi.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Generasi DDR</span>
+          <span class="sv">Versi Teknologi</span>
+          <br><span style="font-size:13px">DDR4 (standar saat ini), DDR5 (lebih cepat, hemat daya, mulai umum). Tidak kompatibel satu sama lain — harus sesuai dengan slot di motherboard.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Frekuensi (MHz)</span>
+          <span class="sv">Kecepatan Transfer Data</span>
+          <br><span style="font-size:13px">DDR4 3200 MHz = 3200 juta transfer/detik. Frekuensi lebih tinggi = bandwidth lebih besar, tapi pengaruhnya lebih terasa di tugas berat seperti rendering.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Latency (CL)</span>
+          <span class="sv">Waktu Respons</span>
+          <br><span style="font-size:13px">CL (CAS Latency) = berapa siklus CPU menunggu data dari RAM. CL lebih rendah = lebih responsif. CL16 lebih baik dari CL18 pada frekuensi sama.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Channel</span>
+          <span class="sv">Jalur Komunikasi</span>
+          <br><span style="font-size:13px"><b>Single channel</b>: 1 jalur ke CPU. <b>Dual channel</b>: 2 jalur — bandwidth hampir 2× lebih besar. Gunakan 2 keping RAM ukuran sama untuk aktifkan dual channel.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">LPDDR</span>
+          <span class="sv">Versi Hemat Daya (Mobile)</span>
+          <br><span style="font-size:13px">LPDDR4/LPDDR5 digunakan di laptop tipis &amp; smartphone. Lebih hemat daya, tapi biasanya disolder langsung ke motherboard — tidak bisa diupgrade.</span>
+        </div>
+      </div>
+
+      <p class="sub-head">Panduan Kapasitas RAM untuk Kebutuhan Umum</p>
+      <table class="compare-table">
+        <thead><tr><th>Kapasitas</th><th>Cocok untuk</th><th>Tidak ideal untuk</th></tr></thead>
+        <tbody>
+          <tr><td><b>4 GB</b></td><td>Chromebook, browsing ringan, dokumen</td><td>Multitasking, streaming HD</td></tr>
+          <tr><td><b>8 GB</b></td><td>Pelajar umum, Microsoft Office, browsing multi-tab</td><td>Video editing, gaming AAA modern</td></tr>
+          <tr><td><b>16 GB</b></td><td>Gaming, programming, streaming + multitasking</td><td>Workstation berat (3D/ML)</td></tr>
+          <tr><td><b>32 GB+</b></td><td>Video editing 4K, machine learning, virtualisasi</td><td>Penggunaan biasa (overkill)</td></tr>
+        </tbody>
+      </table>
+
+      <hr class="card-divider">
+      <div class="callout warn" style="margin:0;">
+        <span class="ck">Hati-hati</span>
+        Laptop tipis modern (terutama MacBook dan ultrabook) sering menggunakan RAM yang disolder (soldered) ke motherboard — artinya tidak bisa diganti atau ditambah setelah pembelian. Pastikan memilih kapasitas yang cukup sejak awal.
+      </div>
     </div>
 
-    <div class="component-card">
+    <!-- ── Motherboard ── -->
+    <div class="component-card" id="motherboard">
       <span class="role">Papan Penghubung Utama</span>
       <h3>Motherboard</h3>
-      <p>Papan sirkuit utama yang menghubungkan semua komponen komputer — CPU, RAM, penyimpanan, kartu grafis, dan periferal lainnya — sehingga bisa saling berkomunikasi.</p>
-      <span class="ex">Motherboard menentukan komponen apa saja yang kompatibel dan bisa dipasang pada suatu komputer.</span>
+      <p>Motherboard adalah tulang punggung sistem komputer — papan sirkuit cetak (PCB) besar yang menghubungkan semua komponen: CPU, RAM, storage, GPU, dan periferal. Tanpa motherboard, tidak ada komponen yang bisa berkomunikasi satu sama lain.</p>
+
+      <div class="analogy">
+        <span class="ak">Analogi</span>
+        Motherboard seperti jaringan jalan raya di sebuah kota. CPU adalah pusat kota, RAM adalah gudang dekat pusat, storage adalah area pinggiran. Motherboard menentukan seberapa lebar "jalan" (bandwidth) dan jalur mana saja yang tersedia.
+      </div>
+
+      <p class="sub-head">Spesifikasi &amp; Fitur Kunci Motherboard</p>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="sl">Chipset</span>
+          <span class="sv">Pengendali Komunikasi</span>
+          <br><span style="font-size:13px">Chipset menentukan fitur yang didukung: jumlah port USB, PCIe lanes, overclocking, dsb. Contoh: Intel Z790 (enthusiast), B760 (mainstream), H610 (entry).</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Form Factor</span>
+          <span class="sv">Ukuran Fisik</span>
+          <br><span style="font-size:13px"><b>ATX</b> (full, paling banyak slot), <b>mATX</b> (medium), <b>mITX</b> (mini, 1 slot RAM). Form factor harus cocok dengan casing PC.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Slot RAM</span>
+          <span class="sv">Kapasitas &amp; Jenis</span>
+          <br><span style="font-size:13px">ATX biasanya 4 slot (bisa dual-channel), mITX hanya 2. Jenis slot (DDR4/DDR5) harus sesuai RAM yang dibeli.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Slot PCIe</span>
+          <span class="sv">Kartu Ekspansi</span>
+          <br><span style="font-size:13px">PCIe x16 untuk GPU, PCIe x1 untuk kartu sound/jaringan. PCIe 5.0 (terbaru) = bandwidth 2× dibanding PCIe 4.0.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">M.2 Slot</span>
+          <span class="sv">Storage NVMe</span>
+          <br><span style="font-size:13px">Slot kecil berbentuk kartu untuk SSD NVMe. Makin banyak slot M.2, makin banyak storage cepat yang bisa dipasang.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">VRM (Voltage Regulator)</span>
+          <span class="sv">Penyuplai Daya CPU</span>
+          <br><span style="font-size:13px">VRM berkualitas baik penting untuk CPU high-performance. VRM lemah = CPU tidak bisa bekerja maksimal atau cepat panas.</span>
+        </div>
+      </div>
+
+      <p class="sub-head">BIOS / UEFI</p>
+      <p>Setiap motherboard memiliki firmware bernama <b>BIOS</b> (lama) atau <b>UEFI</b> (modern). Ini adalah perangkat lunak level rendah yang berjalan sebelum sistem operasi, bertugas menginisialisasi hardware dan memberikan kontrol dasar seperti urutan boot, pengaturan clock speed, dan monitoring suhu. Pada laptop, pengguna biasanya tidak perlu menyentuh UEFI kecuali ada masalah atau ingin booting dari USB.</p>
+
+      <hr class="card-divider">
+      <div class="callout info" style="margin:0;">
+        <span class="ck">Untuk Laptop</span>
+        Pada laptop, motherboard sering disebut "logic board" dan dirancang khusus untuk model tersebut — tidak bisa diganti dengan motherboard merk lain. Semua komponen biasanya sudah terintegrasi dan tidak modular. Ini berbeda dengan PC desktop yang komponen-komponennya bisa diganti satu per satu.
+      </div>
+    </div>
+
+    <!-- ── GPU ── -->
+    <div class="component-card" id="gpu">
+      <span class="role">Pemroses Grafis &amp; Komputasi Paralel</span>
+      <h3>GPU — Graphics Processing Unit</h3>
+      <p>GPU dirancang khusus untuk memproses data visual — mengubah data mentah menjadi piksel yang ditampilkan di layar. Berbeda dengan CPU yang punya sedikit core berkekuatan tinggi, GPU memiliki ribuan core kecil yang bekerja secara <em>paralel</em>, membuatnya unggul untuk tugas berulang berskala besar.</p>
+
+      <div class="analogy">
+        <span class="ak">Analogi</span>
+        CPU seperti 8 ahli yang sangat cepat. GPU seperti 5.000 pekerja yang agak lambat masing-masing, tapi karena bekerja bersamaan, total pekerjaannya jauh lebih cepat — terutama untuk tugas yang bisa dibagi-bagi (seperti mengisi warna jutaan piksel).
+      </div>
+
+      <p class="sub-head">Dua Jenis GPU</p>
+      <table class="compare-table">
+        <thead><tr><th>Jenis</th><th>Penjelasan</th><th>Contoh</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>iGPU (Integrated)</b></td>
+            <td>Menyatu dalam chip CPU. Menggunakan sebagian RAM sistem. Cukup untuk tugas sehari-hari, streaming, bahkan game ringan.</td>
+            <td>Intel Iris Xe, AMD Radeon 780M, Apple M4 GPU</td>
+          </tr>
+          <tr>
+            <td><b>dGPU (Dedicated / Discrete)</b></td>
+            <td>Chip grafis terpisah dengan VRAM sendiri (Video RAM). Performa jauh lebih tinggi untuk game, desain 3D, dan AI/ML.</td>
+            <td>NVIDIA GeForce RTX 4060, AMD Radeon RX 7600</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="sub-head">Spesifikasi Kunci GPU</p>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="sl">VRAM (GB)</span>
+          <span class="sv">Memori Grafis Khusus</span>
+          <br><span style="font-size:13px">Menyimpan tekstur, frame buffer, model 3D. 4 GB: game lama/esports. 8 GB: game modern. 12 GB+: kreator konten &amp; AI.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Shader / CUDA Core</span>
+          <span class="sv">Unit Komputasi</span>
+          <br><span style="font-size:13px">Semakin banyak unit komputasi, semakin tinggi performa. NVIDIA menyebutnya CUDA Cores, AMD menyebutnya Stream Processors.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Ray Tracing</span>
+          <span class="sv">Pencahayaan Realistis</span>
+          <br><span style="font-size:13px">Teknik rendering yang mensimulasikan pantulan cahaya nyata. Butuh GPU generasi baru (NVIDIA RTX / AMD RDNA2+).</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">TDP (Watt)</span>
+          <span class="sv">Konsumsi Daya</span>
+          <br><span style="font-size:13px">GPU laptop: 25–150W. GPU desktop: 100–450W. TDP tinggi = butuh PSU lebih besar &amp; pendinginan lebih baik.</span>
+        </div>
+      </div>
+
+      <hr class="card-divider">
+      <div class="callout amber" style="margin:0;">
+        <span class="ck">GPU &amp; AI</span>
+        GPU kini bukan hanya untuk grafis — VRAM dan ribuan core-nya menjadi fondasi pelatihan model AI/Machine Learning. NVIDIA RTX adalah standar industri untuk deep learning karena ekosistem CUDA-nya yang matang.
+      </div>
+    </div>
+
+    <!-- ── Storage ── -->
+    <div class="component-card" id="storage">
+      <span class="role">Penyimpanan Permanen</span>
+      <h3>Storage — Penyimpanan Data</h3>
+      <p>Storage adalah tempat semua data disimpan secara permanen: sistem operasi, aplikasi, file, foto, dan video. Tidak seperti RAM, data di storage tidak hilang saat komputer dimatikan. Jenis storage yang digunakan sangat mempengaruhi kecepatan loading sistem dan aplikasi.</p>
+
+      <div class="analogy">
+        <span class="ak">Analogi</span>
+        Storage adalah lemari arsip besar di kantor. HDD seperti lemari filing manual yang harus dicari fisiknya, SSD SATA seperti lemari dengan indeks digital, dan NVMe seperti asisten pribadi yang langsung ambilkan berkas yang kamu butuhkan dalam hitungan milidetik.
+      </div>
+
+      <p class="sub-head">Perbandingan Jenis Storage</p>
+      <table class="compare-table">
+        <thead><tr><th>Jenis</th><th>Cara Kerja</th><th>Kecepatan Baca (Seq.)</th><th>Kelebihan</th><th>Kekurangan</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>HDD</b><br><span style="font-size:12px;color:#6b6552">(Hard Disk Drive)</span></td>
+            <td>Piringan magnetik berputar, jarum baca/tulis bergerak mekanis</td>
+            <td>80–180 MB/s</td>
+            <td>Murah per GB, kapasitas besar (1–20 TB+)</td>
+            <td>Lambat, rentan benturan, berisik, boros daya</td>
+          </tr>
+          <tr>
+            <td><b>SSD SATA</b><br><span style="font-size:12px;color:#6b6552">(Solid State Drive)</span></td>
+            <td>Chip flash memory (tidak bergerak), terhubung via konektor SATA</td>
+            <td>500–560 MB/s</td>
+            <td>Jauh lebih cepat dari HDD, tahan benturan, silent</td>
+            <td>Harga per GB lebih tinggi dari HDD</td>
+          </tr>
+          <tr>
+            <td><b>NVMe SSD</b><br><span style="font-size:12px;color:#6b6552">(M.2 / PCIe)</span></td>
+            <td>Flash memory lewat jalur PCIe (bandwidth jauh lebih lebar dari SATA)</td>
+            <td>3.000–7.000 MB/s</td>
+            <td>Sangat cepat, form factor kecil (M.2), standar laptop modern</td>
+            <td>Lebih mahal, menghasilkan lebih banyak panas</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="sub-head">Spesifikasi Tambahan yang Perlu Diperhatikan</p>
+      <ul style="font-size:14px; color:#3a3527;">
+        <li><b>TBW (Terabytes Written)</b>: Ketahanan total SSD sebelum wear-out. Makin tinggi = makin awet untuk penggunaan intensif.</li>
+        <li><b>DRAM Cache</b>: SSD dengan cache DRAM memiliki performa lebih konsisten di beban berat dibanding SSD tanpa cache (DRAM-less).</li>
+        <li><b>Kapasitas rekomendasi</b>: 256 GB untuk sistem + aplikasi dasar; 512 GB untuk pengguna umum; 1 TB+ untuk kreator konten.</li>
+      </ul>
+
+      <hr class="card-divider">
+      <div class="callout info" style="margin:0;">
+        <span class="ck">Tips Praktis</span>
+        Upgrade dari HDD ke SSD adalah peningkatan performa yang paling terasa pada komputer lama — kecepatan boot OS bisa turun dari 2–3 menit menjadi 10–20 detik. Jika laptop/PC masih menggunakan HDD, prioritaskan ini sebelum upgrade RAM atau CPU.
+      </div>
+    </div>
+
+    <!-- ── PSU ── -->
+    <div class="component-card" id="psu">
+      <span class="role">Sumber Daya Listrik</span>
+      <h3>PSU — Power Supply Unit</h3>
+      <p>PSU mengubah arus AC (listrik rumah) menjadi arus DC bertegangan rendah yang dibutuhkan komponen komputer. Komponen yang sering diabaikan, padahal PSU yang buruk bisa merusak semua komponen lain. Pada laptop, fungsi PSU digantikan oleh adaptor (charger) dan baterai.</p>
+
+      <p class="sub-head">Spesifikasi Kunci PSU (PC Desktop)</p>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="sl">Wattage (W)</span>
+          <span class="sv">Kapasitas Daya Total</span>
+          <br><span style="font-size:13px">Jumlahkan TDP semua komponen lalu tambah ~20% buffer. PC gaming mid-range: 650W sudah cukup. High-end dengan RTX 4090: 1000W+.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Efisiensi (80 Plus)</span>
+          <span class="sv">Sertifikasi Efisiensi</span>
+          <br><span style="font-size:13px">80 Plus Bronze (82%), Gold (87%), Platinum (90%), Titanium (92%). Efisiensi lebih tinggi = lebih sedikit listrik terbuang sebagai panas.</span>
+        </div>
+        <div class="spec-item">
+          <span class="sl">Modular / Semi / Non</span>
+          <span class="sv">Jenis Kabel</span>
+          <br><span style="font-size:13px"><b>Modular</b>: kabel bisa dilepas (lebih rapi). <b>Non-modular</b>: semua kabel terhubung permanen (lebih murah tapi berantakan di casing).</span>
+        </div>
+      </div>
+
+      <hr class="card-divider">
+      <div class="callout warn" style="margin:0;">
+        <span class="ck">Jangan Abaikan PSU</span>
+        PSU murah tanpa sertifikasi bisa menghasilkan tegangan tidak stabil, menyebabkan crash acak, atau dalam kasus ekstrem merusak komponen atau menimbulkan risiko kebakaran. Selalu pilih PSU dari merk terpercaya dengan sertifikasi 80 Plus minimal Bronze.
+      </div>
+    </div>
+
+    <!-- ── Pendingin ── -->
+    <div class="component-card" id="pendingin">
+      <span class="role">Manajemen Suhu Sistem</span>
+      <h3>Sistem Pendingin (Cooling)</h3>
+      <p>CPU dan GPU menghasilkan panas saat bekerja. Sistem pendingin bertugas membuang panas tersebut agar komponen tetap dalam batas suhu aman. Suhu terlalu tinggi menyebabkan <em>thermal throttling</em> — CPU/GPU otomatis menurunkan kecepatan kerjanya untuk mendinginkan diri, yang berarti performa turun drastis.</p>
+
+      <p class="sub-head">Jenis Pendingin</p>
+      <table class="compare-table">
+        <thead><tr><th>Jenis</th><th>Cara Kerja</th><th>Cocok untuk</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Air Cooler (Heatsink + Fan)</b></td>
+            <td>Heatsink tembaga/aluminium menyerap panas, kipas mengusir udara panas keluar casing</td>
+            <td>PC desktop mainstream, budget-friendly</td>
+          </tr>
+          <tr>
+            <td><b>AIO Liquid Cooler</b></td>
+            <td>Cairan pendingin mengalir dari CPU ke radiator, radiator didinginkan kipas besar</td>
+            <td>CPU TDP tinggi, PC gaming/workstation</td>
+          </tr>
+          <tr>
+            <td><b>Laptop Cooling (Heatpipe + Fan)</b></td>
+            <td>Heatpipe tembaga mengalirkan panas dari chip ke heatsink tipis, satu/dua kipas membuang panas keluar</td>
+            <td>Semua laptop modern — desain sudah fixed</td>
+          </tr>
+          <tr>
+            <td><b>Pasta Termal (Thermal Paste)</b></td>
+            <td>Material konduktif yang mengisi celah mikroskopis antara CPU dan heatsink untuk meningkatkan transfer panas</td>
+            <td>Semua sistem — perlu diganti ~2–3 tahun sekali pada laptop lama</td>
+          </tr>
+        </tbody>
+      </table>
+      <span class="ex">Pada laptop, suhu ideal CPU saat beban ringan: 40–60°C. Saat gaming/rendering: 80–95°C masih normal. Di atas 100°C terus-menerus = ada masalah pendingin.</span>
+    </div>
+
+  </section>
+
+  <!-- ────────────────── 3. CARA MEMBACA SPESIFIKASI ────────────────── -->
+  <section id="baca-spek">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Cara Membaca Spesifikasi Perangkat</h2><span class="sec-line"></span></div>
+    <p>Berikut contoh spesifikasi laptop nyata dan cara membacanya:</p>
+
+    <div style="background:#fff; border:1px solid var(--line); padding:18px 20px; margin-bottom:16px; font-size:14px;">
+      <p style="font-family:var(--font-mono); font-size:13px; color:var(--teal-dark); margin-bottom:10px;">CONTOH SPESIFIKASI LAPTOP</p>
+      <table class="compare-table">
+        <thead><tr><th>Spesifikasi</th><th>Nilai</th><th>Artinya</th></tr></thead>
+        <tbody>
+          <tr><td>Prosesor</td><td>Intel Core i5-1335U, 10C/12T, up to 4.6 GHz</td><td>CPU Intel generasi ke-13, 10 core (2 Performance + 8 Efficient), bisa boost sampai 4.6 GHz</td></tr>
+          <tr><td>RAM</td><td>16 GB LPDDR5 5200 MHz (soldered)</td><td>16 GB RAM hemat daya generasi terbaru, frekuensi 5200 MHz, tidak bisa diupgrade</td></tr>
+          <tr><td>Storage</td><td>512 GB NVMe PCIe 4.0 SSD</td><td>SSD cepat (3000+ MB/s) menggunakan jalur PCIe gen 4, muat ~200.000 foto biasa</td></tr>
+          <tr><td>Grafis</td><td>Intel Iris Xe Graphics (integrated)</td><td>GPU terintegrasi di CPU, cukup untuk tugas harian &amp; game ringan</td></tr>
+          <tr><td>Layar</td><td>14" FHD IPS 300 nits, 60 Hz</td><td>Layar 1920×1080 piksel, panel IPS (warna akurat), kecerahan standar, refresh rate 60 fps</td></tr>
+          <tr><td>Baterai</td><td>56 WHr, up to 12 jam</td><td>Kapasitas baterai 56 Watt-hour, perkiraan pabrikan 12 jam — realistis ~7–9 jam pemakaian normal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="ck">Tips Membaca Spek</span>
+      Klaim baterai dari pabrikan selalu diukur dalam kondisi ideal (brightness rendah, tugas ringan). Anggap 60–70% dari klaim pabrikan sebagai perkiraan realistis untuk pemakaian normal.
     </div>
   </section>
 
+  <!-- ────────────────── 4. KRITERIA MEMILIH ────────────────── -->
   <section id="kriteria">
-    <div class="sec-head"><span class="sec-num">3</span><h2>Kriteria Memilih Perangkat Sesuai Kebutuhan</h2><span class="sec-line"></span></div>
+    <div class="sec-head"><span class="sec-num">4</span><h2>Kriteria Memilih Perangkat Sesuai Kebutuhan</h2><span class="sec-line"></span></div>
     <ul class="criteria-list">
-      <li><span class="cn">1</span><div><b>Kebutuhan penggunaan</b><span class="d">Untuk mengetik & browsing ringan, spesifikasi menengah sudah cukup; untuk desain/gaming/video editing, butuh CPU & RAM lebih tinggi.</span></div></li>
-      <li><span class="cn">2</span><div><b>Anggaran</b><span class="d">Tentukan batas anggaran di awal, lalu cari perangkat dengan spesifikasi terbaik pada rentang harga tersebut.</span></div></li>
-      <li><span class="cn">3</span><div><b>Portabilitas</b><span class="d">Pertimbangkan berat dan daya tahan baterai jika perangkat akan sering dibawa bepergian.</span></div></li>
-      <li><span class="cn">4</span><div><b>Daya tahan & garansi</b><span class="d">Cek kualitas build, masa garansi resmi, dan ketersediaan layanan purna jual.</span></div></li>
-      <li><span class="cn">5</span><div><b>Kemungkinan upgrade</b><span class="d">Sebagian laptop/PC memungkinkan penambahan RAM/penyimpanan di kemudian hari — nilai tambah untuk penggunaan jangka panjang.</span></div></li>
+      <li><span class="cn">1</span><div><b>Kebutuhan penggunaan (Use-case)</b><span class="d">Tugas ringan (mengetik, browsing, presentasi): prosesor mid-range + 8 GB RAM sudah lebih dari cukup. Desain grafis/video editing: butuh dGPU, minimal 16 GB RAM, dan SSD NVMe besar. Coding/programming: RAM besar (16–32 GB) dan SSD cepat lebih penting dari GPU.</span></div></li>
+      <li><span class="cn">2</span><div><b>Anggaran yang realistis</b><span class="d">Tentukan batas anggaran di awal, lalu cari perangkat terbaik di rentang harga tersebut. Membeli perangkat "secukupnya" dan mengupgrade komponen tertentu (storage, RAM) belakangan bisa lebih ekonomis.</span></div></li>
+      <li><span class="cn">3</span><div><b>Portabilitas vs performa</b><span class="d">Laptop tipis &lt;1.5 kg prioritaskan daya tahan baterai dan bobot. Laptop gaming/workstation biasanya lebih berat (2+ kg) tapi lebih bertenaga. Tentukan prioritasmu: sering dibawa keluar kota atau lebih banyak di meja?</span></div></li>
+      <li><span class="cn">4</span><div><b>Kemungkinan upgrade</b><span class="d">Cek apakah RAM dan storage bisa ditambah/diganti di kemudian hari. Beberapa laptop menyediakan slot RAM kosong; lainnya sudah fully soldered. PC desktop umumnya lebih mudah diupgrade komponen demi komponen.</span></div></li>
+      <li><span class="cn">5</span><div><b>Daya tahan &amp; garansi</b><span class="d">Cek kualitas build (material, rating ketahanan seperti MIL-SPEC), masa garansi resmi (minimal 1 tahun), dan ketersediaan service center di kotamu.</span></div></li>
+      <li><span class="cn">6</span><div><b>Ekosistem &amp; kompatibilitas</b><span class="d">Pertimbangkan OS (Windows/macOS/Linux), kompatibilitas software yang kamu butuhkan, dan ekosistem aksesori. MacBook misalnya sangat terintegrasi dengan iPhone/iPad tapi kurang fleksibel untuk software tertentu.</span></div></li>
     </ul>
+
+    <p class="sub-head" style="font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--teal-dark); margin:16px 0 8px; border-bottom:1px solid var(--line); padding-bottom:4px;">Rekomendasi Spesifikasi Minimum per Kebutuhan</p>
+    <table class="compare-table">
+      <thead><tr><th>Profil Pengguna</th><th>CPU</th><th>RAM</th><th>Storage</th><th>GPU</th></tr></thead>
+      <tbody>
+        <tr><td><b>Pelajar umum</b></td><td>Core i5 / Ryzen 5 (gen terbaru)</td><td>8–16 GB</td><td>512 GB NVMe SSD</td><td>iGPU cukup</td></tr>
+        <tr><td><b>Programmer / Developer</b></td><td>Core i5/i7 atau Ryzen 5/7</td><td>16–32 GB</td><td>512 GB – 1 TB NVMe</td><td>iGPU cukup (kecuali ML)</td></tr>
+        <tr><td><b>Desainer Grafis / Video Editor</b></td><td>Core i7/i9 atau Ryzen 7/9</td><td>16–32 GB</td><td>1 TB NVMe SSD</td><td>dGPU (min. 8 GB VRAM)</td></tr>
+        <tr><td><b>Gamer (1080p)</b></td><td>Core i5 / Ryzen 5</td><td>16 GB</td><td>512 GB – 1 TB NVMe</td><td>RTX 4060 / RX 7600</td></tr>
+        <tr><td><b>AI / Machine Learning</b></td><td>Ryzen 9 / Core i9</td><td>32–64 GB</td><td>1–2 TB NVMe</td><td>dGPU NVIDIA (12+ GB VRAM)</td></tr>
+      </tbody>
+    </table>
+
     <div class="callout">
       <span class="ck">Poin Kunci</span>
-      Spesifikasi tertinggi belum tentu pilihan terbaik — perangkat yang tepat adalah yang spesifikasinya sesuai dengan kebutuhan aktual, bukan sekadar mengejar angka terbesar.
+      Spesifikasi tertinggi belum tentu pilihan terbaik. Perangkat yang tepat adalah yang spesifikasinya <em>sesuai kebutuhan aktual</em> — bukan sekadar mengejar angka terbesar atau brand paling terkenal.
     </div>
   </section>
 
+  <!-- ────────────────── 5. TREN MOBILE ────────────────── -->
   <section id="tren-mobile">
-    <div class="sec-head"><span class="sec-num">4</span><h2>Tren Perangkat Mobile</h2><span class="sec-line"></span></div>
+    <div class="sec-head"><span class="sec-num">5</span><h2>Tren Perangkat Mobile</h2><span class="sec-line"></span></div>
+    <p>Perangkat mobile berkembang dengan sangat cepat. Beberapa tren berikut membentuk arah industri hardware saat ini:</p>
     <table class="compare-table">
-      <thead><tr><th>Tren</th><th>Penjelasan Singkat</th></tr></thead>
+      <thead><tr><th>Tren</th><th>Penjelasan Mendalam</th><th>Implikasi</th></tr></thead>
       <tbody>
-        <tr><td><b>Konvergensi performa</b></td><td>Smartphone & tablet kini punya daya proses setara laptop menengah beberapa tahun lalu.</td></tr>
-        <tr><td><b>Chip khusus AI (NPU)</b></td><td>Banyak perangkat mobile terbaru menyematkan chip khusus untuk mempercepat pemrosesan fitur AI di perangkat.</td></tr>
-        <tr><td><b>Layar & baterai lebih efisien</b></td><td>Teknologi layar dan manajemen daya terus berkembang agar baterai bertahan lebih lama.</td></tr>
-        <tr><td><b>Konektivitas 5G</b></td><td>Kecepatan internet seluler yang jauh lebih tinggi mendukung mobilitas kerja & hiburan.</td></tr>
+        <tr>
+          <td><b>Konvergensi performa</b></td>
+          <td>Smartphone flagship &amp; tablet terbaru (Snapdragon 8 Elite, Apple A18 Pro) memiliki daya proses setara atau melampaui laptop kelas menengah 3–4 tahun lalu.</td>
+          <td>Tugas seperti editing video 4K kini bisa dilakukan di smartphone kelas atas.</td>
+        </tr>
+        <tr>
+          <td><b>Chip khusus AI — NPU</b></td>
+          <td>Neural Processing Unit hadir di hampir semua SoC (System-on-Chip) modern. NPU menjalankan inferensi AI (pengenalan wajah, pemrosesan bahasa, enhancement kamera) secara efisien tanpa menguras baterai.</td>
+          <td>Fitur AI kamera, speech-to-text, dan asisten virtual menjadi semakin real-time dan akurat.</td>
+        </tr>
+        <tr>
+          <td><b>SoC (System-on-Chip)</b></td>
+          <td>CPU, GPU, NPU, modem, ISP (Image Signal Processor) semua dalam satu chip tunggal. Apple M-series dan Qualcomm Snapdragon adalah contoh terdepan.</td>
+          <td>Lebih hemat daya, latensi lebih rendah antar komponen, form factor lebih tipis.</td>
+        </tr>
+        <tr>
+          <td><b>Layar adaptif (LTPO)</b></td>
+          <td>Refresh rate layar bisa berubah dinamis antara 1–120 Hz. Saat scrolling = 120 Hz (mulus), saat membaca = 1 Hz (hemat baterai).</td>
+          <td>Baterai lebih awet tanpa mengorbankan kelancaran tampilan.</td>
+        </tr>
+        <tr>
+          <td><b>Konektivitas 5G &amp; Wi-Fi 7</b></td>
+          <td>5G menawarkan kecepatan unduh hingga 10 Gbps (teoretis) dan latensi rendah. Wi-Fi 7 (802.11be) mendukung bandwidth hingga 46 Gbps di jaringan lokal.</td>
+          <td>Mendukung cloud gaming, streaming 8K, dan kerja jarak jauh yang lebih mulus.</td>
+        </tr>
+        <tr>
+          <td><b>Desain modular &amp; repairability</b></td>
+          <td>Tren baru (didorong regulasi EU) mendorong produsen membuat perangkat yang komponen-komponennya lebih mudah diperbaiki dan diganti oleh pengguna sendiri.</td>
+          <td>Fairphone, Framework Laptop adalah pelopor; Apple &amp; Samsung mulai program self-repair.</td>
+        </tr>
       </tbody>
     </table>
   </section>
 
+  <!-- ────────────────── 6. GLOSARIUM ────────────────── -->
   <section id="glosarium">
-    <div class="sec-head"><span class="sec-num">5</span><h2>Glosarium Singkat</h2><span class="sec-line"></span></div>
+    <div class="sec-head"><span class="sec-num">6</span><h2>Glosarium Singkat</h2><span class="sec-line"></span></div>
     <dl class="glossary">
       <dt>CPU</dt><dd>Central Processing Unit — komponen yang mengeksekusi instruksi dan perhitungan komputer.</dd>
-      <dt>RAM</dt><dd>Random Access Memory — memori sementara untuk menyimpan data yang sedang diproses.</dd>
+      <dt>Core / Thread</dt><dd>Core = unit pemrosesan fisik di CPU. Thread = jalur virtual (biasanya 2× core via Hyper-Threading/SMT).</dd>
+      <dt>Cache (L1/L2/L3)</dt><dd>Memori super-cepat di dalam CPU untuk menyimpan data yang sering diakses.</dd>
+      <dt>TDP</dt><dd>Thermal Design Power — panas maksimum yang dihasilkan komponen, menentukan kebutuhan pendingin.</dd>
+      <dt>RAM / DDR</dt><dd>Random Access Memory — memori kerja sementara. DDR (Double Data Rate) adalah standar jenisnya (DDR4, DDR5).</dd>
+      <dt>LPDDR</dt><dd>Low-Power DDR — versi hemat daya RAM untuk laptop tipis dan smartphone.</dd>
       <dt>Motherboard</dt><dd>Papan sirkuit utama yang menghubungkan seluruh komponen komputer.</dd>
-      <dt>Clock Speed</dt><dd>Kecepatan pemrosesan CPU, diukur dalam GHz (gigahertz).</dd>
-      <dt>NPU</dt><dd>Neural Processing Unit — chip khusus untuk mempercepat pemrosesan tugas-tugas AI.</dd>
+      <dt>Chipset</dt><dd>Chip di motherboard yang mengatur komunikasi antar komponen dan menentukan fitur yang tersedia.</dd>
+      <dt>PCIe</dt><dd>PCI Express — antarmuka koneksi kecepatan tinggi untuk GPU, NVMe SSD, dan kartu ekspansi lainnya.</dd>
+      <dt>GPU / VRAM</dt><dd>Graphics Processing Unit — pemroses grafis. VRAM adalah memori khusus milik GPU.</dd>
+      <dt>HDD / SSD / NVMe</dt><dd>Tiga jenis storage: HDD (mekanis, lambat), SSD SATA (flash, cepat), NVMe (flash via PCIe, sangat cepat).</dd>
+      <dt>SoC</dt><dd>System-on-Chip — CPU, GPU, NPU, modem dalam satu chip (umum di smartphone dan laptop ARM).</dd>
+      <dt>NPU</dt><dd>Neural Processing Unit — chip khusus untuk mempercepat inferensi tugas AI/ML di perangkat.</dd>
+      <dt>Clock Speed (GHz)</dt><dd>Kecepatan pemrosesan CPU, diukur dalam miliar siklus per detik.</dd>
+      <dt>IPC</dt><dd>Instructions Per Cycle — efisiensi CPU dalam menyelesaikan instruksi per siklus. Arsitektur lebih baru umumnya IPC lebih tinggi.</dd>
+      <dt>Thermal Throttling</dt><dd>Kondisi di mana CPU/GPU menurunkan kecepatan kerjanya secara otomatis untuk mencegah overheat.</dd>
     </dl>
   </section>
 
+  <!-- ────────────────── 7. CEK MANDIRI ────────────────── -->
   <section id="cek-mandiri">
-    <div class="sec-head"><span class="sec-num">6</span><h2>Cek Pemahaman Mandiri</h2><span class="sec-line"></span></div>
+    <div class="sec-head"><span class="sec-num">7</span><h2>Cek Pemahaman Mandiri</h2><span class="sec-line"></span></div>
     <ul class="checklist">
-      <li><span class="box"></span>Saya dapat menjelaskan fungsi CPU, RAM, dan motherboard dalam sebuah komputer.</li>
-      <li><span class="box"></span>Saya dapat membaca spesifikasi sebuah laptop/PC dan menjelaskan artinya secara umum.</li>
-      <li><span class="box"></span>Saya dapat menyebutkan minimal tiga kriteria memilih perangkat sesuai kebutuhan.</li>
-      <li><span class="box"></span>Saya dapat menyebutkan minimal dua tren perangkat mobile terkini.</li>
+      <li><span class="box"></span>Saya dapat menjelaskan fungsi CPU, RAM, Motherboard, GPU, Storage, dan PSU — dan bagaimana keempatnya saling berkaitan.</li>
+      <li><span class="box"></span>Saya dapat membedakan DDR4 dan DDR5, serta menjelaskan arti "dual channel" pada RAM.</li>
+      <li><span class="box"></span>Saya dapat membedakan HDD, SSD SATA, dan NVMe berdasarkan kecepatan dan penggunaannya.</li>
+      <li><span class="box"></span>Saya dapat membaca spesifikasi laptop (CPU model, RAM GB+MHz, Storage jenis+kapasitas) dan menjelaskan artinya.</li>
+      <li><span class="box"></span>Saya dapat menyebutkan minimal empat kriteria memilih perangkat sesuai kebutuhan dan anggaran.</li>
+      <li><span class="box"></span>Saya dapat menyebutkan dan menjelaskan minimal tiga tren perangkat mobile terkini.</li>
+      <li><span class="box"></span>Saya dapat menjelaskan apa itu thermal throttling dan mengapa hal itu terjadi.</li>
     </ul>
   </section>
 
+  <!-- ────────────────── PERSIAPAN SESI 4 ────────────────── -->
   <section id="persiapan">
     <div class="prep-box">
       <h2>Persiapan Sebelum Sesi 4</h2>
       <ol>
         <li>Baca Modul 4 — <em>Programs and Apps</em> pada buku Discovering Computers, 17th Edition.</li>
-        <li>Cek spesifikasi laptop/HP Anda sendiri (CPU, RAM, penyimpanan) sebagai bahan diskusi studi kasus di Sesi 3.</li>
-        <li>Catat minimal satu aplikasi produktivitas yang rutin Anda gunakan untuk dibahas singkat di awal Sesi 4.</li>
+        <li>Cek spesifikasi lengkap laptop/HP kamu sendiri (CPU, RAM, Storage, GPU) menggunakan: <em>Settings → System → About</em> (Windows) atau <em>Apple Menu → About This Mac</em> (macOS) — siapkan sebagai bahan diskusi studi kasus di awal Sesi 4.</li>
+        <li>Catat minimal satu aplikasi produktivitas yang rutin kamu gunakan untuk dibahas singkat di awal Sesi 4.</li>
+        <li><em>Opsional</em>: Coba benchmark CPU dan RAM laptopmu menggunakan aplikasi <em>CPU-Z</em> (Windows) atau <em>Geekbench</em> (cross-platform) dan bandingkan hasilnya dengan laptop teman sekelasmu.</li>
       </ol>
     </div>
   </section>
