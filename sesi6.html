@@ -9,15 +9,19 @@
     --ink:#16203a;
     --paper:#f1efe6;
     --paper-2:#e8e4d4;
-    --line: #c9c2a8;
+    --line:#c9c2a8;
     --teal:#2f6f6b;
     --teal-dark:#204c49;
+    --teal-soft:#d4ebe9;
     --amber:#c98a2c;
     --amber-soft:#f3e3c4;
     --red:#a4432c;
-    --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
-    --font-body: 'Charter', Georgia, 'Iowan Old Style', serif;
-    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+    --red-soft:#f5e0da;
+    --blue:#2955a0;
+    --blue-soft:#dce7fa;
+    --font-display:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --font-body:'Charter',Georgia,'Iowan Old Style',serif;
+    --font-mono:'IBM Plex Mono','SFMono-Regular',Menlo,monospace;
   }
 
   *{box-sizing:border-box;}
@@ -27,223 +31,237 @@
     background:var(--paper);
     color:var(--ink);
     font-family:var(--font-body);
-    line-height:1.6;
+    line-height:1.65;
     -webkit-font-smoothing:antialiased;
   }
   body::before{
     content:"";
-    position:fixed; inset:0;
+    position:fixed;inset:0;
     background-image:
-      radial-gradient(circle at 20% 10%, rgba(47,111,107,0.05), transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(201,138,44,0.06), transparent 45%);
+      radial-gradient(circle at 20% 10%,rgba(47,111,107,0.05),transparent 40%),
+      radial-gradient(circle at 90% 80%,rgba(201,138,44,0.06),transparent 45%);
     pointer-events:none;
     z-index:0;
   }
 
-  .wrap{max-width:880px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px 120px;position:relative;z-index:1;}
 
+  /* ---- breadcrumb ---- */
   .breadcrumb{
-    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em;
-    padding:22px 0 0; color:#6b6552;
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.04em;
+    padding:22px 0 0;color:#6b6552;
   }
-  .breadcrumb a{color:var(--teal-dark); text-decoration:none; border-bottom:1px solid var(--teal);}
+  .breadcrumb a{color:var(--teal-dark);text-decoration:none;border-bottom:1px solid var(--teal);}
 
-  header.masthead{
-    border-bottom:3px solid var(--ink);
-    padding:18px 0 20px;
-    margin-bottom:36px;
-  }
+  /* ---- masthead ---- */
+  header.masthead{border-bottom:3px solid var(--ink);padding:18px 0 20px;margin-bottom:40px;}
   .eyebrow{
-    font-family:var(--font-mono);
-    font-size:12px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--teal-dark);
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:14px;
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal-dark);display:flex;justify-content:space-between;margin-bottom:14px;
   }
   h1.title{
-    font-family:var(--font-display);
-    font-weight:400;
-    font-size:clamp(30px,5vw,46px);
-    line-height:1.08;
-    margin:0 0 10px;
-    letter-spacing:-.01em;
+    font-family:var(--font-display);font-weight:400;font-size:clamp(30px,5vw,46px);
+    line-height:1.08;margin:0 0 10px;letter-spacing:-.01em;
   }
-  h1.title em{
-    font-style:normal;
-    color:var(--teal-dark);
-    border-bottom:2px solid var(--amber);
-  }
-  .subtitle{
-    font-size:16px;
-    color:#4b4636;
-    max-width:60ch;
-  }
-  .meta-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:20px;
-  }
+  h1.title em{font-style:normal;color:var(--teal-dark);border-bottom:2px solid var(--amber);}
+  .subtitle{font-size:16px;color:#4b4636;max-width:64ch;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
   .meta-chip{
-    font-family:var(--font-mono);
-    font-size:11.5px;
-    letter-spacing:.03em;
-    padding:5px 11px;
-    border:1px solid var(--line);
-    border-radius:2px;
-    background:var(--paper-2);
-    color:var(--ink);
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.03em;
+    padding:5px 11px;border:1px solid var(--line);border-radius:2px;
+    background:var(--paper-2);color:var(--ink);
   }
 
-  section{margin-bottom:52px;}
-  .sec-head{
-    display:flex;
-    align-items:baseline;
-    gap:14px;
-    margin-bottom:18px;
+  /* ---- TOC ---- */
+  .toc{
+    background:#fff;border:1px solid var(--line);padding:18px 22px;
+    margin-bottom:48px;font-size:14px;
   }
+  .toc-title{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-dark);margin-bottom:10px;}
+  .toc ol{margin:0;padding-left:18px;}
+  .toc li{margin-bottom:4px;}
+  .toc a{color:var(--teal-dark);text-decoration:none;border-bottom:1px dotted var(--teal);}
+  .toc a:hover{color:var(--amber);border-color:var(--amber);}
+
+  /* ---- section structure ---- */
+  section{margin-bottom:60px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px;}
   .sec-num{
-    font-family:var(--font-mono);
-    font-size:13px;
-    color:var(--amber);
-    border:1px solid var(--amber);
-    border-radius:50%;
-    width:26px; height:26px;
-    min-width:26px;
-    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono);font-size:13px;color:var(--amber);
+    border:1px solid var(--amber);border-radius:50%;width:26px;height:26px;min-width:26px;
+    display:flex;align-items:center;justify-content:center;
   }
-  .sec-head h2{
-    font-family:var(--font-display);
-    font-weight:400;
-    font-size:24px;
-    margin:0;
-    color:var(--ink);
-  }
-  .sec-head .sec-line{
-    flex:1;
-    height:1px;
-    background:var(--line);
-  }
+  .sec-head h2{font-family:var(--font-display);font-weight:400;font-size:24px;margin:0;color:var(--ink);}
+  .sec-head .sec-line{flex:1;height:1px;background:var(--line);}
 
+  /* ---- sub-section ---- */
+  .sub{margin-bottom:36px;}
+  .sub-head{
+    font-family:var(--font-display);font-weight:600;font-size:18px;margin:0 0 14px;
+    padding-bottom:6px;border-bottom:2px solid var(--teal-soft);color:var(--teal-dark);
+  }
+  .sub-head span{font-weight:400;font-size:13px;color:#7a735c;margin-left:8px;font-family:var(--font-mono);}
+
+  /* ---- typography ---- */
   p{margin:0 0 14px;}
-  ul, ol{margin:0 0 14px; padding-left:22px;}
+  ul,ol{margin:0 0 14px;padding-left:22px;}
   li{margin-bottom:6px;}
+  strong{color:var(--ink);}
 
-  .objectives{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:14px;
-  }
+  /* ---- objectives ---- */
+  .objectives{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
   .obj-card{
-    background:#fff;
-    border:1px solid var(--line);
-    border-left:4px solid var(--teal);
-    padding:16px 18px;
-    font-size:14.5px;
+    background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);
+    padding:16px 18px;font-size:14.5px;
   }
   .obj-card .k{
-    font-family:var(--font-mono);
-    font-size:11px;
-    color:var(--teal-dark);
-    letter-spacing:.06em;
-    display:block;
-    margin-bottom:4px;
+    font-family:var(--font-mono);font-size:11px;color:var(--teal-dark);letter-spacing:.06em;
+    display:block;margin-bottom:4px;
   }
 
+  /* ---- device card ---- */
   .device-card{
-    background:#fff; border:1px solid var(--line); border-left:4px solid var(--teal);
-    padding:16px 18px; margin-bottom:12px;
+    background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);
+    padding:18px 20px;margin-bottom:14px;
   }
-  .device-card h3{font-family:var(--font-display); font-size:16px; margin:0 0 4px; font-weight:600;}
-  .device-card .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; display:block;}
-  .device-card p{font-size:13.5px; margin:0; color:#453f2f;}
+  .device-card.amber{border-left-color:var(--amber);}
+  .device-card.blue{border-left-color:var(--blue);}
+  .device-card h3{font-family:var(--font-display);font-size:17px;margin:0 0 2px;font-weight:600;}
+  .device-card .role{
+    font-family:var(--font-mono);font-size:11px;color:var(--teal-dark);
+    text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:block;
+  }
+  .device-card.amber .role{color:var(--amber);}
+  .device-card.blue .role{color:var(--blue);}
+  .device-card p{font-size:14px;margin:0 0 8px;color:#3a3527;}
+  .device-card p:last-child{margin-bottom:0;}
+  .device-card ul{font-size:14px;color:#3a3527;margin:4px 0 0;}
 
-  .compare-table{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; margin-bottom:8px;}
-  .compare-table th, .compare-table td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
-  .compare-table thead th{background:var(--ink); color:var(--paper); font-family:var(--font-mono); font-size:11px; text-transform:uppercase; font-weight:400;}
+  /* ---- tag pills ---- */
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .tag{
+    font-family:var(--font-mono);font-size:11px;padding:2px 8px;
+    border-radius:2px;border:1px solid var(--line);background:var(--paper-2);color:#4b4636;
+  }
+  .tag.teal{background:var(--teal-soft);border-color:var(--teal);color:var(--teal-dark);}
+  .tag.amber{background:var(--amber-soft);border-color:var(--amber);color:#7a4a10;}
+  .tag.blue{background:var(--blue-soft);border-color:var(--blue);color:var(--blue);}
 
-  .callout{
-    background:var(--amber-soft);
-    border-left:4px solid var(--amber);
-    padding:16px 20px;
-    font-size:14.5px;
-    margin-bottom:20px;
-  }
-  .callout.warn{background:#f5e0da; border-left-color:var(--red);}
-  .callout .ck{
-    font-family:var(--font-mono);
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color:var(--red);
-    display:block;
-    margin-bottom:6px;
-  }
+  /* ---- compare table ---- */
+  .compare-table{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;margin-bottom:8px;}
+  .compare-table th,.compare-table td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top;}
+  .compare-table thead th{background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:11px;text-transform:uppercase;font-weight:400;}
+  .compare-table tbody tr:nth-child(even){background:var(--paper-2);}
+  .compare-table td.yes{color:var(--teal-dark);font-weight:600;}
+  .compare-table td.no{color:var(--red);}
+  .compare-table td.mid{color:var(--amber);}
 
-  dl.glossary{
-    display:grid;
-    grid-template-columns:180px 1fr;
-    gap:10px 18px;
-    font-size:14.5px;
-  }
-  dl.glossary dt{
-    font-weight:700;
-    font-family:var(--font-mono);
-    font-size:13px;
-    color:var(--teal-dark);
-  }
-  dl.glossary dd{margin:0; color:#3a3527;}
-  .readmore{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    margin-top:6px;
-    font-family:var(--font-mono);
-    font-size:12.5px;
-    color:var(--teal-dark);
-    text-decoration:none;
-    border-bottom:1px solid var(--teal);
-    padding-bottom:1px;
-  }
-  .readmore:hover{color:var(--amber); border-color:var(--amber);}
+  /* ---- spec table ---- */
+  .spec-table{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;margin:12px 0 20px;}
+  .spec-table th,.spec-table td{border:1px solid var(--line);padding:9px 12px;text-align:left;}
+  .spec-table thead th{background:var(--teal-dark);color:#fff;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;font-weight:400;}
+  .spec-table tbody tr:nth-child(even){background:var(--paper-2);}
 
-  .checklist{list-style:none; padding:0; margin:0;}
-  .checklist li{
-    display:flex; gap:10px; align-items:flex-start;
-    padding:9px 0; border-bottom:1px dashed var(--line); font-size:14.5px;
+  /* ---- callout ---- */
+  .callout{background:var(--amber-soft);border-left:4px solid var(--amber);padding:16px 20px;font-size:14.5px;margin-bottom:20px;}
+  .callout.teal{background:var(--teal-soft);border-left-color:var(--teal);}
+  .callout.blue{background:var(--blue-soft);border-left-color:var(--blue);}
+  .callout.warn{background:var(--red-soft);border-left-color:var(--red);}
+  .callout .ck{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px;}
+  .callout .ck{color:var(--amber);}
+  .callout.teal .ck{color:var(--teal-dark);}
+  .callout.blue .ck{color:var(--blue);}
+  .callout.warn .ck{color:var(--red);}
+
+  /* ---- how-it-works strip ---- */
+  .how-strip{
+    display:flex;flex-wrap:wrap;gap:0;margin:16px 0 20px;
+    border:1px solid var(--line);background:#fff;overflow:hidden;
   }
+  .how-step{
+    flex:1;min-width:140px;padding:14px 16px;border-right:1px solid var(--line);
+    position:relative;
+  }
+  .how-step:last-child{border-right:none;}
+  .how-step::after{
+    content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+    color:var(--amber);font-size:14px;z-index:2;
+  }
+  .how-step:last-child::after{display:none;}
+  .how-num{font-family:var(--font-mono);font-size:11px;color:var(--amber);letter-spacing:.06em;display:block;margin-bottom:4px;}
+  .how-title{font-family:var(--font-display);font-weight:600;font-size:14px;margin:0 0 4px;}
+  .how-desc{font-size:12.5px;color:#4b4636;margin:0;}
+
+  /* ---- port grid ---- */
+  .port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+  .port-card{
+    background:#fff;border:1px solid var(--line);padding:14px 16px;font-size:13.5px;
+  }
+  .port-name{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--teal-dark);display:block;margin-bottom:4px;}
+  .port-speed{font-family:var(--font-mono);font-size:11px;color:var(--amber);display:block;margin-bottom:4px;}
+
+  /* ---- io dual ---- */
+  .dual-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  .dual-card{
+    border:1px solid var(--line);background:#fff;padding:16px 18px;
+  }
+  .dual-badge{
+    display:inline-flex;gap:6px;margin-bottom:10px;
+  }
+  .badge{
+    font-family:var(--font-mono);font-size:10px;padding:2px 7px;border-radius:2px;
+    text-transform:uppercase;letter-spacing:.05em;
+  }
+  .badge.in{background:var(--teal-soft);color:var(--teal-dark);border:1px solid var(--teal);}
+  .badge.out{background:var(--amber-soft);color:#7a4a10;border:1px solid var(--amber);}
+  .dual-card h3{font-family:var(--font-display);font-size:16px;font-weight:600;margin:0 0 6px;}
+  .dual-card p{font-size:13.5px;color:#3a3527;margin:0;}
+
+  /* ---- exercise ---- */
+  .exercise{background:var(--ink);color:var(--paper);padding:26px 28px;border-radius:2px;margin-bottom:12px;}
+  .exercise .ex-head{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber-soft);margin-bottom:14px;}
+  .exercise ol{padding-left:18px;margin:0;}
+  .exercise li{margin-bottom:10px;font-size:14.5px;line-height:1.6;}
+  .exercise .hint{font-size:12.5px;color:#aaa89b;font-style:italic;margin-top:4px;}
+
+  /* ---- glossary ---- */
+  .glos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .glos-item{background:#fff;border:1px solid var(--line);padding:13px 16px;font-size:14px;}
+  .glos-term{font-family:var(--font-mono);font-size:12px;color:var(--teal-dark);font-weight:700;display:block;margin-bottom:3px;}
+
+  /* ---- checklist ---- */
+  .checklist{list-style:none;padding:0;margin:0;}
+  .checklist li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14.5px;}
   .checklist li:last-child{border-bottom:none;}
-  .checklist .box{
-    width:16px; height:16px; border:1.5px solid var(--ink);
-    flex:none; margin-top:3px; border-radius:2px;
-  }
+  .checklist .box{width:16px;height:16px;border:1.5px solid var(--ink);flex:none;margin-top:3px;border-radius:2px;}
 
-  .prep-box{
-    background:var(--ink); color:var(--paper);
-    padding:24px 26px; border-radius:2px;
-  }
-  .prep-box h2{
-    font-family:var(--font-display); font-weight:400; font-size:20px;
-    margin:0 0 12px; color:var(--amber-soft);
-  }
-  .prep-box ol{padding-left:20px; margin:0;}
-  .prep-box li{margin-bottom:8px; font-size:14.5px;}
+  /* ---- prep box ---- */
+  .prep-box{background:var(--ink);color:var(--paper);padding:24px 28px;border-radius:2px;}
+  .prep-box h2{font-family:var(--font-display);font-weight:400;font-size:20px;margin:0 0 12px;color:var(--amber-soft);}
+  .prep-box ol{padding-left:20px;margin:0;}
+  .prep-box li{margin-bottom:8px;font-size:14.5px;}
 
+  /* ---- footer ---- */
   footer{
-    border-top:1px solid var(--line);
-    padding-top:18px; margin-top:60px;
-    font-family:var(--font-mono); font-size:11.5px; color:#7a735c;
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+    border-top:1px solid var(--line);padding-top:18px;margin-top:60px;
+    font-family:var(--font-mono);font-size:11.5px;color:#7a735c;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
   }
 
-  @media (max-width:640px){
+  /* ---- responsive ---- */
+  @media(max-width:680px){
     .objectives{grid-template-columns:1fr;}
-    dl.glossary{grid-template-columns:1fr;}
-    dl.glossary dt{margin-top:6px;}
+    .dual-grid{grid-template-columns:1fr;}
+    .port-grid{grid-template-columns:1fr 1fr;}
+    .glos-grid{grid-template-columns:1fr;}
+    .how-strip{flex-direction:column;}
+    .how-step{border-right:none;border-bottom:1px solid var(--line);}
+    .how-step::after{content:"↓";right:auto;left:50%;top:auto;bottom:-10px;transform:translateX(-50%);}
+    .how-step:last-child::after{display:none;}
     .meta-row{gap:8px;}
+  }
+  @media(max-width:480px){
+    .port-grid{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -258,7 +276,7 @@
       <span>Panduan Mahasiswa</span>
     </div>
     <h1 class="title">Sesi 06 — Perangkat<br><em>Input dan Output</em></h1>
-    <p class="subtitle">Panduan referensi untuk pertemuan keenam: mengenal ragam cara komputer menerima perintah dari kita (input) dan menyampaikan hasilnya kembali (output).</p>
+    <p class="subtitle">Pembahasan mendalam tentang cara komputer menerima data dari pengguna (input), memprosesnya, dan menyampaikan hasil kembali dalam berbagai bentuk (output) — mulai dari mekanisme kerja hingga standar antarmuka modern.</p>
     <div class="meta-row">
       <span class="meta-chip">Modul 6 — Input and Output</span>
       <span class="meta-chip">Ref: Discovering Computers, 17th Ed.</span>
@@ -267,97 +285,663 @@
     </div>
   </header>
 
+  <!-- ════════════════════ TOC ════════════════════ -->
+  <nav class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ol>
+      <li><a href="#tujuan">Tujuan Pembelajaran</a></li>
+      <li><a href="#konsep-dasar">Konsep Dasar I/O</a></li>
+      <li><a href="#input">Perangkat Input</a> — Keyboard, Pointing Device, Scanner &amp; Kamera, Audio Input, Sensor, Biometrik</li>
+      <li><a href="#output">Perangkat Output</a> — Monitor/Display, Printer, Speaker &amp; Audio, Haptic Output</li>
+      <li><a href="#cara-kerja">Cara Kerja Perangkat Kunci</a></li>
+      <li><a href="#antarmuka">Antarmuka I/O: Port &amp; Koneksi</a></li>
+      <li><a href="#io-ganda">Perangkat I/O Ganda</a></li>
+      <li><a href="#tren">Tren Modern Perangkat I/O</a></li>
+      <li><a href="#perbandingan">Tabel Perbandingan Cepat</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#latihan">Latihan Soal</a></li>
+      <li><a href="#cek-mandiri">Cek Pemahaman Mandiri</a></li>
+      <li><a href="#persiapan">Persiapan Sesi 7</a></li>
+    </ol>
+  </nav>
+
+  <!-- ════════════════════ 1. TUJUAN ════════════════════ -->
   <section id="tujuan">
     <div class="sec-head"><span class="sec-num">1</span><h2>Tujuan Pembelajaran</h2><span class="sec-line"></span></div>
     <div class="objectives">
-      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Mengidentifikasi jenis-jenis perangkat input beserta fungsinya.</div>
-      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Mengidentifikasi jenis-jenis perangkat output beserta fungsinya.</div>
-      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menjelaskan bagaimana sensor dan biometrik digunakan sebagai perangkat input modern.</div>
-      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Memilih perangkat input/output yang sesuai untuk kebutuhan tertentu.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Mengidentifikasi dan membedakan jenis-jenis perangkat input beserta mekanisme kerjanya.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Mengidentifikasi dan membedakan jenis-jenis perangkat output beserta spesifikasi teknis utamanya.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menjelaskan bagaimana sensor dan biometrik bekerja sebagai perangkat input modern.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Mengenali jenis-jenis port dan antarmuka koneksi I/O yang umum digunakan.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Membandingkan teknologi layar (LCD vs OLED) dan printer (inkjet vs laser) berdasarkan kegunaan.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Memilih perangkat input/output yang tepat untuk kebutuhan dan konteks penggunaan tertentu.</div>
     </div>
   </section>
 
+  <!-- ════════════════════ 2. KONSEP DASAR ════════════════════ -->
+  <section id="konsep-dasar">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Konsep Dasar I/O</h2><span class="sec-line"></span></div>
+
+    <p>Dalam arsitektur komputer, siklus dasar pemrosesan informasi dikenal sebagai model <strong>IPO (Input → Process → Output)</strong>. Perangkat I/O adalah jembatan antara dunia fisik (manusia, lingkungan) dan dunia digital (CPU, memori).</p>
+
+    <div class="how-strip">
+      <div class="how-step">
+        <span class="how-num">TAHAP 1</span>
+        <div class="how-title">Input</div>
+        <p class="how-desc">Data atau perintah dimasukkan melalui perangkat input dan diubah menjadi sinyal digital.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-num">TAHAP 2</span>
+        <div class="how-title">Processing</div>
+        <p class="how-desc">CPU memproses data menggunakan instruksi yang tersimpan di memori (RAM + ROM).</p>
+      </div>
+      <div class="how-step">
+        <span class="how-num">TAHAP 3</span>
+        <div class="how-title">Output</div>
+        <p class="how-desc">Hasil disampaikan kembali ke pengguna melalui perangkat output dalam bentuk visual, audio, atau cetak.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-num">OPSIONAL</span>
+        <div class="how-title">Storage</div>
+        <p class="how-desc">Data yang sudah diproses dapat disimpan ke perangkat penyimpanan untuk digunakan kembali.</p>
+      </div>
+    </div>
+
+    <div class="callout teal">
+      <span class="ck">Definisi</span>
+      <strong>Perangkat Input</strong> adalah perangkat keras yang mengubah data dari dunia nyata (teks, suara, gambar, gerakan, kondisi lingkungan) menjadi sinyal digital yang dapat diproses komputer. <strong>Perangkat Output</strong> melakukan kebalikannya — mengubah data digital menjadi bentuk yang dapat diterima indera manusia.
+    </div>
+  </section>
+
+  <!-- ════════════════════ 3. INPUT ════════════════════ -->
   <section id="input">
-    <div class="sec-head"><span class="sec-num">2</span><h2>Perangkat Input</h2><span class="sec-line"></span></div>
-    <p>Perangkat input adalah perangkat keras yang digunakan untuk memasukkan data atau perintah ke dalam komputer.</p>
+    <div class="sec-head"><span class="sec-num">3</span><h2>Perangkat Input</h2><span class="sec-line"></span></div>
 
-    <div class="device-card">
-      <span class="role">Input Teks & Perintah Dasar</span>
-      <h3>Keyboard</h3>
-      <p>Perangkat input paling umum untuk mengetik teks dan memasukkan perintah. Selain keyboard fisik, kini juga umum keyboard virtual di layar sentuh.</p>
+    <!-- 3.1 Keyboard -->
+    <div class="sub">
+      <div class="sub-head">3.1 Keyboard <span>Input Teks &amp; Perintah</span></div>
+      <p>Keyboard adalah perangkat input utama untuk memasukkan teks dan perintah. Setiap tombol memiliki kode khusus (scan code) yang dikirim ke komputer lalu diinterpretasikan sebagai karakter oleh sistem operasi.</p>
+
+      <div class="device-card">
+        <span class="role">Jenis Keyboard berdasarkan Teknologi Tombol</span>
+        <h3>Membrane Keyboard</h3>
+        <p>Menggunakan lapisan membran karet/silikon di bawah tombol. Saat tombol ditekan, membran menutup sirkuit dan menghasilkan sinyal listrik. Paling umum pada keyboard laptop dan keyboard murah — tipis, tahan percikan cairan, namun kurang respons taktil.</p>
+        <div class="tags"><span class="tag">Biaya rendah</span><span class="tag">Tipis & ringan</span><span class="tag">Kurang taktil</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Jenis Keyboard berdasarkan Teknologi Tombol</span>
+        <h3>Mechanical Keyboard</h3>
+        <p>Setiap tombol memiliki saklar mekanik individual (switch). Jenis switch umum antara lain: <strong>Cherry MX Red</strong> (linear, ringan), <strong>Cherry MX Blue</strong> (clicky, ada bunyi klik), <strong>Cherry MX Brown</strong> (taktil tanpa bunyi keras). Populer di kalangan programmer, desainer, dan gamer karena respons yang akurat dan daya tahan tinggi (50–100 juta penekanan per tombol).</p>
+        <div class="tags"><span class="tag teal">Respons taktil</span><span class="tag teal">Daya tahan tinggi</span><span class="tag">Lebih tebal & berat</span><span class="tag">Harga lebih tinggi</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Jenis Keyboard berdasarkan Teknologi Tombol</span>
+        <h3>Scissor-Switch / Chiclet Keyboard</h3>
+        <p>Menggunakan mekanisme gunting (X-shaped stabilizer) di bawah tombol untuk gerakan yang stabil. Profil tombol rendah, perjalanan tombol pendek (~1,5 mm). Banyak digunakan pada MacBook dan laptop premium modern.</p>
+        <div class="tags"><span class="tag">Profil rendah</span><span class="tag">Stabil</span><span class="tag teal">Cocok untuk laptop tipis</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Jenis Keyboard berdasarkan Koneksi</span>
+        <h3>Virtual / On-Screen Keyboard</h3>
+        <p>Keyboard yang ditampilkan di layar sentuh, tidak memerlukan perangkat fisik. Umum di smartphone, tablet, dan kiosk. Input berupa sentuhan atau tap pada area layar. Juga tersedia sebagai aksesibilitas pada desktop (Windows On-Screen Keyboard).</p>
+        <div class="tags"><span class="tag teal">Tanpa hardware tambahan</span><span class="tag">Kecepatan mengetik lebih rendah</span></div>
+      </div>
+
+      <div class="callout">
+        <span class="ck">Fakta Menarik</span>
+        Susunan tombol <strong>QWERTY</strong> dirancang pada tahun 1874 untuk mesin tik Sholes & Glidden, dengan tujuan mengurangi benturan tuas mekanik — bukan untuk kecepatan mengetik. Alternatif seperti <strong>Dvorak</strong> (1936) dirancang untuk efisiensi, namun QWERTY tetap menjadi standar global karena efek jaringan (sudah terlanjur dipakai semua orang).
+      </div>
     </div>
-    <div class="device-card">
-      <span class="role">Navigasi & Penunjuk Layar</span>
-      <h3>Pointing Device</h3>
-      <p>Perangkat untuk mengendalikan penunjuk (kursor) di layar — mencakup mouse, trackpad, trackball, dan layar sentuh (touchscreen).</p>
+
+    <!-- 3.2 Pointing Device -->
+    <div class="sub">
+      <div class="sub-head">3.2 Pointing Device <span>Navigasi &amp; Penunjuk Layar</span></div>
+      <p>Pointing device memungkinkan pengguna mengendalikan posisi kursor di layar secara intuitif, menggantikan navigasi berbasis perintah teks.</p>
+
+      <div class="device-card">
+        <span class="role">Mouse</span>
+        <h3>Optical Mouse &amp; Laser Mouse</h3>
+        <p><strong>Optical mouse</strong> menggunakan LED merah dan sensor kamera mikro (resolusi 400–800 DPI) untuk mendeteksi gerakan permukaan. <strong>Laser mouse</strong> menggunakan laser inframerah yang memungkinkan presisi lebih tinggi (800–8000+ DPI) dan dapat bekerja di hampir semua permukaan. DPI (Dots Per Inch) mengukur sensitivitas — makin tinggi DPI, makin sedikit gerakan fisik untuk jarak kursor yang sama.</p>
+        <div class="tags"><span class="tag">DPI: 400–8000+</span><span class="tag teal">Optical: permukaan padat</span><span class="tag teal">Laser: hampir semua permukaan</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Trackpad / Touchpad</span>
+        <h3>Kapasitif Touchpad</h3>
+        <p>Mendeteksi kontak jari melalui perubahan kapasitansi listrik. Mendukung multi-touch gesture: pinch-to-zoom, dua jari scroll, tiga jari swipe, dll. Touchpad modern (Force Touch di MacBook) juga mendeteksi tekanan. Tidak membutuhkan permukaan terpisah — cocok untuk mobilitas.</p>
+        <div class="tags"><span class="tag teal">Multi-touch gesture</span><span class="tag">Presisi lebih rendah dari mouse</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Layar Sentuh</span>
+        <h3>Touchscreen: Resistif vs Kapasitif</h3>
+        <p><strong>Resistif</strong>: dua lapisan konduktif yang bersentuhan saat ditekan. Merespons tekanan dari jari maupun stylus atau benda lain. Lebih tahan air dan murah, namun kurang akurat dan tidak mendukung multi-touch. Umum pada mesin kasir dan industri.<br><strong>Kapasitif</strong>: menggunakan grid elektroda yang mendeteksi konduktivitas tubuh manusia. Mendukung multi-touch, responsif, dan jernih, namun hanya merespons jari (tidak merespons sarung tangan biasa). Digunakan di hampir semua smartphone dan tablet modern.</p>
+        <div class="tags"><span class="tag">Resistif: any object, industrial</span><span class="tag teal">Kapasitif: multi-touch, smartphone</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Stylus &amp; Pen Tablet</span>
+        <h3>Stylus / Drawing Tablet</h3>
+        <p>Stylus aktif (seperti Apple Pencil, Samsung S Pen) menggunakan teknologi elektromagnetik untuk deteksi posisi ultra-presisi dan tekanan hingga 4096 level. Drawing tablet (Wacom, Huion) menangkap gerakan stylus tanpa menyentuh layar. Digunakan profesional di bidang desain grafis, ilustrasi digital, dan arsitektur.</p>
+        <div class="tags"><span class="tag teal">4096 level tekanan</span><span class="tag">Desain grafis & ilustrasi</span></div>
+      </div>
     </div>
-    <div class="device-card">
-      <span class="role">Menangkap Kondisi Lingkungan</span>
-      <h3>Sensor</h3>
-      <p>Perangkat yang mendeteksi dan mengukur kondisi fisik di sekitarnya (cahaya, gerakan, suhu, lokasi) lalu mengubahnya menjadi data digital. Sensor kini tertanam di hampir semua perangkat mobile dan smart device.</p>
+
+    <!-- 3.3 Scanner & Kamera -->
+    <div class="sub">
+      <div class="sub-head">3.3 Scanner &amp; Kamera <span>Menangkap Gambar &amp; Dokumen</span></div>
+
+      <div class="device-card">
+        <span class="role">Scanner Dokumen</span>
+        <h3>Flatbed Scanner</h3>
+        <p>Memindai dokumen atau foto dengan meneranginya menggunakan lampu LED/fluorescent dan menangkap pantulan melalui sensor CCD (Charge-Coupled Device) atau CIS (Contact Image Sensor). Resolusi dinyatakan dalam DPI (300–9600 DPI). Menghasilkan file digital berformat TIFF, JPEG, atau PDF.</p>
+        <div class="tags"><span class="tag">Resolusi 300–9600 DPI</span><span class="tag teal">CCD vs CIS sensor</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Barcode &amp; QR Scanner</span>
+        <h3>Barcode Scanner &amp; QR Code Reader</h3>
+        <p><strong>Barcode 1D</strong> menyimpan data dalam pola garis paralel — dibaca oleh sinar laser yang mendeteksi pola gelap-terang. Digunakan di supermarket, logistik, dan inventori.<br><strong>QR Code (2D)</strong> menyimpan data dalam pola matriks dua dimensi, mampu menyimpan hingga 4.296 karakter alfanumerik. Dibaca oleh kamera standar dengan algoritma image recognition. Umum untuk URL, pembayaran digital, dan boarding pass.</p>
+        <div class="tags"><span class="tag">Barcode 1D: laser</span><span class="tag teal">QR 2D: kamera</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Kamera Digital</span>
+        <h3>Webcam &amp; Kamera Dokumen</h3>
+        <p>Kamera digital menggunakan sensor CMOS atau CCD untuk mengubah cahaya menjadi sinyal digital. Resolusi diukur dalam megapixel. Webcam umumnya 720p–4K, digunakan untuk video call dan streaming. Kamera dokumen (document camera/visualizer) digunakan untuk mempresentasikan dokumen fisik secara real-time.</p>
+        <div class="tags"><span class="tag">CMOS / CCD sensor</span><span class="tag teal">720p–4K</span></div>
+      </div>
     </div>
-    <div class="device-card">
-      <span class="role">Verifikasi Berbasis Tubuh</span>
-      <h3>Biometrik</h3>
-      <p>Perangkat input yang membaca karakteristik fisik unik pengguna untuk keperluan identifikasi/autentikasi — sidik jari, wajah, atau suara — sering dipakai bersama konsep autentikasi yang dibahas di Sesi 5.</p>
+
+    <!-- 3.4 Audio Input -->
+    <div class="sub">
+      <div class="sub-head">3.4 Input Audio <span>Suara sebagai Data</span></div>
+
+      <div class="device-card amber">
+        <span class="role">Mikrofon</span>
+        <h3>Dynamic vs Condenser Microphone</h3>
+        <p><strong>Dynamic microphone</strong>: menggunakan koil induksi elektromagnetik. Kuat, tidak memerlukan daya tambahan, cocok untuk lingkungan bising (pertunjukan live). <strong>Condenser microphone</strong>: menggunakan kapasitor untuk mendeteksi getaran udara dengan sangat sensitif. Memerlukan phantom power (+48V). Digunakan di studio rekaman dan podcast karena kualitas suara yang lebih jernih pada jarak jauh.</p>
+        <div class="tags"><span class="tag">Dynamic: live performance</span><span class="tag amber">Condenser: studio, podcast</span></div>
+      </div>
+
+      <div class="device-card amber">
+        <span class="role">Voice Recognition</span>
+        <h3>Speech-to-Text &amp; Voice Command</h3>
+        <p>Mengubah sinyal audio menjadi teks atau perintah menggunakan algoritma pemrosesan sinyal dan machine learning. Teknologi modern seperti Google Speech API, Apple Siri, dan Amazon Alexa menggunakan model deep learning untuk akurasi 95%+. Faktor yang mempengaruhi akurasi: aksen, kecepatan bicara, kebisingan latar, dan ukuran vocabulary model.</p>
+        <div class="tags"><span class="tag amber">Deep learning ASR</span><span class="tag">Akurasi 95%+</span></div>
+      </div>
+    </div>
+
+    <!-- 3.5 Sensor -->
+    <div class="sub">
+      <div class="sub-head">3.5 Sensor <span>Mendeteksi Kondisi Lingkungan</span></div>
+      <p>Sensor adalah perangkat yang mengubah besaran fisik (cahaya, gerak, suhu, posisi) menjadi sinyal listrik yang dapat dibaca komputer. Saat ini, smartphone rata-rata memiliki 10–15 sensor berbeda.</p>
+
+      <table class="spec-table">
+        <thead>
+          <tr><th>Sensor</th><th>Yang Dideteksi</th><th>Kegunaan Nyata</th><th>Satuan</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Akselerometer</strong></td><td>Percepatan linier (3 sumbu)</td><td>Rotasi layar, penghitungan langkah, deteksi jatuh</td><td>m/s²</td></tr>
+          <tr><td><strong>Giroskop</strong></td><td>Kecepatan rotasi (3 sumbu)</td><td>Stabilisasi kamera, game AR/VR, navigasi</td><td>rad/s</td></tr>
+          <tr><td><strong>Magnetometer</strong></td><td>Medan magnet bumi</td><td>Kompas digital, orientasi peta</td><td>µT (mikrotesla)</td></tr>
+          <tr><td><strong>GPS</strong></td><td>Sinyal satelit (triangulasi)</td><td>Navigasi, geotagging foto, ride-hailing</td><td>Koordinat lat/long</td></tr>
+          <tr><td><strong>Proximity Sensor</strong></td><td>Jarak objek (inframerah)</td><td>Matikan layar saat telepon di telinga</td><td>cm</td></tr>
+          <tr><td><strong>Ambient Light Sensor</strong></td><td>Intensitas cahaya sekitar</td><td>Auto-brightness layar</td><td>Lux</td></tr>
+          <tr><td><strong>Barometer</strong></td><td>Tekanan udara</td><td>Ketinggian, prakiraan cuaca</td><td>hPa</td></tr>
+          <tr><td><strong>Sensor Suhu</strong></td><td>Suhu</td><td>Monitoring suhu baterai dan CPU</td><td>°C</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout teal">
+        <span class="ck">Fusion Sensor</span>
+        Data dari beberapa sensor digabungkan menggunakan algoritma seperti <strong>Kalman Filter</strong> untuk menghasilkan informasi yang lebih akurat. Contoh: akselerometer + giroskop + magnetometer = orientasi 3D yang stabil (digunakan VR headset dan navigasi).
+      </div>
+    </div>
+
+    <!-- 3.6 Biometrik -->
+    <div class="sub">
+      <div class="sub-head">3.6 Biometrik <span>Identifikasi Berbasis Tubuh</span></div>
+      <p>Biometrik menggunakan karakteristik fisik atau perilaku unik seseorang sebagai data identifikasi. Tidak dapat dipindahtangankan dan sangat sulit dipalsukan dibanding kata sandi.</p>
+
+      <div class="device-card">
+        <span class="role">Sidik Jari (Fingerprint)</span>
+        <h3>Fingerprint Scanner</h3>
+        <p>Menangkap pola ridge dan valley pada ujung jari. Tiga teknologi utama: <strong>Optical</strong> (menggunakan cahaya — umum di bawah layar OLED), <strong>Capacitive</strong> (grid kapasitor — presisi tinggi, di tombol samping/bawah layar), dan <strong>Ultrasonic</strong> (gelombang suara untuk pemetaan 3D — tidak terpengaruh air dan kotoran, digunakan Qualcomm Sonic Sensor di Samsung Galaxy). Template sidik jari disimpan sebagai hash yang tidak dapat diubah kembali ke gambar asli.</p>
+        <div class="tags"><span class="tag teal">Optical</span><span class="tag teal">Capacitive</span><span class="tag teal">Ultrasonic</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Pengenalan Wajah (Face Recognition)</span>
+        <h3>Facial Recognition</h3>
+        <p>Sistem 2D (kamera biasa): menganalisis jarak antar fitur wajah — rentan terhadap foto. Sistem 3D (Face ID Apple): menggunakan dot projector yang memancarkan 30.000+ titik inframerah, kamera inframerah, dan flood illuminator untuk pemetaan wajah 3D — tidak dapat dikelabui foto. Akurasi Face ID: tingkat kesalahan 1:1.000.000.</p>
+        <div class="tags"><span class="tag">2D: kamera biasa</span><span class="tag teal">3D: inframerah depth map</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Iris &amp; Retina</span>
+        <h3>Iris Scanner</h3>
+        <p>Memindai pola unik pada iris mata menggunakan kamera inframerah dekat (NIR). Iris memiliki ~266 karakteristik yang dapat diukur (sidik jari hanya ~13). Sangat akurat dan stabil sepanjang hidup. Digunakan di pasport biometrik, kontrol akses keamanan tinggi, dan beberapa smartphone (ex. Samsung Galaxy S8).</p>
+        <div class="tags"><span class="tag teal">266 karakteristik unik</span><span class="tag">NIR Camera</span></div>
+      </div>
+
+      <div class="callout warn">
+        <span class="ck">Privasi &amp; Keamanan</span>
+        Data biometrik bersifat permanen — tidak seperti kata sandi, sidik jari dan wajah tidak dapat diganti jika bocor. Regulasi GDPR (Eropa) dan berbagai undang-undang perlindungan data mengklasifikasikan data biometrik sebagai <em>data sensitif</em> yang membutuhkan perlindungan khusus. Selalu tanyakan: di mana template biometrik disimpan, dan bagaimana ia dilindungi?
+      </div>
     </div>
   </section>
 
+  <!-- ════════════════════ 4. OUTPUT ════════════════════ -->
   <section id="output">
-    <div class="sec-head"><span class="sec-num">3</span><h2>Perangkat Output</h2><span class="sec-line"></span></div>
-    <p>Perangkat output menyampaikan hasil pemrosesan komputer kembali kepada pengguna, dalam bentuk yang bisa dilihat, didengar, atau dicetak.</p>
-    <table class="compare-table">
-      <thead><tr><th>Jenis</th><th>Fungsi</th><th>Contoh</th></tr></thead>
+    <div class="sec-head"><span class="sec-num">4</span><h2>Perangkat Output</h2><span class="sec-line"></span></div>
+
+    <!-- 4.1 Monitor/Display -->
+    <div class="sub">
+      <div class="sub-head">4.1 Monitor / Display <span>Output Visual</span></div>
+
+      <p>Monitor adalah perangkat output visual utama. Kualitas ditentukan oleh teknologi panel, resolusi, refresh rate, dan akurasi warna.</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr><th>Spesifikasi</th><th>Keterangan</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Resolusi</strong></td><td>Jumlah piksel (horizontal × vertikal). HD = 1280×720, FHD = 1920×1080, QHD = 2560×1440, 4K UHD = 3840×2160, 8K = 7680×4320</td></tr>
+          <tr><td><strong>Refresh Rate</strong></td><td>Berapa kali layar diperbarui per detik (Hz). 60 Hz standar, 120–165 Hz gaming, 1–10 Hz hemat daya (LTPO)</td></tr>
+          <tr><td><strong>Respons Time</strong></td><td>Waktu piksel berubah warna (ms). Makin rendah = makin baik untuk game. 1 ms (TN) hingga 5 ms (IPS)</td></tr>
+          <tr><td><strong>Kecerahan</strong></td><td>Diukur dalam nit (cd/m²). Layar outdoor/HDR membutuhkan 1000+ nit</td></tr>
+          <tr><td><strong>Color Gamut</strong></td><td>Rentang warna yang dapat ditampilkan. sRGB (standar web), DCI-P3 (film), Adobe RGB (cetak)</td></tr>
+          <tr><td><strong>Aspect Ratio</strong></td><td>16:9 (standar), 21:9 ultrawide, 4:3 (lama), 3:2 (laptop Surface)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="device-card">
+        <span class="role">Teknologi Panel</span>
+        <h3>LCD (Liquid Crystal Display)</h3>
+        <p>Cahaya dari backlight melewati lapisan kristal cair yang dikontrol secara elektrik. Kristal cair mengatur berapa banyak cahaya yang lolos ke piksel berwarna (RGB filter). Karena selalu menyala di belakang, LCD tidak bisa menghasilkan hitam sempurna.</p>
+        <ul>
+          <li><strong>TN (Twisted Nematic)</strong>: respons cepat (1 ms), murah, tapi sudut pandang sempit dan akurasi warna rendah. Populer untuk monitor gaming budget.</li>
+          <li><strong>IPS (In-Plane Switching)</strong>: sudut pandang lebar (178°), warna akurat, namun respons sedikit lebih lambat. Standar untuk desainer dan profesional.</li>
+          <li><strong>VA (Vertical Alignment)</strong>: kontras terbaik di antara LCD (2000:1 atau lebih), warna baik, respons sedang. Cocok untuk menonton konten film.</li>
+        </ul>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Teknologi Panel</span>
+        <h3>OLED (Organic Light-Emitting Diode)</h3>
+        <p>Setiap piksel menghasilkan cahayanya sendiri — tidak memerlukan backlight. Saat piksel hitam, ia dimatikan sepenuhnya, menghasilkan black level yang sempurna (infinite contrast ratio). Lebih tipis, hemat daya pada konten gelap, respons waktu &lt;1 ms. Kelemahan: potensi burn-in pada elemen statis, masa hidup organik terbatas, lebih mahal.</p>
+        <div class="tags"><span class="tag teal">Hitam sempurna</span><span class="tag teal">Infinite contrast</span><span class="tag">Risiko burn-in</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Teknologi Panel</span>
+        <h3>Mini-LED &amp; Micro-LED</h3>
+        <p><strong>Mini-LED</strong>: LCD dengan ribuan LED kecil sebagai backlight + local dimming zone — mendekati kualitas OLED namun tanpa risiko burn-in. Digunakan di iPad Pro M4, MacBook Pro 2021+. <strong>Micro-LED</strong>: setiap piksel adalah LED independen seperti OLED, tapi terbuat dari bahan anorganik — tidak ada burn-in, lebih terang, lebih tahan lama. Masih mahal, saat ini tersedia di Apple Watch Ultra dan Samsung The Wall.</p>
+        <div class="tags"><span class="tag teal">Mini-LED: kualitas tinggi, no burn-in</span><span class="tag teal">Micro-LED: masa depan display</span></div>
+      </div>
+
+      <div class="device-card amber">
+        <span class="role">Proyektor</span>
+        <h3>Projector</h3>
+        <p>Teknologi proyektor modern: <strong>DLP (Digital Light Processing)</strong> menggunakan jutaan mikro-cermin berputar untuk memantulkan cahaya; <strong>LCD Projector</strong> memancarkan cahaya melalui panel LCD; <strong>Laser Projector</strong> menggunakan laser sebagai sumber cahaya dengan umur 20.000+ jam. Ukuran gambar dinyatakan dalam diagonal inci, kecerahan dalam lumen ANSI (minimal 2500 lumen untuk ruang terang).</p>
+      </div>
+    </div>
+
+    <!-- 4.2 Printer -->
+    <div class="sub">
+      <div class="sub-head">4.2 Printer <span>Output Cetak Fisik</span></div>
+
+      <table class="compare-table">
+        <thead>
+          <tr><th>Aspek</th><th>Inkjet</th><th>Laser / Toner</th><th>3D Printer (FDM)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Prinsip Kerja</strong></td><td>Menyemprotkan tetesan tinta cair (~1–4 pikoliter) ke kertas</td><td>Drum bermuatan listrik menarik bubuk toner, dilebur ke kertas dengan panas</td><td>Melelehkan filamen plastik (PLA/ABS) lapis demi lapis</td></tr>
+          <tr><td><strong>Kualitas Foto</strong></td><td class="yes">Sangat baik (4800+ DPI)</td><td class="mid">Sedang (foto kurang vibrant)</td><td class="no">Tidak berlaku</td></tr>
+          <tr><td><strong>Kecepatan</strong></td><td class="no">5–15 halaman/menit</td><td class="yes">20–50+ halaman/menit</td><td class="no">Jam per objek</td></tr>
+          <tr><td><strong>Biaya Awal</strong></td><td class="yes">Rendah (Rp 500rb–2 jt)</td><td class="mid">Lebih tinggi (Rp 2–20 jt)</td><td class="mid">Rp 2–10 jt</td></tr>
+          <tr><td><strong>Biaya per Halaman</strong></td><td class="no">Lebih mahal (tinta cepat habis)</td><td class="yes">Lebih murah (toner tahan lama)</td><td class="no">Biaya per gram filamen</td></tr>
+          <tr><td><strong>Keunggulan</strong></td><td>Cetak foto berkualitas tinggi</td><td>Volume cetak tinggi, efisien untuk kantor</td><td>Membuat objek 3D fisik</td></tr>
+          <tr><td><strong>Kelemahan</strong></td><td>Tinta bisa kering jika jarang dipakai</td><td>Tidak ideal untuk foto, panas saat bekerja</td><td>Lambat, butuh post-processing</td></tr>
+        </tbody>
+      </table>
+
+      <div class="device-card">
+        <span class="role">Printer Spesialis</span>
+        <h3>Thermal Printer</h3>
+        <p>Menggunakan kepala panas untuk menghitamkan kertas thermal khusus — tidak memerlukan tinta. Sangat cepat dan senyap. Digunakan pada struk belanja, tiket, dan label pengiriman. Kelemahan: tulisan pudar seiring waktu dan sensitif terhadap panas.</p>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Printer Spesialis</span>
+        <h3>Plotter</h3>
+        <p>Dirancang untuk mencetak gambar teknis berukuran besar (A0–A1) dengan presisi tinggi. Digunakan arsitek, insinyur, dan desainer interior. Pen plotter menggerakkan pena di atas kertas; inkjet plotter menggunakan kepala semprot tinta presisi tinggi.</p>
+      </div>
+    </div>
+
+    <!-- 4.3 Speaker & Audio -->
+    <div class="sub">
+      <div class="sub-head">4.3 Speaker &amp; Output Audio <span>Output Suara</span></div>
+
+      <div class="device-card amber">
+        <span class="role">Speaker</span>
+        <h3>Cara Kerja Speaker</h3>
+        <p>Sinyal audio digital diubah ke analog oleh DAC (Digital-to-Analog Converter), lalu dikuatkan oleh amplifier. Kumparan suara (voice coil) yang dialiri arus bergerak dalam medan magnet, mendorong membran/cone yang menggetarkan udara menjadi gelombang suara. Spesifikasi utama: frekuensi respons (20 Hz–20 kHz untuk telinga manusia), impedansi (Ω), dan sensitivitas (dB/W/m).</p>
+      </div>
+
+      <div class="device-card amber">
+        <span class="role">Headphone &amp; Earphone</span>
+        <h3>Active Noise Cancellation (ANC)</h3>
+        <p>Mikrofon eksternal menangkap suara bising lingkungan, prosesor menghasilkan gelombang suara anti-fase (fase berlawanan persis), dan gelombang anti-fase ini dijumlahkan dengan suara masuk sehingga saling meniadakan. Mengurangi kebisingan 20–40 dB. Contoh: Apple AirPods Pro, Sony WH-1000XM5.</p>
+        <div class="tags"><span class="tag amber">ANC: 20–40 dB reduksi</span><span class="tag">Feed-forward vs Feedback ANC</span></div>
+      </div>
+    </div>
+
+    <!-- 4.4 Haptic -->
+    <div class="sub">
+      <div class="sub-head">4.4 Haptic Output <span>Umpan Balik Sentuhan</span></div>
+
+      <div class="device-card">
+        <span class="role">Haptic Actuator</span>
+        <h3>LRA &amp; ERM Actuator</h3>
+        <p><strong>ERM (Eccentric Rotating Mass)</strong>: motor kecil dengan massa tidak seimbang — menghasilkan getaran putaran. Lebih murah, respons lambat (~50 ms). Umum di controller game lama.<br><strong>LRA (Linear Resonant Actuator)</strong>: massa bergerak linear pada frekuensi resonansi — respons cepat (~10 ms), lebih presisi, dan hemat daya. Digunakan di iPhone (Taptic Engine) dan Android flagship untuk mensimulasikan klik tombol virtual, getaran keyboard, dan notifikasi berbeda.</p>
+        <div class="tags"><span class="tag teal">LRA: Taptic Engine iPhone</span><span class="tag">ERM: controller klasik</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 5. CARA KERJA ════════════════════ -->
+  <section id="cara-kerja">
+    <div class="sec-head"><span class="sec-num">5</span><h2>Cara Kerja Perangkat Kunci</h2><span class="sec-line"></span></div>
+
+    <div class="sub">
+      <div class="sub-head">Dari Keystroke ke Layar: Satu Karakter Keyboard</div>
+      <div class="how-strip">
+        <div class="how-step">
+          <span class="how-num">1 — FISIK</span>
+          <div class="how-title">Tombol Ditekan</div>
+          <p class="how-desc">Switch mekanik/membran menutup sirkuit pada matriks baris-kolom keyboard.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">2 — FIRMWARE</span>
+          <div class="how-title">Scan Code</div>
+          <p class="how-desc">Mikrokontroler keyboard menghasilkan scan code unik dan mengirimnya via USB/Bluetooth.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">3 — OS</span>
+          <div class="how-title">Interpretasi</div>
+          <p class="how-desc">Driver keyboard OS mengubah scan code menjadi virtual key code berdasarkan layout aktif (QWERTY/AZERTY/dll).</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">4 — APLIKASI</span>
+          <div class="how-title">Karakter Muncul</div>
+          <p class="how-desc">Aplikasi aktif menerima event keyboard dan menampilkan karakter di layar melalui GPU.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-head">Dari Klik Mouse ke Aksi: Navigasi Kursor</div>
+      <div class="how-strip">
+        <div class="how-step">
+          <span class="how-num">1 — OPTIK</span>
+          <div class="how-title">LED + Kamera</div>
+          <p class="how-desc">LED menerangi permukaan; sensor kamera mengambil 1000–8000 foto per detik.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">2 — DSP</span>
+          <div class="how-title">Deteksi Gerak</div>
+          <p class="how-desc">DSP (Digital Signal Processor) membandingkan frame berturut-turut untuk menghitung delta X dan Y.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">3 — OS</span>
+          <div class="how-title">Translasi Kursor</div>
+          <p class="how-desc">Delta dikalikan dengan pengaturan kecepatan pointer OS, menggeser posisi kursor di layar.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">4 — GPU</span>
+          <div class="how-title">Render Kursor</div>
+          <p class="how-desc">GPU merender kursor pada posisi baru setiap frame refresh layar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 6. ANTARMUKA I/O ════════════════════ -->
+  <section id="antarmuka">
+    <div class="sec-head"><span class="sec-num">6</span><h2>Antarmuka I/O: Port &amp; Koneksi</h2><span class="sec-line"></span></div>
+    <p>Antarmuka I/O (interface) adalah standar koneksi fisik dan protokol komunikasi yang menghubungkan perangkat input/output ke komputer. Memilih antarmuka yang tepat mempengaruhi kecepatan transfer data, latensi, dan kompatibilitas.</p>
+
+    <div class="port-grid">
+      <div class="port-card">
+        <span class="port-name">USB-A 3.2 Gen 2</span>
+        <span class="port-speed">10 Gbps</span>
+        Konektor USB kotak klasik. Backward compatible. Umum untuk mouse, keyboard, flash drive.
+      </div>
+      <div class="port-card">
+        <span class="port-name">USB-C / Thunderbolt 4</span>
+        <span class="port-speed">40 Gbps (TB4)</span>
+        Konektor oval reversibel. USB4/TB4 mendukung data, video (4K×2), dan pengisian 100W+ dalam satu kabel.
+      </div>
+      <div class="port-card">
+        <span class="port-name">HDMI 2.1</span>
+        <span class="port-speed">48 Gbps</span>
+        Standar koneksi video/audio konsumen. Mendukung 4K@120Hz, 8K@60Hz, HDR, dan eARC (audio).
+      </div>
+      <div class="port-card">
+        <span class="port-name">DisplayPort 2.1</span>
+        <span class="port-speed">80 Gbps</span>
+        Standar video untuk monitor PC. Mendukung 16K, daisy-chaining monitor, dan Adaptive Sync (G-Sync/FreeSync).
+      </div>
+      <div class="port-card">
+        <span class="port-name">Bluetooth 5.3</span>
+        <span class="port-speed">2 Mbps, 10–40 m</span>
+        Koneksi nirkabel untuk mouse, keyboard, headphone, dan periferal lain. LE Audio (LC3 codec) untuk audio efisien.
+      </div>
+      <div class="port-card">
+        <span class="port-name">Wi-Fi 6E (802.11ax)</span>
+        <span class="port-speed">9.6 Gbps teori</span>
+        Jaringan nirkabel band 6 GHz. Latensi rendah, kapasitas tinggi di lingkungan padat. Digunakan layar nirkabel.
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="ck">Catatan Penting</span>
+      <strong>USB-C adalah konektor</strong> (bentuk fisik), bukan protokol. Sebuah port USB-C bisa mendukung USB 2.0 (480 Mbps) atau Thunderbolt 4 (40 Gbps) — selalu cek spesifikasi, jangan hanya melihat bentuk konektor!
+    </div>
+  </section>
+
+  <!-- ════════════════════ 7. I/O GANDA ════════════════════ -->
+  <section id="io-ganda">
+    <div class="sec-head"><span class="sec-num">7</span><h2>Perangkat I/O Ganda</h2><span class="sec-line"></span></div>
+    <p>Beberapa perangkat menjalankan fungsi input dan output secara bersamaan — ini disebut <strong>perangkat I/O bidireksional</strong>.</p>
+
+    <div class="dual-grid">
+      <div class="dual-card">
+        <div class="dual-badge"><span class="badge in">Input</span><span class="badge out">Output</span></div>
+        <h3>Touchscreen</h3>
+        <p>Menampilkan konten visual (output) sekaligus menerima sentuhan sebagai perintah (input). Standar pada semua smartphone, tablet, dan kiosk modern.</p>
+      </div>
+      <div class="dual-card">
+        <div class="dual-badge"><span class="badge in">Input</span><span class="badge out">Output</span></div>
+        <h3>All-in-One Printer (MFP)</h3>
+        <p>Multifunction Printer — mencetak (output), memindai (input), dan mengirim faks. Satu perangkat untuk tiga fungsi.</p>
+      </div>
+      <div class="dual-card">
+        <div class="dual-badge"><span class="badge in">Input</span><span class="badge out">Output</span></div>
+        <h3>Headset VoIP</h3>
+        <p>Mikrofon menerima suara (input) dan speaker/earphone memutar audio (output) secara simultan dalam satu perangkat.</p>
+      </div>
+      <div class="dual-card">
+        <div class="dual-badge"><span class="badge in">Input</span><span class="badge out">Output</span></div>
+        <h3>Smart Speaker (Asisten Suara)</h3>
+        <p>Mikrofon array menangkap perintah suara (input), speaker merespons dengan audio dan informasi (output). Contoh: Amazon Echo, Google Home.</p>
+      </div>
+      <div class="dual-card">
+        <div class="dual-badge"><span class="badge in">Input</span><span class="badge out">Output</span></div>
+        <h3>Force Feedback Joystick/Controller</h3>
+        <p>Mengirim perintah arah/tombol ke game (input) dan menerima umpan balik getaran/resistansi dari game (output haptic).</p>
+      </div>
+      <div class="dual-card">
+        <div class="dual-badge"><span class="badge in">Input</span><span class="badge out">Output</span></div>
+        <h3>Braille Terminal</h3>
+        <p>Tombol braille untuk input teks; pin braille yang naik-turun secara mekanis menampilkan output teks sebagai braille. Digunakan pengguna tunanetra.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 8. TREN ════════════════════ -->
+  <section id="tren">
+    <div class="sec-head"><span class="sec-num">8</span><h2>Tren Modern Perangkat I/O</h2><span class="sec-line"></span></div>
+
+    <div class="device-card blue">
+      <span class="role">Natural User Interface (NUI)</span>
+      <h3>Input Tanpa Kontak Fisik</h3>
+      <p>Pergeseran dari input berbasis kontak (keyboard, mouse) ke interaksi yang lebih alami: <strong>kontrol suara</strong> (Siri, Alexa, Google Assistant), <strong>gesture recognition</strong> (kamera + ML mendeteksi gerakan tangan tanpa sentuhan — digunakan Apple Vision Pro), dan <strong>eye tracking</strong> (melacak arah pandang mata untuk navigasi, digunakan di VR/AR headset dan aksesibilitas).</p>
+    </div>
+
+    <div class="device-card blue">
+      <span class="role">Augmented Reality / Virtual Reality</span>
+      <h3>AR/VR I/O</h3>
+      <p>Headset VR seperti Meta Quest 3 dan Apple Vision Pro menggabungkan banyak sensor (kamera, IMU, depth sensor, eye tracker) sebagai input, dan layar micro-OLED/pancake lens sebagai output visual imersif. Tangan pengguna langsung menjadi controller (hand tracking). Antarmuka ini menghilangkan batas antara "memegang perangkat" dan "berada di dalam antarmuka".</p>
+    </div>
+
+    <div class="device-card blue">
+      <span class="role">Brain-Computer Interface (BCI)</span>
+      <h3>Input Langsung dari Otak</h3>
+      <p>Teknologi eksperimental yang membaca sinyal elektrik dari neuron otak. Neuralink (Elon Musk) melakukan implantasi chip di korteks motorik untuk memungkinkan penderita paralisis menggerakkan kursor hanya dengan niat. Non-invasif menggunakan EEG headset untuk kontrol sederhana. Masih dalam fase penelitian medis, namun menunjukkan potensi revolusioner.</p>
+    </div>
+
+    <div class="device-card blue">
+      <span class="role">Layar Masa Depan</span>
+      <h3>Layar Fleksibel &amp; Transparan</h3>
+      <p><strong>Foldable display</strong> menggunakan OLED di atas substrat polimer fleksibel — Samsung Galaxy Z Fold, Huawei Mate X. <strong>Transparent display</strong> menggunakan Micro-LED transparan atau teknologi holografik — digunakan di head-up display (HUD) mobil, kacamata AR, dan etalase toko pintar.</p>
+    </div>
+
+    <div class="device-card blue">
+      <span class="role">AI-Enhanced I/O</span>
+      <h3>Perangkat I/O Bertenaga AI</h3>
+      <p>AI kini diintegrasikan langsung ke firmware perangkat I/O: kamera dengan real-time background blur dan noise reduction on-device; mikrofon dengan AI noise cancellation (NVIDIA RTX Voice); monitor dengan AI upscaling (NVIDIA DLSS, AMD FSR) yang memproses gambar 1080p menjadi tampilan kualitas 4K secara real-time.</p>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 9. PERBANDINGAN ════════════════════ -->
+  <section id="perbandingan">
+    <div class="sec-head"><span class="sec-num">9</span><h2>Tabel Perbandingan Cepat</h2><span class="sec-line"></span></div>
+
+    <p><strong>LCD vs OLED vs Mini-LED</strong></p>
+    <table class="compare-table" style="margin-bottom:28px;">
+      <thead><tr><th>Aspek</th><th>LCD/IPS</th><th>OLED</th><th>Mini-LED</th></tr></thead>
       <tbody>
-        <tr><td><b>Layar (Display)</b></td><td>Menampilkan output visual secara real-time</td><td>Monitor, layar laptop, proyektor</td></tr>
-        <tr><td><b>Printer</b></td><td>Mencetak output ke media fisik (kertas)</td><td>Printer inkjet, laser, 3D printer</td></tr>
-        <tr><td><b>Audio</b></td><td>Menghasilkan output berupa suara</td><td>Speaker, headphone, earphone</td></tr>
+        <tr><td>Black Level</td><td class="no">Tidak sempurna (backlight bocor)</td><td class="yes">Sempurna (piksel mati)</td><td class="mid">Sangat baik (local dimming)</td></tr>
+        <tr><td>Kecerahan</td><td class="mid">400–600 nit</td><td class="mid">1000–2000 nit (peak)</td><td class="yes">1000–4000 nit (peak)</td></tr>
+        <tr><td>Burn-in</td><td class="yes">Tidak ada</td><td class="no">Risiko pada elemen statis</td><td class="yes">Tidak ada</td></tr>
+        <tr><td>Respons</td><td class="mid">1–5 ms</td><td class="yes">&lt;0.1 ms</td><td class="mid">1–3 ms</td></tr>
+        <tr><td>Harga</td><td class="yes">Terjangkau</td><td class="no">Paling mahal</td><td class="mid">Premium</td></tr>
+        <tr><td>Umur Panjang</td><td class="yes">10–20 tahun</td><td class="no">5–10 tahun (organik degradasi)</td><td class="yes">15–20 tahun</td></tr>
       </tbody>
     </table>
-    <div class="callout">
-      <span class="ck">Poin Kunci</span>
-      Beberapa perangkat modern menggabungkan fungsi input dan output sekaligus — layar sentuh adalah contoh paling jelas: menampilkan output visual sekaligus menerima input sentuhan pengguna.
+
+    <p><strong>Keyboard Mechanical vs Membrane</strong></p>
+    <table class="compare-table">
+      <thead><tr><th>Aspek</th><th>Mechanical</th><th>Membrane</th><th>Scissor-Switch</th></tr></thead>
+      <tbody>
+        <tr><td>Respons Taktil</td><td class="yes">Sangat baik</td><td class="no">Tidak ada</td><td class="mid">Ringan</td></tr>
+        <tr><td>Kebisingan</td><td class="no">Berisik (Blue) / Senyap (Red)</td><td class="yes">Senyap</td><td class="yes">Senyap</td></tr>
+        <tr><td>Daya Tahan</td><td class="yes">50–100 juta keystrokes</td><td class="no">5–10 juta keystrokes</td><td class="mid">20–30 juta keystrokes</td></tr>
+        <tr><td>Ketebalan</td><td class="no">Tebal (3–4 cm)</td><td class="mid">Sedang</td><td class="yes">Tipis (laptop)</td></tr>
+        <tr><td>Harga</td><td class="no">Rp 400rb–3 jt+</td><td class="yes">Rp 50rb–300rb</td><td class="mid">Rp 200rb–1 jt</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ════════════════════ 10. GLOSARIUM ════════════════════ -->
+  <section id="glosarium">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Glosarium</h2><span class="sec-line"></span></div>
+    <div class="glos-grid">
+      <div class="glos-item"><span class="glos-term">DPI (Dots Per Inch)</span>Satuan resolusi atau sensitivitas — jumlah titik per inci. Pada mouse: seberapa jauh kursor bergerak per milimeter gerakan fisik.</div>
+      <div class="glos-item"><span class="glos-term">Scan Code</span>Kode numerik unik yang dihasilkan keyboard saat tombol ditekan, sebelum diinterpretasikan OS sebagai karakter.</div>
+      <div class="glos-item"><span class="glos-term">CCD / CMOS Sensor</span>Sensor gambar dalam kamera dan scanner. CCD: kualitas lebih tinggi, boros daya. CMOS: efisien, integrasi mudah, standar modern.</div>
+      <div class="glos-item"><span class="glos-term">Refresh Rate (Hz)</span>Jumlah kali layar memperbarui gambarnya per detik. 60 Hz = 60 frame per detik. Lebih tinggi = gerakan lebih mulus.</div>
+      <div class="glos-item"><span class="glos-term">Pointing Device</span>Perangkat input untuk mengendalikan kursor di layar (mouse, trackpad, touchscreen, stylus).</div>
+      <div class="glos-item"><span class="glos-term">DAC (Digital-to-Analog Converter)</span>Komponen yang mengubah data audio digital (0 dan 1) menjadi sinyal listrik analog yang dapat diubah speaker menjadi suara.</div>
+      <div class="glos-item"><span class="glos-term">ANC (Active Noise Cancellation)</span>Teknologi pada headphone yang menggunakan gelombang anti-fase untuk meniadakan kebisingan lingkungan secara elektronik.</div>
+      <div class="glos-item"><span class="glos-term">Haptic Feedback</span>Umpan balik berupa getaran atau kekuatan fisik dari suatu perangkat untuk mensimulasikan sensasi sentuhan.</div>
+      <div class="glos-item"><span class="glos-term">OLED</span>Organic Light-Emitting Diode — teknologi layar di mana setiap piksel memancarkan cahayanya sendiri tanpa backlight.</div>
+      <div class="glos-item"><span class="glos-term">Biometrik</span>Metode identifikasi menggunakan karakteristik fisik atau perilaku unik seseorang (sidik jari, wajah, iris, suara, gaya berjalan).</div>
+      <div class="glos-item"><span class="glos-term">Touchscreen Kapasitif</span>Layar sentuh yang mendeteksi konduktivitas listrik tubuh manusia — mendukung multi-touch. Standar smartphone modern.</div>
+      <div class="glos-item"><span class="glos-term">Akselerometer</span>Sensor yang mengukur percepatan linier pada tiga sumbu (X, Y, Z). Mendeteksi gerakan dan orientasi perangkat.</div>
+      <div class="glos-item"><span class="glos-term">Thunderbolt 4</span>Antarmuka koneksi Intel dengan bandwidth 40 Gbps — mendukung data, video 4K ganda, dan pengisian daya dalam satu konektor USB-C.</div>
+      <div class="glos-item"><span class="glos-term">ASR (Automatic Speech Recognition)</span>Teknologi yang mengubah sinyal audio ucapan manusia menjadi teks secara otomatis menggunakan model machine learning.</div>
+      <div class="glos-item"><span class="glos-term">Multifunction Printer (MFP)</span>Printer yang menggabungkan fungsi cetak, scan, copy, dan faks dalam satu perangkat — contoh I/O ganda.</div>
+      <div class="glos-item"><span class="glos-term">IPO Model</span>Input–Process–Output — model dasar arsitektur komputer yang menggambarkan alur kerja sistem pemrosesan informasi.</div>
     </div>
   </section>
 
-  <section id="tren">
-    <div class="sec-head"><span class="sec-num">4</span><h2>Tren Perangkat Input/Output</h2><span class="sec-line"></span></div>
-    <ul>
-      <li><b>Kontrol suara</b> — asisten virtual memungkinkan input tanpa sentuhan sama sekali.</li>
-      <li><b>Gesture & motion sensing</b> — kamera dan sensor gerak sebagai input tanpa kontak fisik.</li>
-      <li><b>Haptic feedback</b> — output berupa getaran/sentuhan untuk memberi umpan balik fisik (mis. saat mengetik di layar sentuh).</li>
-      <li><b>Layar fleksibel & lipat</b> — perkembangan teknologi output visual yang makin portabel.</li>
-    </ul>
+  <!-- ════════════════════ 11. LATIHAN ════════════════════ -->
+  <section id="latihan">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Latihan Soal</h2><span class="sec-line"></span></div>
+
+    <div class="exercise">
+      <div class="ex-head">Latihan A — Pilihan Ganda Konseptual</div>
+      <ol>
+        <li>Sebuah sensor suhu pada smartphone mendeteksi suhu baterai mencapai 45°C dan secara otomatis menurunkan performa CPU. Komponen mana yang merupakan perangkat <em>input</em> dalam skenario ini?
+          <div class="hint">Petunjuk: sensor adalah perangkat yang menerima data dari lingkungan fisik.</div>
+        </li>
+        <li>Mengapa touchscreen kapasitif tidak merespons saat pengguna memakai sarung tangan biasa, tetapi sarung tangan "capacitive gloves" berfungsi?
+          <div class="hint">Petunjuk: pikirkan apa yang sebenarnya dideteksi oleh layar sentuh kapasitif.</div>
+        </li>
+        <li>Seorang desainer grafis ingin mencetak 500 lembar dokumen teks setiap hari dengan biaya per halaman serendah mungkin. Printer jenis apa yang paling tepat, dan mengapa?</li>
+        <li>Sebuah monitor 4K 60Hz vs monitor FHD 144Hz — manakah yang lebih baik untuk gaming kompetitif, dan faktor teknis apa yang menjadi dasar keputusan tersebut?</li>
+      </ol>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head">Latihan B — Identifikasi Perangkat</div>
+      <ol>
+        <li>Sebutkan semua perangkat I/O yang ada pada smartphone Anda. Klasifikasikan masing-masing sebagai <em>input</em>, <em>output</em>, atau <em>keduanya</em>. Jangan lupa sensor yang tidak terlihat langsung.
+          <div class="hint">Petunjuk: cari informasi di situs spesifikasi resmi produsen atau buka menu Settings &gt; About Phone.</div>
+        </li>
+        <li>Gambarkan (secara deskripsi tulisan) alur data dari saat Anda menekan tombol kamera di smartphone hingga foto tersimpan di galeri. Identifikasi perangkat input dan output yang terlibat di setiap tahap.</li>
+      </ol>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head">Latihan C — Analisis Kasus</div>
+      <ol>
+        <li>Sebuah rumah sakit ingin mengimplementasikan sistem absensi karyawan berbasis biometrik. Bandingkan tiga opsi (fingerprint, face recognition, iris scanner) dari sisi akurasi, kecepatan, biaya, dan implikasi kebersihan/hygienis di lingkungan medis. Rekomendasikan satu opsi beserta alasannya.</li>
+      </ol>
+    </div>
   </section>
 
-  <section id="glosarium">
-    <div class="sec-head"><span class="sec-num">5</span><h2>Glosarium Singkat</h2><span class="sec-line"></span></div>
-    <dl class="glossary">
-      <dt>Pointing Device</dt><dd>Perangkat input untuk mengendalikan kursor di layar (mouse, trackpad, touchscreen).</dd>
-      <dt>Sensor</dt><dd>Perangkat yang mendeteksi kondisi fisik lingkungan dan mengubahnya menjadi data digital.</dd>
-      <dt>Biometrik</dt><dd>Metode identifikasi berdasarkan karakteristik fisik unik seseorang (sidik jari, wajah, suara).</dd>
-      <dt>Haptic Feedback</dt><dd>Umpan balik berupa getaran/sentuhan fisik dari suatu perangkat.</dd>
-      <dt>Touchscreen</dt><dd>Layar yang berfungsi ganda sebagai perangkat input (sentuhan) dan output (tampilan visual).</dd>
-    </dl>
-  </section>
-
+  <!-- ════════════════════ 12. CEK MANDIRI ════════════════════ -->
   <section id="cek-mandiri">
-    <div class="sec-head"><span class="sec-num">6</span><h2>Cek Pemahaman Mandiri</h2><span class="sec-line"></span></div>
+    <div class="sec-head"><span class="sec-num">12</span><h2>Cek Pemahaman Mandiri</h2><span class="sec-line"></span></div>
     <ul class="checklist">
-      <li><span class="box"></span>Saya dapat menyebutkan minimal tiga jenis perangkat input beserta contohnya.</li>
-      <li><span class="box"></span>Saya dapat menyebutkan minimal tiga jenis perangkat output beserta contohnya.</li>
-      <li><span class="box"></span>Saya dapat menjelaskan perbedaan sensor dan biometrik sebagai perangkat input.</li>
-      <li><span class="box"></span>Saya dapat memberi contoh perangkat yang berfungsi sebagai input sekaligus output.</li>
+      <li><span class="box"></span>Saya dapat menjelaskan perbedaan keyboard mechanical, membrane, dan scissor-switch, termasuk kelebihan dan kekurangan masing-masing.</li>
+      <li><span class="box"></span>Saya dapat membedakan cara kerja touchscreen resistif dan kapasitif serta menyebutkan konteks penggunaan yang tepat.</li>
+      <li><span class="box"></span>Saya dapat menyebutkan minimal 6 jenis sensor di smartphone beserta fungsi nyatanya.</li>
+      <li><span class="box"></span>Saya dapat menjelaskan mengapa OLED memiliki black level lebih baik dari LCD, dan apa konsekuensi negatifnya.</li>
+      <li><span class="box"></span>Saya dapat membandingkan printer inkjet dan laser dan merekomendasikan yang tepat berdasarkan kebutuhan pengguna.</li>
+      <li><span class="box"></span>Saya dapat menjelaskan perbedaan antara USB-C sebagai konektor dan Thunderbolt 4 sebagai protokol.</li>
+      <li><span class="box"></span>Saya dapat menyebutkan contoh perangkat I/O ganda dan menjelaskan bagaimana ia berfungsi sebagai keduanya.</li>
+      <li><span class="box"></span>Saya dapat menjelaskan risiko privasi dari penggunaan data biometrik dan mengapa ia dianggap "data sensitif".</li>
     </ul>
   </section>
 
+  <!-- ════════════════════ PERSIAPAN SESI 7 ════════════════════ -->
   <section id="persiapan">
     <div class="prep-box">
       <h2>Persiapan Sebelum Sesi 7</h2>
       <ol>
-        <li>Baca Modul 7 — <em>Digital Storage</em> pada buku Discovering Computers, 17th Edition.</li>
-        <li>Catat perangkat input dan output apa saja yang ada pada laptop/HP Anda sendiri, termasuk sensor yang mungkin tidak terlihat langsung.</li>
-        <li>Sesi 7 juga mencakup review Minggu 1–7 sebagai persiapan UTS — mulai baca ulang catatan dari sesi-sesi sebelumnya.</li>
+        <li>Baca Modul 7 — <em>Digital Storage</em> pada buku Discovering Computers, 17th Edition. Fokus pada perbedaan HDD, SSD, dan optical storage.</li>
+        <li>Catat semua perangkat I/O pada laptop/HP Anda beserta spesifikasinya (nama sensor, resolusi kamera, jenis layar jika diketahui). Gunakan menu Settings atau situs spesifikasi produsen.</li>
+        <li>Kerjakan Latihan B No. 1 di atas sebagai tugas mandiri — akan dibahas bersama di awal Sesi 7.</li>
+        <li>Sesi 7 juga mencakup review Minggu 1–7 sebagai persiapan UTS — mulai baca ulang catatan dari sesi-sesi sebelumnya, terutama konsep bit/byte (Sesi 2), sistem operasi (Sesi 4), dan keamanan digital (Sesi 5).</li>
       </ol>
     </div>
   </section>
