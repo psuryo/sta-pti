@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesi 7 — Penyimpanan Digital</title>
+<style>
+  :root{
+    --ink:#16203a;
+    --paper:#f1efe6;
+    --paper-2:#e8e4d4;
+    --line:#c9c2a8;
+    --teal:#2f6f6b;
+    --teal-dark:#204c49;
+    --teal-soft:#d4ebe9;
+    --amber:#c98a2c;
+    --amber-soft:#f3e3c4;
+    --red:#a4432c;
+    --red-soft:#f5e0da;
+    --blue:#2955a0;
+    --blue-soft:#dce7fa;
+    --font-display:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --font-body:'Charter',Georgia,'Iowan Old Style',serif;
+    --font-mono:'IBM Plex Mono','SFMono-Regular',Menlo,monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background-image:
+      radial-gradient(circle at 20% 10%,rgba(47,111,107,0.05),transparent 40%),
+      radial-gradient(circle at 90% 80%,rgba(201,138,44,0.06),transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px 120px;position:relative;z-index:1;}
+
+  /* ---- breadcrumb ---- */
+  .breadcrumb{
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.04em;
+    padding:22px 0 0;color:#6b6552;
+  }
+  .breadcrumb a{color:var(--teal-dark);text-decoration:none;border-bottom:1px solid var(--teal);}
+
+  /* ---- masthead ---- */
+  header.masthead{border-bottom:3px solid var(--ink);padding:18px 0 20px;margin-bottom:40px;}
+  .eyebrow{
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal-dark);display:flex;justify-content:space-between;margin-bottom:14px;
+  }
+  h1.title{
+    font-family:var(--font-display);font-weight:400;font-size:clamp(30px,5vw,46px);
+    line-height:1.08;margin:0 0 10px;letter-spacing:-.01em;
+  }
+  h1.title em{font-style:normal;color:var(--teal-dark);border-bottom:2px solid var(--amber);}
+  .subtitle{font-size:16px;color:#4b4636;max-width:64ch;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .meta-chip{
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.03em;
+    padding:5px 11px;border:1px solid var(--line);border-radius:2px;
+    background:var(--paper-2);color:var(--ink);
+  }
+
+  /* ---- TOC ---- */
+  .toc{
+    background:#fff;border:1px solid var(--line);padding:18px 22px;
+    margin-bottom:48px;font-size:14px;
+  }
+  .toc-title{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-dark);margin-bottom:10px;}
+  .toc ol{margin:0;padding-left:18px;}
+  .toc li{margin-bottom:4px;}
+  .toc a{color:var(--teal-dark);text-decoration:none;border-bottom:1px dotted var(--teal);}
+  .toc a:hover{color:var(--amber);border-color:var(--amber);}
+
+  /* ---- section structure ---- */
+  section{margin-bottom:60px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px;}
+  .sec-num{
+    font-family:var(--font-mono);font-size:13px;color:var(--amber);
+    border:1px solid var(--amber);border-radius:50%;width:26px;height:26px;min-width:26px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .sec-head h2{font-family:var(--font-display);font-weight:400;font-size:24px;margin:0;color:var(--ink);}
+  .sec-head .sec-line{flex:1;height:1px;background:var(--line);}
+
+  /* ---- sub-section ---- */
+  .sub{margin-bottom:36px;}
+  .sub-head{
+    font-family:var(--font-display);font-weight:600;font-size:18px;margin:0 0 14px;
+    padding-bottom:6px;border-bottom:2px solid var(--teal-soft);color:var(--teal-dark);
+  }
+  .sub-head span{font-weight:400;font-size:13px;color:#7a735c;margin-left:8px;font-family:var(--font-mono);}
+
+  /* ---- typography ---- */
+  p{margin:0 0 14px;}
+  ul,ol{margin:0 0 14px;padding-left:22px;}
+  li{margin-bottom:6px;}
+  strong{color:var(--ink);}
+
+  /* ---- objectives ---- */
+  .objectives{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .obj-card{
+    background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);
+    padding:16px 18px;font-size:14.5px;
+  }
+  .obj-card .k{
+    font-family:var(--font-mono);font-size:11px;color:var(--teal-dark);letter-spacing:.06em;
+    display:block;margin-bottom:4px;
+  }
+
+  /* ---- device card ---- */
+  .device-card{
+    background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);
+    padding:18px 20px;margin-bottom:14px;
+  }
+  .device-card.amber{border-left-color:var(--amber);}
+  .device-card.blue{border-left-color:var(--blue);}
+  .device-card.red{border-left-color:var(--red);}
+  .device-card h3{font-family:var(--font-display);font-size:17px;margin:0 0 2px;font-weight:600;}
+  .device-card .role{
+    font-family:var(--font-mono);font-size:11px;color:var(--teal-dark);
+    text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:block;
+  }
+  .device-card.amber .role{color:var(--amber);}
+  .device-card.blue .role{color:var(--blue);}
+  .device-card.red .role{color:var(--red);}
+  .device-card p{font-size:14px;margin:0 0 8px;color:#3a3527;}
+  .device-card p:last-child{margin-bottom:0;}
+  .device-card ul{font-size:14px;color:#3a3527;margin:4px 0 0;}
+
+  /* ---- tag pills ---- */
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .tag{
+    font-family:var(--font-mono);font-size:11px;padding:2px 8px;
+    border-radius:2px;border:1px solid var(--line);background:var(--paper-2);color:#4b4636;
+  }
+  .tag.teal{background:var(--teal-soft);border-color:var(--teal);color:var(--teal-dark);}
+  .tag.amber{background:var(--amber-soft);border-color:var(--amber);color:#7a4a10;}
+  .tag.blue{background:var(--blue-soft);border-color:var(--blue);color:var(--blue);}
+  .tag.red{background:var(--red-soft);border-color:var(--red);color:var(--red);}
+
+  /* ---- compare table ---- */
+  .compare-table{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;margin-bottom:8px;}
+  .compare-table th,.compare-table td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top;}
+  .compare-table thead th{background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:11px;text-transform:uppercase;font-weight:400;}
+  .compare-table tbody tr:nth-child(even){background:var(--paper-2);}
+  .compare-table td.yes{color:var(--teal-dark);font-weight:600;}
+  .compare-table td.no{color:var(--red);}
+  .compare-table td.mid{color:var(--amber);}
+
+  /* ---- spec table ---- */
+  .spec-table{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;margin:12px 0 20px;}
+  .spec-table th,.spec-table td{border:1px solid var(--line);padding:9px 12px;text-align:left;}
+  .spec-table thead th{background:var(--teal-dark);color:#fff;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;font-weight:400;}
+  .spec-table tbody tr:nth-child(even){background:var(--paper-2);}
+
+  /* ---- callout ---- */
+  .callout{background:var(--amber-soft);border-left:4px solid var(--amber);padding:16px 20px;font-size:14.5px;margin-bottom:20px;}
+  .callout.teal{background:var(--teal-soft);border-left-color:var(--teal);}
+  .callout.blue{background:var(--blue-soft);border-left-color:var(--blue);}
+  .callout.warn{background:var(--red-soft);border-left-color:var(--red);}
+  .callout .ck{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px;}
+  .callout .ck{color:var(--amber);}
+  .callout.teal .ck{color:var(--teal-dark);}
+  .callout.blue .ck{color:var(--blue);}
+  .callout.warn .ck{color:var(--red);}
+
+  /* ---- how-it-works strip ---- */
+  .how-strip{
+    display:flex;flex-wrap:wrap;gap:0;margin:16px 0 20px;
+    border:1px solid var(--line);background:#fff;overflow:hidden;
+  }
+  .how-step{
+    flex:1;min-width:140px;padding:14px 16px;border-right:1px solid var(--line);
+    position:relative;
+  }
+  .how-step:last-child{border-right:none;}
+  .how-step::after{
+    content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+    color:var(--amber);font-size:14px;z-index:2;
+  }
+  .how-step:last-child::after{display:none;}
+  .how-num{font-family:var(--font-mono);font-size:11px;color:var(--amber);letter-spacing:.06em;display:block;margin-bottom:4px;}
+  .how-title{font-family:var(--font-display);font-weight:600;font-size:14px;margin:0 0 4px;}
+  .how-desc{font-size:12.5px;color:#4b4636;margin:0;}
+
+  /* ---- storage tier ---- */
+  .tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+  .tier-card{
+    background:#fff;border:1px solid var(--line);padding:14px 16px;font-size:13.5px;
+    border-top:3px solid var(--teal);
+  }
+  .tier-card.amber{border-top-color:var(--amber);}
+  .tier-card.blue{border-top-color:var(--blue);}
+  .tier-name{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--teal-dark);display:block;margin-bottom:4px;}
+  .tier-card.amber .tier-name{color:var(--amber);}
+  .tier-card.blue .tier-name{color:var(--blue);}
+  .tier-speed{font-family:var(--font-mono);font-size:11px;color:#7a735c;display:block;margin-bottom:4px;}
+
+  /* ---- review grid ---- */
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:16px;}
+  .review-card{
+    background:#fff;border:1px solid var(--line);padding:16px 18px;
+  }
+  .review-sesi{
+    font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--amber);display:block;margin-bottom:4px;
+  }
+  .review-card h3{font-family:var(--font-display);font-size:16px;font-weight:600;margin:0 0 8px;}
+  .review-card ul{font-size:13.5px;color:#3a3527;margin:0;padding-left:18px;}
+  .review-card li{margin-bottom:4px;}
+
+  /* ---- backup rule ---- */
+  .backup-rule{
+    background:var(--ink);color:var(--paper);padding:24px 28px;margin-bottom:16px;
+  }
+  .backup-rule .rule-head{
+    font-family:var(--font-mono);font-size:26px;color:var(--amber);margin-bottom:8px;
+  }
+  .backup-rule h3{font-family:var(--font-display);font-weight:400;font-size:20px;margin:0 0 10px;color:#f3e3c4;}
+  .backup-rule p{font-size:14.5px;line-height:1.6;color:#ccc8b8;margin:0;}
+
+  /* ---- exercise ---- */
+  .exercise{background:var(--ink);color:var(--paper);padding:26px 28px;border-radius:2px;margin-bottom:12px;}
+  .exercise .ex-head{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber-soft);margin-bottom:14px;}
+  .exercise ol{padding-left:18px;margin:0;}
+  .exercise li{margin-bottom:10px;font-size:14.5px;line-height:1.6;}
+  .exercise .hint{font-size:12.5px;color:#aaa89b;font-style:italic;margin-top:4px;}
+
+  /* ---- glossary ---- */
+  .glos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .glos-item{background:#fff;border:1px solid var(--line);padding:13px 16px;font-size:14px;}
+  .glos-term{font-family:var(--font-mono);font-size:12px;color:var(--teal-dark);font-weight:700;display:block;margin-bottom:3px;}
+
+  /* ---- checklist ---- */
+  .checklist{list-style:none;padding:0;margin:0;}
+  .checklist li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14.5px;}
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .box{width:16px;height:16px;border:1.5px solid var(--ink);flex:none;margin-top:3px;border-radius:2px;}
+
+  /* ---- prep box ---- */
+  .prep-box{background:var(--ink);color:var(--paper);padding:24px 28px;border-radius:2px;}
+  .prep-box h2{font-family:var(--font-display);font-weight:400;font-size:20px;margin:0 0 12px;color:var(--amber-soft);}
+  .prep-box ol{padding-left:20px;margin:0;}
+  .prep-box li{margin-bottom:8px;font-size:14.5px;}
+
+  /* ---- footer ---- */
+  footer{
+    border-top:1px solid var(--line);padding-top:18px;margin-top:60px;
+    font-family:var(--font-mono);font-size:11.5px;color:#7a735c;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  /* ---- responsive ---- */
+  @media(max-width:680px){
+    .objectives{grid-template-columns:1fr;}
+    .tier-grid{grid-template-columns:1fr;}
+    .review-grid{grid-template-columns:1fr;}
+    .glos-grid{grid-template-columns:1fr;}
+    .how-strip{flex-direction:column;}
+    .how-step{border-right:none;border-bottom:1px solid var(--line);}
+    .how-step::after{content:"↓";right:auto;left:50%;top:auto;bottom:-10px;transform:translateX(-50%);}
+    .how-step:last-child::after{display:none;}
+    .meta-row{gap:8px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="index.html">← Kembali ke Ruang Kelas</a></div>
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Pengantar Teknologi Informasi · Semester I</span>
+      <span>Panduan Mahasiswa</span>
+    </div>
+    <h1 class="title">Sesi 07 — Penyimpanan<br><em>Digital &amp; Review UTS</em></h1>
+    <p class="subtitle">Memahami cara komputer menyimpan data secara permanen — dari piringan magnetik hingga chip flash — beserta strategi backup yang handal. Sesi ini juga mencakup review menyeluruh Modul 1–7 sebagai persiapan Ujian Tengah Semester.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Modul 7 — Digital Storage</span>
+      <span class="meta-chip">Ref: Discovering Computers, 17th Ed.</span>
+      <span class="meta-chip">Metode: Ceramah, Demonstrasi, Review Soal</span>
+      <span class="meta-chip">Pertemuan 7 dari 16</span>
+    </div>
+  </header>
+
+  <!-- ════════════════════ TOC ════════════════════ -->
+  <nav class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ol>
+      <li><a href="#tujuan">Tujuan Pembelajaran</a></li>
+      <li><a href="#konsep">Konsep Dasar Penyimpanan</a></li>
+      <li><a href="#magnetic">Magnetic Storage — HDD</a></li>
+      <li><a href="#ssd">Solid-State Storage — SSD &amp; Flash</a></li>
+      <li><a href="#optical">Optical Storage</a></li>
+      <li><a href="#cloud">Cloud Storage</a></li>
+      <li><a href="#hierarki">Hierarki Memori &amp; Storage</a></li>
+      <li><a href="#backup">Strategi Backup Data</a></li>
+      <li><a href="#perbandingan">Tabel Perbandingan Cepat</a></li>
+      <li><a href="#review">Review UTS — Modul 1–7</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#latihan">Latihan Soal</a></li>
+      <li><a href="#cek-mandiri">Cek Pemahaman Mandiri</a></li>
+      <li><a href="#persiapan">Persiapan Sesi 8 (UTS)</a></li>
+    </ol>
+  </nav>
+
+  <!-- ════════════════════ 1. TUJUAN ════════════════════ -->
+  <section id="tujuan">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Tujuan Pembelajaran</h2><span class="sec-line"></span></div>
+    <div class="objectives">
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Membedakan jenis-jenis media penyimpanan (magnetik, solid-state, optik, cloud) beserta prinsip kerja masing-masing.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menjelaskan mengapa SSD lebih cepat dari HDD dari sudut pandang arsitektur teknis.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Membandingkan media penyimpanan berdasarkan kapasitas, kecepatan, ketahanan, dan biaya untuk memilih yang tepat.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Menjelaskan hierarki memori komputer dan peran masing-masing tingkatan dalam performa sistem.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Merancang strategi backup data menggunakan prinsip 3-2-1.</div>
+      <div class="obj-card"><span class="k">SETELAH SESI INI, MAHASISWA MAMPU</span>Merangkum konsep kunci Modul 1–7 sebagai persiapan UTS.</div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 2. KONSEP DASAR ════════════════════ -->
+  <section id="konsep">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Konsep Dasar Penyimpanan</h2><span class="sec-line"></span></div>
+
+    <p>Penyimpanan digital adalah proses merekam data dalam bentuk biner (0 dan 1) ke medium fisik sehingga data dapat dibaca kembali di kemudian hari. Berbeda dengan <strong>memori utama (RAM)</strong> yang bersifat volatil (data hilang saat listrik mati), <strong>penyimpanan sekunder</strong> bersifat <strong>non-volatil</strong> — data tetap ada meski tanpa daya listrik.</p>
+
+    <div class="callout teal">
+      <span class="ck">Perbedaan Kunci: Memori vs Storage</span>
+      <strong>Memori (RAM)</strong> — cepat, sementara, harga tinggi per GB, digunakan CPU secara aktif. <strong>Storage</strong> — lebih lambat, permanen, harga rendah per GB, digunakan untuk menyimpan OS, program, dan data jangka panjang. Data perlu "dimuat" dari storage ke RAM sebelum bisa diproses CPU.
+    </div>
+
+    <p>Karakteristik utama yang membedakan media penyimpanan:</p>
+    <ul>
+      <li><strong>Kapasitas</strong> — seberapa banyak data yang dapat disimpan (KB → MB → GB → TB → PB)</li>
+      <li><strong>Kecepatan Baca/Tulis</strong> — seberapa cepat data dapat diakses atau disimpan (MB/s atau GB/s)</li>
+      <li><strong>Latensi Akses</strong> — waktu tunggu sebelum operasi baca/tulis dimulai (ms atau µs)</li>
+      <li><strong>Daya Tahan</strong> — ketahanan terhadap guncangan, panas, dan siklus baca/tulis</li>
+      <li><strong>Biaya per GB</strong> — efisiensi ekonomi penyimpanan</li>
+      <li><strong>Portabilitas</strong> — kemudahan memindahkan data antar perangkat</li>
+    </ul>
+
+    <div class="callout">
+      <span class="ck">Satuan Kapasitas Data</span>
+      1 KB = 1.024 byte · 1 MB = 1.024 KB · 1 GB = 1.024 MB · 1 TB = 1.024 GB · 1 PB = 1.024 TB · 1 EB = 1.024 PB. Catatan: produsen hard disk menggunakan basis 10 (1 GB = 1.000.000.000 byte), sedangkan OS menggunakan basis 2 — itulah mengapa kapasitas yang tertera di OS lebih kecil dari yang tertulis di kotak produk.
+    </div>
+  </section>
+
+  <!-- ════════════════════ 3. MAGNETIC STORAGE ════════════════════ -->
+  <section id="magnetic">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Magnetic Storage — HDD</h2><span class="sec-line"></span></div>
+
+    <p><strong>HDD (Hard Disk Drive)</strong> adalah media penyimpanan yang menggunakan piringan (platter) berputar yang dilapisi bahan magnetik. Kepala baca/tulis (read/write head) melayang nanometer di atas permukaan platter untuk membaca dan menulis data.</p>
+
+    <div class="device-card">
+      <span class="role">Cara Kerja HDD</span>
+      <h3>Mekanisme Magnetik</h3>
+      <p>Data disimpan sebagai orientasi magnetik domain pada lapisan ferro-magnetik piringan. Domain yang berorientasi ke satu arah mewakili bit 1, arah berlawanan mewakili bit 0. Kepala baca/tulis menggunakan elektromagnet kecil: mengubah orientasi domain untuk menulis, mendeteksi perubahan medan magnet untuk membaca.</p>
+      <div class="tags"><span class="tag">Kecepatan rotasi: 5.400–15.000 RPM</span><span class="tag teal">Kapasitas: 500 GB–20+ TB</span><span class="tag">Harga: ~Rp 200–500/GB</span></div>
+    </div>
+
+    <div class="device-card">
+      <span class="role">Komponen Utama HDD</span>
+      <h3>Anatomi Hard Disk Drive</h3>
+      <ul>
+        <li><strong>Platter</strong>: piringan aluminium/kaca dilapisi bahan magnetik. Satu HDD bisa punya 1–10 platter bertumpuk.</li>
+        <li><strong>Spindle</strong>: poros yang memutar platter. Kecepatan umum: 5.400 RPM (laptop hemat daya), 7.200 RPM (desktop standar), 10.000–15.000 RPM (server).</li>
+        <li><strong>Read/Write Head</strong>: satu kepala per permukaan platter (atas dan bawah), melayang pada ketinggian 3–5 nanometer.</li>
+        <li><strong>Actuator Arm</strong>: lengan yang menggerakkan head ke posisi track yang tepat.</li>
+        <li><strong>Cache Buffer</strong>: memori DRAM kecil (8–256 MB) pada PCB untuk mempercepat operasi baca/tulis berulang.</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-head">Cara Data Diorganisasi di Platter</div>
+      <div class="how-strip">
+        <div class="how-step">
+          <span class="how-num">Track</span>
+          <div class="how-title">Lingkaran Konsentris</div>
+          <p class="how-desc">Permukaan platter dibagi menjadi ribuan track — lingkaran konsentris dari tepi ke tengah.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">Sector</span>
+          <div class="how-title">Potongan Track</div>
+          <p class="how-desc">Tiap track dipotong menjadi sector — unit terkecil data yang dapat dibaca/ditulis (512 byte atau 4 KB).</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">Cylinder</span>
+          <div class="how-title">Track Vertikal</div>
+          <p class="how-desc">Track bernomor sama di semua platter membentuk cylinder — diakses tanpa menggerakkan head.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">Cluster</span>
+          <div class="how-title">Unit Alokasi</div>
+          <p class="how-desc">OS mengelompokkan sector menjadi cluster (4–64 KB) — unit minimum yang dialokasikan untuk satu file.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="ck">Bottleneck Fisik HDD</span>
+      <strong>Seek time</strong> (waktu kepala bergerak ke track yang tepat, ~3–10 ms) dan <strong>rotational latency</strong> (waktu menunggu sector yang diinginkan berputar ke bawah kepala, rata-rata setengah rotasi = 4–8 ms pada 7.200 RPM) adalah penyebab utama HDD jauh lebih lambat dari SSD. SSD tidak punya bagian bergerak, sehingga latensi akses turun ke ~0,05–0,1 ms.
+    </div>
+
+    <div class="device-card amber">
+      <span class="role">Jenis HDD Modern</span>
+      <h3>SMR vs CMR</h3>
+      <p><strong>CMR (Conventional Magnetic Recording)</strong>: track ditulis tanpa tumpang tindih — kecepatan tulis konsisten, cocok untuk NAS dan workload berat. <strong>SMR (Shingled Magnetic Recording)</strong>: track baru ditumpangkan di atas tepi track lama seperti sirap atap — kapasitas lebih besar namun kecepatan tulis lebih lambat (butuh rewrite area) sehingga tidak cocok untuk NAS/RAID. Produsen sering tidak mencantumkan tipe di kotak produk — periksa spesifikasi teknis resmi sebelum membeli untuk NAS.</p>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 4. SSD ════════════════════ -->
+  <section id="ssd">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Solid-State Storage — SSD &amp; Flash</h2><span class="sec-line"></span></div>
+
+    <p><strong>SSD (Solid-State Drive)</strong> menyimpan data menggunakan sel memori NAND Flash — tidak ada bagian bergerak. Data ditulis/dibaca dengan mengatur muatan listrik dalam transistor floating-gate atau charge-trap yang tersusun dalam grid sel.</p>
+
+    <div class="device-card">
+      <span class="role">Teknologi NAND Flash</span>
+      <h3>SLC / MLC / TLC / QLC</h3>
+      <p>Jumlah bit yang disimpan per sel menentukan kepadatan dan karakteristik performa:</p>
+      <table class="spec-table" style="margin-top:10px;">
+        <thead><tr><th>Tipe</th><th>Bit/Sel</th><th>Kecepatan Tulis</th><th>Daya Tahan (P/E cycles)</th><th>Biaya</th><th>Penggunaan Ideal</th></tr></thead>
+        <tbody>
+          <tr><td><strong>SLC</strong></td><td>1 bit</td><td>Tercepat</td><td>50.000–100.000</td><td>Sangat mahal</td><td>Enterprise, cache layer</td></tr>
+          <tr><td><strong>MLC</strong></td><td>2 bit</td><td>Cepat</td><td>10.000–30.000</td><td>Mahal</td><td>Enterprise/prosumer</td></tr>
+          <tr><td><strong>TLC</strong></td><td>3 bit</td><td>Cukup cepat</td><td>1.000–3.000</td><td>Terjangkau</td><td>Konsumer mainstream</td></tr>
+          <tr><td><strong>QLC</strong></td><td>4 bit</td><td>Lebih lambat</td><td>100–1.000</td><td>Murah</td><td>Cold storage, arsip</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:#4b4636;margin:0;">P/E Cycle = berapa kali satu sel dapat ditulis dan dihapus sebelum mulai gagal.</p>
+    </div>
+
+    <div class="device-card">
+      <span class="role">Form Factor & Interface SSD</span>
+      <h3>2.5" SATA vs M.2 NVMe</h3>
+      <p><strong>2.5" SATA SSD</strong>: bentuk seperti HDD kecil, menggunakan interface SATA III — kecepatan maks ~550 MB/s baca / ~520 MB/s tulis. Bottleneck ada di protokol SATA, bukan chip NAND. Cocok untuk upgrade laptop lama atau desktop yang tidak punya slot M.2.</p>
+      <p><strong>M.2 NVMe SSD</strong>: form factor papan kecil (~22×80 mm), terhubung langsung ke jalur PCIe CPU via protokol NVMe. Kecepatan: PCIe 3.0 ~3.5 GB/s, PCIe 4.0 ~7 GB/s, PCIe 5.0 ~14 GB/s. Latensi lebih rendah karena NVMe dirancang khusus untuk flash (bukan diadaptasi dari protokol disk magnetik seperti AHCI/SATA).</p>
+      <div class="tags"><span class="tag">SATA III: ~550 MB/s</span><span class="tag teal">NVMe PCIe 4.0: ~7 GB/s</span><span class="tag teal">NVMe PCIe 5.0: ~14 GB/s</span></div>
+    </div>
+
+    <div class="device-card">
+      <span class="role">Teknologi 3D NAND</span>
+      <h3>Layer Vertikal — Lebih Besar, Lebih Tahan</h3>
+      <p>Generasi awal NAND menyusun sel secara datar (2D/planar). 3D NAND menumpuk lapisan sel secara vertikal (64–200+ lapisan). Hasilnya: kapasitas lebih besar dalam area silikon yang sama, kepadatan tinggi, dan daya tahan per sel lebih baik karena sel lebih besar. Samsung V-NAND, Micron 3D NAND, dan SK Hynix 4D NAND adalah implementasi populer.</p>
+    </div>
+
+    <div class="sub">
+      <div class="sub-head">Flash Storage Lain <span>USB, SD Card, eMMC, UFS</span></div>
+
+      <div class="device-card amber">
+        <span class="role">Removable Flash Storage</span>
+        <h3>USB Flash Drive &amp; SD Card</h3>
+        <p><strong>USB Flash Drive</strong>: menggunakan chip NAND Flash dengan controller. Kecepatan sangat bervariasi (10–420 MB/s baca). Penting cek spesifikasi: USB 2.0 (max 60 MB/s) vs USB 3.2 Gen 1 (625 MB/s) vs USB 3.2 Gen 2 (1.25 GB/s).</p>
+        <p><strong>SD Card</strong>: digunakan di kamera, drone, dan tablet. Grading speed: Class 10 (10 MB/s min), UHS-I (104 MB/s max), UHS-II (312 MB/s max), UHS-III (624 MB/s), SD Express (985 MB/s+). Video membutuhkan rating V30/V60/V90 (kecepatan tulis minimum untuk rekaman video 4K/8K).</p>
+        <div class="tags"><span class="tag amber">SD Card V30: 30 MB/s min write</span><span class="tag">UHS-II: 312 MB/s max</span></div>
+      </div>
+
+      <div class="device-card amber">
+        <span class="role">Embedded Flash — Smartphone & Laptop</span>
+        <h3>eMMC vs UFS</h3>
+        <p><strong>eMMC (embedded MultiMediaCard)</strong>: chip flash yang disolder langsung ke motherboard. Interface satu jalur (half-duplex) — kecepatan baca/tulis tidak bisa bersamaan. Maks ~400 MB/s baca. Umum di smartphone entry-level dan Chromebook murah.</p>
+        <p><strong>UFS (Universal Flash Storage)</strong>: interface dua jalur (full-duplex) — baca dan tulis dapat terjadi bersamaan. UFS 3.1: ~2,1 GB/s baca / ~1,2 GB/s tulis. UFS 4.0: ~4,2 GB/s baca. Standar smartphone flagship modern (Snapdragon 8-series, Dimensity 9000+).</p>
+        <div class="tags"><span class="tag">eMMC: half-duplex, ~400 MB/s</span><span class="tag amber">UFS 4.0: ~4.2 GB/s baca</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 5. OPTICAL ════════════════════ -->
+  <section id="optical">
+    <div class="sec-head"><span class="sec-num">5</span><h2>Optical Storage</h2><span class="sec-line"></span></div>
+
+    <p>Media optik menyimpan data sebagai pola pit (cekungan) dan land (permukaan datar) pada permukaan disk yang dipindai oleh sinar laser. Laser membaca perbedaan pantulan cahaya antara pit dan land sebagai data biner.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr><th>Format</th><th>Kapasitas</th><th>Kecepatan (1×)</th><th>Laser</th><th>Kegunaan Utama</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>CD</strong></td><td>700 MB</td><td>150 KB/s</td><td>Inframerah (780 nm)</td><td>Musik, software lama</td></tr>
+        <tr><td><strong>DVD</strong></td><td>4,7 GB (single layer) / 8,5 GB (dual layer)</td><td>1,38 MB/s</td><td>Merah (650 nm)</td><td>Film SD, software distribusi</td></tr>
+        <tr><td><strong>Blu-ray</strong></td><td>25 GB (SL) / 50 GB (DL) / 100 GB (BDXL)</td><td>4,5 MB/s</td><td>Biru-ungu (405 nm)</td><td>Film 4K UHD, arsip jangka panjang</td></tr>
+        <tr><td><strong>M-DISC</strong></td><td>25–100 GB</td><td>—</td><td>Biru-ungu (405 nm)</td><td>Arsip permanen (1.000 tahun+)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout teal">
+      <span class="ck">Mengapa Blu-ray Lebih Padat?</span>
+      Semakin pendek panjang gelombang laser, semakin kecil titik yang dapat difokuskan di permukaan disk, sehingga pit dan land dapat dibuat lebih kecil dan lebih rapat — kapasitas meningkat. CD menggunakan laser 780 nm, DVD 650 nm, Blu-ray 405 nm.
+    </div>
+
+    <div class="callout warn">
+      <span class="ck">Optical Disc Rot</span>
+      CD/DVD berbahan polycarbonate dengan lapisan reflektif aluminium rentan terhadap oksidasi (disc rot) — lapisan aluminium berkarat dari dalam, menyebabkan data tidak dapat dibaca. Proses berlangsung dalam 20–30 tahun pada kondisi buruk. M-DISC menggunakan lapisan inorganic rock-like material yang jauh lebih tahan.
+    </div>
+  </section>
+
+  <!-- ════════════════════ 6. CLOUD STORAGE ════════════════════ -->
+  <section id="cloud">
+    <div class="sec-head"><span class="sec-num">6</span><h2>Cloud Storage</h2><span class="sec-line"></span></div>
+
+    <p>Cloud storage menyimpan data di server pihak ketiga yang dapat diakses melalui internet. Data secara fisik tersimpan di data center yang tersebar di berbagai lokasi geografis untuk ketahanan (redundancy) dan performa.</p>
+
+    <div class="device-card blue">
+      <span class="role">Cara Kerja Cloud Storage</span>
+      <h3>Distribusi &amp; Redundansi</h3>
+      <p>Data diunggah melalui API ke server provider. Provider menyimpan beberapa salinan (biasanya 3 replika di lokasi berbeda) menggunakan teknik seperti <strong>erasure coding</strong> atau <strong>replication</strong>. Data dienkripsi dalam transit (TLS) dan saat tersimpan (AES-256). Pengguna mengakses data melalui browser, aplikasi, atau mounting sebagai drive virtual.</p>
+    </div>
+
+    <table class="compare-table" style="margin-bottom:16px;">
+      <thead>
+        <tr><th>Layanan</th><th>Storage Gratis</th><th>Integrasi Utama</th><th>Enkripsi Sisi Klien</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Google Drive</strong></td><td>15 GB</td><td>Google Workspace, Android</td><td class="no">Tidak (server-side saja)</td></tr>
+        <tr><td><strong>OneDrive</strong></td><td>5 GB</td><td>Microsoft 365, Windows</td><td class="no">Tidak (kecuali Personal Vault)</td></tr>
+        <tr><td><strong>iCloud Drive</strong></td><td>5 GB</td><td>Apple ecosystem</td><td class="yes">Ya (Advanced Data Protection)</td></tr>
+        <tr><td><strong>Dropbox</strong></td><td>2 GB</td><td>Desktop sync universal</td><td class="no">Tidak</td></tr>
+        <tr><td><strong>Backblaze B2</strong></td><td>10 GB</td><td>Backup apps, Veeam, Rclone</td><td class="yes">Ya (server-side + client option)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <span class="ck">Cloud Bukan Pengganti Backup</span>
+      Cloud storage ≠ backup. Jika file terhapus atau rusak secara lokal, sinkronisasi cloud dapat menyebarkan kerusakan tersebut ke semua perangkat. Layanan cloud seperti Dropbox menyimpan histori versi (30 hari–1 tahun tergantung paket), namun ini bukan backup sejati. Untuk backup yang andal, ikuti strategi 3-2-1 (lihat bagian selanjutnya).
+    </div>
+  </section>
+
+  <!-- ════════════════════ 7. HIERARKI MEMORI ════════════════════ -->
+  <section id="hierarki">
+    <div class="sec-head"><span class="sec-num">7</span><h2>Hierarki Memori &amp; Storage</h2><span class="sec-line"></span></div>
+
+    <p>Sistem komputer menggunakan beberapa tingkatan penyimpanan yang berbeda kecepatan dan biayanya. CPU mengakses tingkatan yang lebih dekat (dan lebih cepat) terlebih dahulu sebelum mengambil data dari tingkatan yang lebih lambat.</p>
+
+    <div class="tier-grid">
+      <div class="tier-card">
+        <span class="tier-name">Register CPU</span>
+        <span class="tier-speed">~0.1 ns · Bytes</span>
+        Memori tercepat, langsung di dalam prosesor. Menampung operand dan hasil operasi aritmetik aktif. Jumlah: 16–32 register umum per core.
+      </div>
+      <div class="tier-card">
+        <span class="tier-name">Cache L1</span>
+        <span class="tier-speed">~1 ns · 32–128 KB/core</span>
+        Per-core. Menyimpan instruksi dan data yang paling baru digunakan. Akses dalam 4–5 siklus clock.
+      </div>
+      <div class="tier-card">
+        <span class="tier-name">Cache L2</span>
+        <span class="tier-speed">~4 ns · 256 KB–4 MB/core</span>
+        Per-core atau shared. Buffer antara L1 dan L3. Akses dalam 12–15 siklus.
+      </div>
+      <div class="tier-card amber">
+        <span class="tier-name">Cache L3</span>
+        <span class="tier-speed">~10 ns · 8–128 MB shared</span>
+        Dibagi seluruh core. Menyimpan data yang sering diakses bersama. Contoh: Intel Core i9 punya L3 hingga 36 MB.
+      </div>
+      <div class="tier-card amber">
+        <span class="tier-name">RAM (DRAM)</span>
+        <span class="tier-speed">~60–100 ns · 4–128 GB</span>
+        Memori utama sistem. Volatil. DDR5 mencapai 6.400 MT/s. Semua program aktif harus dimuat ke sini.
+      </div>
+      <div class="tier-card amber">
+        <span class="tier-name">SSD NVMe</span>
+        <span class="tier-speed">~0.05 ms · 256 GB–8 TB</span>
+        Storage primer modern. Non-volatil. Digunakan OS dan aplikasi sehari-hari.
+      </div>
+      <div class="tier-card blue">
+        <span class="tier-name">HDD / SATA SSD</span>
+        <span class="tier-speed">~5–10 ms (HDD) · TB-level</span>
+        Storage sekunder. HDD untuk kapasitas besar dengan biaya rendah. SATA SSD sebagai kompromi.
+      </div>
+      <div class="tier-card blue">
+        <span class="tier-name">Optical / Tape</span>
+        <span class="tier-speed">Detik–menit · TB–PB</span>
+        Arsip jangka panjang dan backup tier dingin. Tape (LTO) digunakan data center besar.
+      </div>
+      <div class="tier-card blue">
+        <span class="tier-name">Cloud Storage</span>
+        <span class="tier-speed">Bergantung jaringan</span>
+        Penyimpanan jarak jauh. Kecepatan dibatasi bandwidth internet. Cocok untuk kolaborasi dan backup offsite.
+      </div>
+    </div>
+
+    <div class="callout teal">
+      <span class="ck">Prinsip Lokalitas</span>
+      Cache bekerja efektif karena program mengikuti <strong>lokalitas temporal</strong> (data yang baru digunakan kemungkinan besar akan digunakan lagi segera) dan <strong>lokalitas spasial</strong> (data yang berdekatan di memori kemungkinan besar akan diakses bersamaan). Cache hit rate 95%+ adalah normal untuk aplikasi yang dioptimalkan dengan baik.
+    </div>
+  </section>
+
+  <!-- ════════════════════ 8. BACKUP ════════════════════ -->
+  <section id="backup">
+    <div class="sec-head"><span class="sec-num">8</span><h2>Strategi Backup Data</h2><span class="sec-line"></span></div>
+
+    <p>Backup adalah salinan data yang dibuat untuk memulihkan data jika terjadi kehilangan akibat kegagalan hardware, malware, kesalahan manusia, atau bencana alam. Backup yang tidak diuji adalah backup yang tidak ada nilainya.</p>
+
+    <div class="backup-rule">
+      <div class="rule-head">3–2–1</div>
+      <h3>Aturan Backup 3-2-1</h3>
+      <p>Standar industri yang direkomendasikan oleh NIST, US-CERT, dan pakar keamanan data di seluruh dunia: <strong>3</strong> salinan data (1 original + 2 backup) · disimpan di <strong>2</strong> media berbeda (misalnya SSD + external HDD) · dengan <strong>1</strong> salinan di lokasi offsite (cloud atau lokasi fisik berbeda). Melindungi dari kegagalan hardware tunggal, ransomware, dan bencana fisik.</p>
+    </div>
+
+    <div class="sub">
+      <div class="sub-head">Jenis-Jenis Backup</div>
+
+      <div class="device-card">
+        <span class="role">Full Backup</span>
+        <h3>Salinan Lengkap</h3>
+        <p>Menyalin seluruh data setiap kali backup dijalankan. Proses paling lambat dan membutuhkan ruang paling besar, namun restorasi paling mudah (hanya butuh satu file backup). Cocok untuk backup mingguan atau bulanan.</p>
+        <div class="tags"><span class="tag">Waktu backup: Lama</span><span class="tag">Ruang: Besar</span><span class="tag teal">Restorasi: Mudah (1 file)</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Incremental Backup</span>
+        <h3>Hanya Perubahan Sejak Backup Terakhir</h3>
+        <p>Menyalin hanya data yang berubah sejak backup terakhir (full atau incremental). Proses cepat, ruang kecil. Namun restorasi kompleks: harus memutar ulang full backup + semua incremental secara berurutan. Cocok untuk backup harian.</p>
+        <div class="tags"><span class="tag teal">Waktu backup: Cepat</span><span class="tag teal">Ruang: Kecil</span><span class="tag">Restorasi: Kompleks (rantai file)</span></div>
+      </div>
+
+      <div class="device-card">
+        <span class="role">Differential Backup</span>
+        <h3>Perubahan Sejak Full Backup Terakhir</h3>
+        <p>Menyalin semua data yang berubah sejak <em>full backup terakhir</em> (bukan backup terakhir). Restorasi hanya butuh dua file: full backup + differential terbaru. Kompromi antara incremental dan full.</p>
+        <div class="tags"><span class="tag">Waktu backup: Sedang</span><span class="tag">Ruang: Sedang (makin besar seiring waktu)</span><span class="tag teal">Restorasi: 2 file</span></div>
+      </div>
+
+      <div class="device-card amber">
+        <span class="role">Snapshot &amp; Continuous Backup</span>
+        <h3>Point-in-Time Recovery</h3>
+        <p><strong>Snapshot</strong>: gambar status sistem pada titik waktu tertentu. Tidak menyalin data secara fisik — hanya mencatat blok mana yang berubah (copy-on-write). Sangat cepat dibuat, digunakan ZFS, Btrfs, dan VMware. <strong>Continuous Data Protection (CDP)</strong>: setiap perubahan langsung direkam ke sistem backup — RPO (Recovery Point Objective) mendekati nol. Digunakan lingkungan enterprise kritis.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="ck">Pengujian Backup</span>
+      Backup tanpa pengujian restorasi adalah ilusi keamanan. Jadwalkan <strong>uji restorasi berkala</strong> — setidaknya sekali per kuartal. Pastikan prosedur restorasi terdokumentasi dan dapat dijalankan oleh siapapun di tim, bukan hanya satu orang. Ransomware modern juga mengincar file backup yang terhubung ke jaringan — pastikan setidaknya satu salinan offline atau immutable.
+    </div>
+  </section>
+
+  <!-- ════════════════════ 9. PERBANDINGAN ════════════════════ -->
+  <section id="perbandingan">
+    <div class="sec-head"><span class="sec-num">9</span><h2>Tabel Perbandingan Cepat</h2><span class="sec-line"></span></div>
+
+    <p><strong>HDD vs SSD NVMe vs Cloud</strong></p>
+    <table class="compare-table" style="margin-bottom:28px;">
+      <thead><tr><th>Aspek</th><th>HDD (7.200 RPM)</th><th>SATA SSD</th><th>NVMe SSD (PCIe 4.0)</th><th>Cloud Storage</th></tr></thead>
+      <tbody>
+        <tr><td>Kecepatan Baca</td><td class="no">120–200 MB/s</td><td class="mid">500–550 MB/s</td><td class="yes">3.500–7.000 MB/s</td><td>Bergantung ISP</td></tr>
+        <tr><td>Latensi Akses</td><td class="no">5–10 ms</td><td class="yes">0,05–0,1 ms</td><td class="yes">&lt;0,05 ms</td><td class="no">20–200 ms (jaringan)</td></tr>
+        <tr><td>Kapasitas Maks</td><td class="yes">20 TB+</td><td class="mid">4–8 TB</td><td class="mid">4–8 TB</td><td class="yes">Tidak terbatas (berbayar)</td></tr>
+        <tr><td>Biaya per GB</td><td class="yes">~Rp 200–500</td><td class="mid">~Rp 500–1.500</td><td class="no">~Rp 800–2.000</td><td>~Rp 150–300/GB/bulan</td></tr>
+        <tr><td>Ketahanan Fisik</td><td class="no">Rentan guncangan (bagian bergerak)</td><td class="yes">Tahan guncangan</td><td class="yes">Tahan guncangan</td><td class="yes">Tidak relevan (di data center)</td></tr>
+        <tr><td>Akses Offline</td><td class="yes">Ya</td><td class="yes">Ya</td><td class="yes">Ya</td><td class="no">Tidak (butuh internet)</td></tr>
+        <tr><td>Konsumsi Daya</td><td class="no">5–10 W (aktif)</td><td class="yes">1–3 W</td><td class="yes">3–7 W (burst), &lt;1 W (idle)</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Backup Full vs Incremental vs Differential</strong></p>
+    <table class="compare-table">
+      <thead><tr><th>Aspek</th><th>Full</th><th>Incremental</th><th>Differential</th></tr></thead>
+      <tbody>
+        <tr><td>Kecepatan Backup</td><td class="no">Paling lambat</td><td class="yes">Paling cepat</td><td class="mid">Sedang</td></tr>
+        <tr><td>Ruang Storage</td><td class="no">Paling besar</td><td class="yes">Paling kecil</td><td class="mid">Berkembang seiring waktu</td></tr>
+        <tr><td>Kecepatan Restorasi</td><td class="yes">Paling cepat</td><td class="no">Paling lambat (rantai)</td><td class="mid">Cepat (2 file saja)</td></tr>
+        <tr><td>Kompleksitas</td><td class="yes">Paling sederhana</td><td class="no">Paling kompleks</td><td class="mid">Sedang</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ════════════════════ 10. REVIEW UTS ════════════════════ -->
+  <section id="review">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Review UTS — Modul 1–7</h2><span class="sec-line"></span></div>
+
+    <p>Ujian Tengah Semester mencakup seluruh materi Modul 1–7. Berikut ringkasan konsep kunci per sesi yang perlu dikuasai.</p>
+
+    <div class="review-grid">
+      <div class="review-card">
+        <span class="review-sesi">Sesi 1 — Modul 1</span>
+        <h3>Warga Digital &amp; Sejarah Komputer</h3>
+        <ul>
+          <li>Generasi komputer I–V dan teknologi kuncinya</li>
+          <li>Komponen dasar: Input, Process, Output, Storage, Communication</li>
+          <li>Definisi literasi digital dan hak/tanggung jawab warga digital</li>
+          <li>Jenis komputer: supercomputer, mainframe, server, desktop, laptop, mobile, embedded</li>
+        </ul>
+      </div>
+
+      <div class="review-card">
+        <span class="review-sesi">Sesi 2 — Modul 2</span>
+        <h3>Internet &amp; Komunikasi Online</h3>
+        <ul>
+          <li>Cara kerja internet: IP address, DNS, packet switching</li>
+          <li>Protokol web: HTTP/HTTPS, FTP, SMTP, TCP/IP</li>
+          <li>Cloud computing: SaaS, PaaS, IaaS — definisi dan contoh</li>
+          <li>E-commerce, media sosial, dan risiko online</li>
+          <li>Sistem bilangan: biner, desimal, heksadesimal</li>
+        </ul>
+      </div>
+
+      <div class="review-card">
+        <span class="review-sesi">Sesi 3 — Modul 3</span>
+        <h3>Evaluasi Perangkat Keras</h3>
+        <ul>
+          <li>CPU: ALU, Control Unit, clock speed, core, cache L1/L2/L3</li>
+          <li>RAM: DRAM vs SRAM, DDR generasi, dual-channel</li>
+          <li>Motherboard: chipset, slot PCIe, form factor</li>
+          <li>GPU: integrated vs discrete, VRAM, CUDA/compute cores</li>
+          <li>PSU: efisiensi 80 Plus, watt rating</li>
+        </ul>
+      </div>
+
+      <div class="review-card">
+        <span class="review-sesi">Sesi 4 — Modul 4</span>
+        <h3>Program dan Aplikasi</h3>
+        <ul>
+          <li>Jenis software: system software vs application software</li>
+          <li>Lisensi: proprietary, freeware, shareware, open-source (GPL, MIT, Apache)</li>
+          <li>Aplikasi produktivitas: office suite, browser, media player</li>
+          <li>Proses kompilasi vs interpretasi kode program</li>
+          <li>App store dan distribusi software modern</li>
+        </ul>
+      </div>
+
+      <div class="review-card">
+        <span class="review-sesi">Sesi 5 — Modul 5</span>
+        <h3>Keamanan Digital, Etika &amp; Privasi</h3>
+        <ul>
+          <li>Jenis malware: virus, worm, trojan, ransomware, spyware, rootkit</li>
+          <li>Metode serangan: phishing, social engineering, man-in-the-middle, brute force</li>
+          <li>Autentikasi: password, 2FA/MFA, biometrik</li>
+          <li>Enkripsi: simetris (AES) vs asimetris (RSA), HTTPS/TLS</li>
+          <li>Etika digital: hak cipta, plagiarisme, cyberbullying, privasi data</li>
+        </ul>
+      </div>
+
+      <div class="review-card">
+        <span class="review-sesi">Sesi 6 — Modul 6</span>
+        <h3>Perangkat Input dan Output</h3>
+        <ul>
+          <li>Jenis keyboard: membrane, mechanical, scissor-switch, virtual</li>
+          <li>Pointing device: optical/laser mouse, touchpad kapasitif, touchscreen</li>
+          <li>Sensor smartphone: akselerometer, giroskop, GPS, proximity</li>
+          <li>Biometrik: fingerprint (optical/capacitive/ultrasonic), face recognition 2D/3D, iris</li>
+          <li>Teknologi layar: LCD (TN/IPS/VA), OLED, Mini-LED</li>
+          <li>Port I/O: USB-C, Thunderbolt, HDMI, DisplayPort, Bluetooth</li>
+        </ul>
+      </div>
+
+      <div class="review-card">
+        <span class="review-sesi">Sesi 7 — Modul 7</span>
+        <h3>Penyimpanan Digital</h3>
+        <ul>
+          <li>HDD: platter, track, sector, cylinder, seek time, rotational latency</li>
+          <li>SSD: NAND Flash, SLC/MLC/TLC/QLC, 2.5" SATA vs M.2 NVMe, 3D NAND</li>
+          <li>Optical: CD/DVD/Blu-ray — kapasitas, panjang gelombang laser</li>
+          <li>Cloud storage: redundansi, enkripsi, layanan populer</li>
+          <li>Hierarki memori: register → cache L1/L2/L3 → RAM → SSD → HDD → Cloud</li>
+          <li>Backup: aturan 3-2-1, full vs incremental vs differential</li>
+        </ul>
+      </div>
+
+      <div class="review-card" style="border-left:4px solid var(--amber);">
+        <span class="review-sesi" style="color:var(--red);">Tips UTS</span>
+        <h3>Strategi Menjawab Soal</h3>
+        <ul>
+          <li>Soal konsep: jawab dengan definisi + contoh konkret</li>
+          <li>Soal perbandingan: gunakan tabel atau dua paragraf per opsi</li>
+          <li>Soal kasus: identifikasi masalah → analisis → rekomendasi + alasan</li>
+          <li>Baca soal sampai akhir sebelum mulai menjawab</li>
+          <li>Kelola waktu: alokasikan per-soal proporsional terhadap poin</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 11. GLOSARIUM ════════════════════ -->
+  <section id="glosarium">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Glosarium</h2><span class="sec-line"></span></div>
+    <div class="glos-grid">
+      <div class="glos-item"><span class="glos-term">HDD (Hard Disk Drive)</span>Media penyimpanan magnetik dengan piringan berputar. Data disimpan sebagai orientasi domain magnetik pada lapisan ferro-magnetik platter.</div>
+      <div class="glos-item"><span class="glos-term">SSD (Solid-State Drive)</span>Media penyimpanan berbasis chip NAND Flash tanpa bagian bergerak. Jauh lebih cepat dan tahan guncangan dibanding HDD.</div>
+      <div class="glos-item"><span class="glos-term">NAND Flash</span>Jenis memori non-volatil yang menyimpan data sebagai muatan listrik dalam transistor floating-gate. Digunakan SSD, USB drive, dan kartu memori.</div>
+      <div class="glos-item"><span class="glos-term">NVMe (Non-Volatile Memory Express)</span>Protokol antarmuka yang dirancang khusus untuk SSD — memanfaatkan jalur PCIe langsung ke CPU, jauh lebih cepat dari AHCI/SATA.</div>
+      <div class="glos-item"><span class="glos-term">Seek Time</span>Waktu yang dibutuhkan kepala baca/tulis HDD untuk bergerak ke track yang tepat. Rata-rata 3–10 ms — penyebab utama lambatnya HDD.</div>
+      <div class="glos-item"><span class="glos-term">Rotational Latency</span>Waktu menunggu sector yang diinginkan berputar ke bawah kepala HDD. Rata-rata setengah rotasi: ~4 ms pada 7.200 RPM.</div>
+      <div class="glos-item"><span class="glos-term">RAID (Redundant Array of Independent Disks)</span>Teknik menggabungkan beberapa drive untuk performa atau redundansi. RAID 0: striping (cepat, tidak ada redundansi). RAID 1: mirroring (data disalin di dua drive).</div>
+      <div class="glos-item"><span class="glos-term">P/E Cycle (Program/Erase)</span>Jumlah siklus tulis-hapus yang dapat dilakukan sel NAND sebelum gagal. SLC: 100.000 siklus; TLC: 1.000–3.000 siklus.</div>
+      <div class="glos-item"><span class="glos-term">Wear Leveling</span>Algoritma dalam controller SSD yang mendistribusikan penulisan secara merata ke seluruh sel agar tidak ada sel yang aus lebih cepat.</div>
+      <div class="glos-item"><span class="glos-term">RPO (Recovery Point Objective)</span>Titik waktu paling jauh ke belakang di mana data dapat dipulihkan. RPO 24 jam berarti maksimal kehilangan 24 jam data jika bencana terjadi.</div>
+      <div class="glos-item"><span class="glos-term">RTO (Recovery Time Objective)</span>Waktu maksimum yang diizinkan untuk memulihkan sistem setelah bencana. RTO 4 jam berarti sistem harus berjalan kembali dalam 4 jam.</div>
+      <div class="glos-item"><span class="glos-term">Volatile vs Non-Volatile</span>Volatile: data hilang saat listrik mati (RAM, cache). Non-volatile: data tetap ada tanpa daya (SSD, HDD, flash, optical).</div>
+      <div class="glos-item"><span class="glos-term">3-2-1 Rule</span>Strategi backup: 3 salinan data, di 2 media berbeda, dengan 1 salinan offsite. Standar industri untuk perlindungan data.</div>
+      <div class="glos-item"><span class="glos-term">Cloud Storage</span>Penyimpanan data di server remote yang diakses via internet. Contoh: Google Drive, OneDrive, iCloud, Dropbox.</div>
+      <div class="glos-item"><span class="glos-term">SMR (Shingled Magnetic Recording)</span>Teknik HDD yang menumpangkan track baru di atas tepi track lama untuk meningkatkan kapasitas, namun kecepatan tulis lebih lambat dibanding CMR.</div>
+      <div class="glos-item"><span class="glos-term">Hierarki Memori</span>Piramida penyimpanan komputer dari tercepat/termahal (register) hingga terlambat/termurah (cloud/tape), mencerminkan trade-off antara kecepatan dan biaya.</div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 12. LATIHAN ════════════════════ -->
+  <section id="latihan">
+    <div class="sec-head"><span class="sec-num">12</span><h2>Latihan Soal</h2><span class="sec-line"></span></div>
+
+    <div class="exercise">
+      <div class="ex-head">Latihan A — Pilihan Ganda Konseptual</div>
+      <ol>
+        <li>Sebuah HDD 7.200 RPM memiliki seek time rata-rata 8 ms. Berapa latensi rotasional rata-ratanya, dan berapa total waktu akses rata-rata (seek + rotational)?
+          <div class="hint">Petunjuk: latensi rotasional rata-rata = waktu untuk setengah putaran penuh.</div>
+        </li>
+        <li>Mengapa SSD menggunakan teknik "wear leveling" padahal HDD tidak memerlukannya?
+          <div class="hint">Petunjuk: pikirkan perbedaan mekanisme penulisan data di kedua jenis storage tersebut.</div>
+        </li>
+        <li>Sebuah perusahaan melakukan backup incremental setiap malam dan full backup setiap minggu. Jika bencana terjadi pada hari Kamis, berapa banyak file backup yang harus dipulihkan secara berurutan untuk mendapatkan data terbaru?</li>
+        <li>Mengapa kapasitas HDD yang tertera di kotak produk (misalnya "1 TB = 1.000 GB") berbeda dengan yang ditampilkan sistem operasi Windows atau macOS?</li>
+      </ol>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head">Latihan B — Studi Kasus Backup</div>
+      <ol>
+        <li>Sebuah fotografer profesional memiliki koleksi foto bernilai tinggi sebesar 2 TB. Saat ini ia hanya menyimpan semua foto di satu external HDD. Rancangkan strategi backup yang mengikuti aturan 3-2-1 untuk situasi ini. Sebutkan media, lokasi, dan frekuensi backup yang Anda rekomendasikan, beserta estimasi biaya.</li>
+        <li>Sebuah organisasi non-profit kehilangan semua data karena ransomware menyerang file backup yang tersimpan di Google Drive yang selalu tersinkron secara otomatis. Identifikasi kesalahan dalam strategi backup mereka dan jelaskan bagaimana aturan 3-2-1 seharusnya diterapkan untuk mencegah kejadian ini.</li>
+      </ol>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head">Latihan C — Review UTS Lintas Modul</div>
+      <ol>
+        <li>Seorang mahasiswa ingin membeli laptop untuk keperluan desain grafis, video editing 4K, dan gaming. Jelaskan spesifikasi storage yang ideal (jenis, form factor, kapasitas, interface) dan jelaskan mengapa spesifikasi tersebut cocok untuk ketiga kebutuhan itu. Kemudian tautkan keputusan storage tersebut dengan spesifikasi RAM (Sesi 3) yang perlu didampingi.</li>
+        <li>Jelaskan bagaimana enkripsi (Sesi 5) berperan dalam melindungi data yang disimpan di cloud storage, khususnya jika provider cloud mengalami kebocoran data. Bedakan antara enkripsi server-side dan client-side.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ════════════════════ 13. CEK MANDIRI ════════════════════ -->
+  <section id="cek-mandiri">
+    <div class="sec-head"><span class="sec-num">13</span><h2>Cek Pemahaman Mandiri</h2><span class="sec-line"></span></div>
+    <ul class="checklist">
+      <li><span class="box"></span>Saya dapat menjelaskan mengapa latensi akses HDD (ms) jauh lebih tinggi dari SSD (µs) secara teknis, bukan hanya menyebut "karena bergerak".</li>
+      <li><span class="box"></span>Saya dapat membedakan SLC, TLC, dan QLC NAND berdasarkan jumlah bit per sel, daya tahan, dan konteks penggunaan yang tepat.</li>
+      <li><span class="box"></span>Saya dapat menjelaskan perbedaan antara SATA SSD dan NVMe SSD dari sudut pandang protokol, bukan hanya bentuk fisik.</li>
+      <li><span class="box"></span>Saya dapat menyusun hierarki memori dari register hingga cloud storage dengan benar beserta perkiraan latensi tiap tingkatan.</li>
+      <li><span class="box"></span>Saya dapat merancang strategi backup 3-2-1 untuk skenario nyata dan menjelaskan mengapa setiap komponen aturan tersebut penting.</li>
+      <li><span class="box"></span>Saya dapat membedakan full, incremental, dan differential backup berdasarkan kecepatan, ruang yang dibutuhkan, dan kompleksitas restorasi.</li>
+      <li><span class="box"></span>Saya dapat merangkum konsep kunci dari Modul 1–7 dan mengidentifikasi keterkaitan antar topik (misalnya: enkripsi Sesi 5 berkaitan dengan cloud storage Sesi 7).</li>
+      <li><span class="box"></span>Saya dapat menjelaskan mengapa cloud storage bukan pengganti backup dan menyebutkan skenario di mana cloud sync justru menyebarkan kerusakan data.</li>
+    </ul>
+  </section>
+
+  <!-- ════════════════════ PERSIAPAN SESI 8 ════════════════════ -->
+  <section id="persiapan">
+    <div class="prep-box">
+      <h2>Persiapan Sebelum Sesi 8 (UTS)</h2>
+      <ol>
+        <li>Pelajari kembali semua panduan sesi 1–7. Fokus pada konsep yang Anda tandai belum dipahami di daftar cek mandiri masing-masing sesi.</li>
+        <li>Kerjakan semua latihan soal dari sesi 1–7 yang belum diselesaikan. Prioritaskan soal studi kasus karena format UTS kemungkinan besar mencakup analisis kasus.</li>
+        <li>Buat ringkasan satu halaman per modul — rangkum dalam kata-kata sendiri, bukan salin dari materi. Ini adalah cara belajar aktif yang terbukti efektif untuk retensi.</li>
+        <li>Tinjau kembali Latihan B No. 1 dari Sesi 6 (identifikasi perangkat I/O smartphone) yang seharusnya sudah dikerjakan — siap dibahas dan dikaitkan dengan Sesi 7.</li>
+        <li>Pastikan hadir tepat waktu di Sesi 8. Bawa alat tulis yang cukup. Tidak ada materi yang dibawa masuk ke ruang ujian kecuali diizinkan oleh dosen.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <span>Pengantar Teknologi Informasi — Semester I</span>
+    <span>Sumber: Campbell et al., Discovering Computers, 17th Ed. (Cengage Learning, 2023)</span>
+  </footer>
+
+</div>
+</body>
+</html>
