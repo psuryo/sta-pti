@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesi 10 — Pendalaman Perangkat Jaringan</title>
+<style>
+  :root{
+    --ink:#16203a;
+    --paper:#f1efe6;
+    --paper-2:#e8e4d4;
+    --line: #c9c2a8;
+    --teal:#2f6f6b;
+    --teal-dark:#204c49;
+    --amber:#c98a2c;
+    --amber-soft:#f3e3c4;
+    --red:#a4432c;
+    --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+    --font-body: 'Charter', Georgia, 'Iowan Old Style', serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(47,111,107,0.05), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(201,138,44,0.06), transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:880px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  .breadcrumb{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em;
+    padding:22px 0 0; color:#6b6552;
+  }
+  .breadcrumb a{color:var(--teal-dark); text-decoration:none; border-bottom:1px solid var(--teal);}
+
+  header.masthead{
+    border-bottom:3px solid var(--ink);
+    padding:18px 0 20px;
+    margin-bottom:36px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(30px,5vw,46px);
+    line-height:1.08;
+    margin:0 0 10px;
+    letter-spacing:-.01em;
+  }
+  h1.title em{
+    font-style:normal;
+    color:var(--teal-dark);
+    border-bottom:2px solid var(--amber);
+  }
+  .subtitle{
+    font-size:16px;
+    color:#4b4636;
+    max-width:60ch;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+  }
+  .meta-chip{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:.03em;
+    padding:5px 11px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:var(--paper-2);
+    color:var(--ink);
+  }
+
+  section{margin-bottom:52px;}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:18px;
+  }
+  .sec-num{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--amber);
+    border:1px solid var(--amber);
+    border-radius:50%;
+    width:26px; height:26px;
+    min-width:26px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sec-head h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:24px;
+    margin:0;
+    color:var(--ink);
+  }
+  .sec-head .sec-line{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  p{margin:0 0 14px;}
+  ul, ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:6px;}
+
+  .objectives{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  .obj-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    padding:16px 18px;
+    font-size:14.5px;
+  }
+  .obj-card .k{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--teal-dark);
+    letter-spacing:.06em;
+    display:block;
+    margin-bottom:4px;
+  }
+
+  .type-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+  }
+  .type-card{
+    border:1px solid var(--line);
+    background:#fff;
+    padding:14px 16px;
+  }
+  .type-card h3{
+    font-family:var(--font-display);
+    font-size:16px;
+    margin:0 0 6px;
+    font-weight:600;
+  }
+  .type-card p{font-size:13.5px; margin:0; color:#453f2f;}
+
+  .concept-card{
+    background:#fff; border:1px solid var(--line); border-left:4px solid var(--teal);
+    padding:16px 18px; margin-bottom:12px;
+  }
+  .concept-card h3{font-family:var(--font-display); font-size:16px; margin:0 0 4px; font-weight:600;}
+  .concept-card .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; display:block;}
+  .concept-card p{font-size:13.5px; margin:0; color:#453f2f;}
+
+  .compare-table{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; margin-bottom:8px;}
+  .compare-table th, .compare-table td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  .compare-table thead th{background:var(--ink); color:var(--paper); font-family:var(--font-mono); font-size:11px; text-transform:uppercase; font-weight:400;}
+
+  .callout{
+    background:var(--amber-soft);
+    border-left:4px solid var(--amber);
+    padding:16px 20px;
+    font-size:14.5px;
+    margin-bottom:20px;
+  }
+  .callout.warn{background:#f5e0da; border-left-color:var(--red);}
+  .callout .ck{
+    font-family:var(--font-mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--red);
+    display:block;
+    margin-bottom:6px;
+  }
+
+  dl.glossary{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:10px 18px;
+    font-size:14.5px;
+  }
+  dl.glossary dt{
+    font-weight:700;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--teal-dark);
+  }
+  dl.glossary dd{margin:0; color:#3a3527;}
+  .readmore{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:6px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--teal-dark);
+    text-decoration:none;
+    border-bottom:1px solid var(--teal);
+    padding-bottom:1px;
+  }
+  .readmore:hover{color:var(--amber); border-color:var(--amber);}
+
+  .checklist{list-style:none; padding:0; margin:0;}
+  .checklist li{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:9px 0; border-bottom:1px dashed var(--line); font-size:14.5px;
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .box{
+    width:16px; height:16px; border:1.5px solid var(--ink);
+    flex:none; margin-top:3px; border-radius:2px;
+  }
+
+  .prep-box{
+    background:var(--ink); color:var(--paper);
+    padding:24px 26px; border-radius:2px;
+  }
+  .prep-box h2{
+    font-family:var(--font-display); font-weight:400; font-size:20px;
+    margin:0 0 12px; color:var(--amber-soft);
+  }
+  .prep-box ol{padding-left:20px; margin:0;}
+  .prep-box li{margin-bottom:8px; font-size:14.5px;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:18px; margin-top:60px;
+    font-family:var(--font-mono); font-size:11.5px; color:#7a735c;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  @media (max-width:640px){
+    .objectives, .type-grid{grid-template-columns:1fr;}
+    dl.glossary{grid-template-columns:1fr;}
+    dl.glossary dt{margin-top:6px;}
+    .meta-row{gap:8px;}
+  }
+
+  .fig{margin:0 0 18px; background:#fff; border:1px solid var(--line); padding:14px 14px 10px;}
+  .fig svg{display:block; width:100%; max-width:360px; height:auto; margin:0 auto;}
+  .fig figcaption{font-family:var(--font-mono); font-size:11.5px; color:#6b6552; text-align:center; margin-top:6px;}
+  .fig img{display:block; max-width:100%; height:auto; margin:0 auto;}
+  .item{margin-bottom:34px; padding-bottom:6px;}
+  .item h3{font-family:var(--font-display); font-size:20px; font-weight:600; margin:0 0 4px;}
+  .item .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:10px;}
+  .pc{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:6px;}
+  .pc div{background:#fff; border:1px solid var(--line); padding:12px 14px; font-size:13.5px;}
+  .pc .pro{border-top:3px solid var(--teal);} .pc .con{border-top:3px solid var(--red);}
+  .pc b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:4px;}
+  .pc ul{margin:0; padding-left:18px;} .pc li{margin-bottom:3px;}
+  @media (max-width:640px){.pc{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="sesi10.html">← Kembali ke Sesi 10</a></div>
+
+  <header class="masthead">
+    <div class="eyebrow"><span>Sesi 10 · Pendalaman 2</span><span>Modul 9 — Jaringan</span></div>
+    <h1 class="title">Pendalaman — <em>Perangkat</em> Jaringan</h1>
+    <p class="subtitle">Penjelasan dan gambar dari tiap perangkat jaringan yang sering ditemui: modem, router, switch, access point, NIC, dan kabel.</p>
+    <div class="meta-row"><span class="meta-chip">Perangkat Jaringan</span><span class="meta-chip">Ref: Discovering Computers, 17th Ed.</span></div>
+  </header>
+  <section id="alur">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Gambaran Alur Perangkat</h2><span class="sec-line"></span></div>
+    <figure class="fig"><div style="overflow-x:auto"><svg style="min-width:420px" viewBox="0 0 440 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Alur perangkat jaringan rumah" font-family="Menlo,monospace" font-size="10"><rect x="6" y="40" width="78" height="34" rx="4" fill="#16203a"/><text x="45" y="61" text-anchor="middle" fill="#fff">Internet</text><rect x="114" y="40" width="78" height="34" rx="4" fill="#2f6f6b"/><text x="153" y="61" text-anchor="middle" fill="#fff">Modem</text><rect x="222" y="40" width="78" height="34" rx="4" fill="#2f6f6b"/><text x="261" y="61" text-anchor="middle" fill="#fff">Router</text><rect x="330" y="40" width="78" height="34" rx="4" fill="#c98a2c"/><text x="369" y="61" text-anchor="middle" fill="#fff">Switch / AP</text><path d="M84 57 h24" stroke="#16203a" stroke-width="2"/><path d="M108 57 l-6 -4 v8 z" fill="#16203a"/><path d="M192 57 h24" stroke="#16203a" stroke-width="2"/><path d="M216 57 l-6 -4 v8 z" fill="#16203a"/><path d="M300 57 h24" stroke="#16203a" stroke-width="2"/><path d="M324 57 l-6 -4 v8 z" fill="#16203a"/><text x="240" y="108" text-anchor="middle" fill="#16203a">→ laptop, komputer, printer, ponsel</text></svg></div><figcaption>Gambar 1. Alur umum perangkat jaringan di rumah atau kantor kecil</figcaption></figure>
+  </section>
+  <section id="perangkat">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Perangkat Satu per Satu</h2><span class="sec-line"></span></div>
+    <div class="item">
+      <h3>Modem</h3><span class="role">Penghubung ke Penyedia Internet (ISP)</span>
+      <figure class="fig">
+        <!-- Untuk memakai foto sendiri, ganti seluruh tag svg di bawah dengan: <img src="foto-modem.jpg" alt="Modem"> -->
+        <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Modem" font-family="Menlo,monospace" font-size="10"><rect x="40" y="55" width="120" height="50" rx="6" fill="#2f6f6b"/><circle cx="60" cy="72" r="3.5" fill="#c98a2c"/><circle cx="78" cy="72" r="3.5" fill="#c98a2c"/><circle cx="96" cy="72" r="3.5" fill="#c98a2c"/><circle cx="114" cy="72" r="3.5" fill="#fff"/><circle cx="132" cy="72" r="3.5" fill="#fff"/><rect x="60" y="86" width="80" height="6" rx="2" fill="#fff" opacity=".4"/><line x1="0" y1="95" x2="40" y2="95" stroke="#16203a" stroke-width="3"/><line x1="160" y1="90" x2="200" y2="90" stroke="#16203a" stroke-width="3"/><text x="20" y="116" text-anchor="middle" fill="#16203a">dari ISP</text><text x="178" y="108" text-anchor="middle" fill="#16203a">ke router</text></svg>
+        <figcaption>Gambar 2. Ilustrasi Modem</figcaption>
+      </figure>
+      <p>Modem (<em>modulator-demodulator</em>) mengubah sinyal dari jalur ISP (kabel telepon, serat optik, atau seluler) menjadi sinyal digital yang dapat dipahami jaringan di rumah atau kantor, dan sebaliknya.</p>
+      <p><b>Peran:</b> Satu-satunya perangkat yang berhubungan langsung dengan jalur ISP. Tanpa modem, jaringan lokal tidak mendapat akses ke internet.</p>
+      <p><b>Catatan:</b> Pada layanan serat optik, perangkat ini sering disebut ONT dan dipasang oleh penyedia layanan.</p>
+    </div>
+    <div class="item">
+      <h3>Router</h3><span class="role">Pengarah Lalu Lintas Antar Jaringan</span>
+      <figure class="fig">
+        <!-- Untuk memakai foto sendiri, ganti seluruh tag svg di bawah dengan: <img src="foto-router.jpg" alt="Router"> -->
+        <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Router" font-family="Menlo,monospace" font-size="10"><line x1="60" y1="60" x2="48" y2="22" stroke="#16203a" stroke-width="3"/><line x1="140" y1="60" x2="152" y2="22" stroke="#16203a" stroke-width="3"/><rect x="30" y="58" width="140" height="42" rx="6" fill="#2f6f6b"/><circle cx="50" cy="72" r="3" fill="#c98a2c"/><circle cx="66" cy="72" r="3" fill="#c98a2c"/><circle cx="82" cy="72" r="3" fill="#c98a2c"/><circle cx="98" cy="72" r="3" fill="#c98a2c"/><rect x="50" y="86" width="16" height="9" rx="1" fill="#fff" opacity=".85"/><rect x="74" y="86" width="16" height="9" rx="1" fill="#fff" opacity=".85"/><rect x="98" y="86" width="16" height="9" rx="1" fill="#fff" opacity=".85"/><rect x="122" y="86" width="16" height="9" rx="1" fill="#fff" opacity=".85"/><text x="100" y="118" text-anchor="middle" fill="#16203a">port LAN &amp; WAN</text></svg>
+        <figcaption>Gambar 3. Ilustrasi Router</figcaption>
+      </figure>
+      <p>Router meneruskan data antara jaringan lokal dan internet, memberi IP address ke perangkat (DHCP), dan menjadi gateway menuju internet.</p>
+      <p><b>Peran:</b> Menentukan jalur terbaik bagi data dan dapat mengatur keamanan dasar seperti kata sandi Wi-Fi dan firewall.</p>
+      <p><b>Catatan:</b> Router rumah biasanya sudah memiliki access point Wi-Fi dan beberapa port switch di dalamnya.</p>
+    </div>
+    <div class="item">
+      <h3>Switch</h3><span class="role">Penghubung Banyak Perangkat dalam LAN</span>
+      <figure class="fig">
+        <!-- Untuk memakai foto sendiri, ganti seluruh tag svg di bawah dengan: <img src="foto-switch.jpg" alt="Switch"> -->
+        <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Switch" font-family="Menlo,monospace" font-size="10"><rect x="10" y="48" width="180" height="40" rx="4" fill="#16203a"/><rect x="20" y="62" width="15" height="14" rx="1.5" fill="#fff" opacity=".9"/><circle cx="27.5" cy="56" r="1.8" fill="#c98a2c"/><rect x="41" y="62" width="15" height="14" rx="1.5" fill="#fff" opacity=".9"/><circle cx="48.5" cy="56" r="1.8" fill="#c98a2c"/><rect x="62" y="62" width="15" height="14" rx="1.5" fill="#fff" opacity=".9"/><circle cx="69.5" cy="56" r="1.8" fill="#c98a2c"/><rect x="83" y="62" width="15" height="14" rx="1.5" fill="#fff" opacity=".9"/><circle cx="90.5" cy="56" r="1.8" fill="#c98a2c"/><rect x="104" y="62" width="15" height="14" rx="1.5" fill="#fff" opacity=".9"/><circle cx="111.5" cy="56" r="1.8" fill="#c98a2c"/><rect x="125" y="62" width="15" height="14" rx="1.5" fill="#fff" opacity=".9"/><circle cx="132.5" cy="56" r="1.8" fill="#c98a2c"/><rect x="146" y="62" width="15" height="14" rx="1.5" fill="#fff" opacity=".9"/><circle cx="153.5" cy="56" r="1.8" fill="#c98a2c"/><rect x="167" y="62" width="15" height="14" rx="1.5" fill="#fff" opacity=".9"/><circle cx="174.5" cy="56" r="1.8" fill="#c98a2c"/><text x="100" y="110" text-anchor="middle" fill="#16203a">banyak port Ethernet</text></svg>
+        <figcaption>Gambar 4. Ilustrasi Switch</figcaption>
+      </figure>
+      <p>Switch menghubungkan banyak perangkat dalam satu jaringan lokal dan meneruskan data hanya ke port perangkat tujuan, bukan ke semua perangkat.</p>
+      <p><b>Peran:</b> Lebih efisien daripada hub, yang mengirim data ke semua port. Switch adalah pusat dari topologi star.</p>
+      <p><b>Catatan:</b> Dipakai di laboratorium komputer dan kantor yang butuh banyak koneksi kabel.</p>
+    </div>
+    <div class="item">
+      <h3>Access Point</h3><span class="role">Pemancar Wi-Fi</span>
+      <figure class="fig">
+        <!-- Untuk memakai foto sendiri, ganti seluruh tag svg di bawah dengan: <img src="foto-access.jpg" alt="Access Point"> -->
+        <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Point" font-family="Menlo,monospace" font-size="10"><ellipse cx="100" cy="92" rx="38" ry="12" fill="#2f6f6b"/><ellipse cx="100" cy="86" rx="38" ry="12" fill="#e8f1f0" stroke="#2f6f6b" stroke-width="2"/><circle cx="100" cy="86" r="3" fill="#c98a2c"/><path d="M86 57.2 Q100 41.8 114 57.2" fill="none" stroke="#c98a2c" stroke-width="3" stroke-linecap="round"/><path d="M74 54.8 Q100 26.199999999999996 126 54.8" fill="none" stroke="#c98a2c" stroke-width="3" stroke-linecap="round"/><path d="M62 52.4 Q100 10.600000000000001 138 52.4" fill="none" stroke="#c98a2c" stroke-width="3" stroke-linecap="round"/></svg>
+        <figcaption>Gambar 5. Ilustrasi Access Point</figcaption>
+      </figure>
+      <p>Access point (AP) memancarkan sinyal Wi-Fi sehingga perangkat nirkabel dapat terhubung ke jaringan kabel.</p>
+      <p><b>Peran:</b> Memperluas jangkauan jaringan nirkabel dan tersambung ke router atau switch lewat kabel.</p>
+      <p><b>Catatan:</b> Dipasang di langit-langit ruang kelas atau gedung agar sinyal Wi-Fi merata.</p>
+    </div>
+    <div class="item">
+      <h3>NIC (Network Interface Card)</h3><span class="role">Kartu Jaringan di dalam Perangkat</span>
+      <figure class="fig">
+        <!-- Untuk memakai foto sendiri, ganti seluruh tag svg di bawah dengan: <img src="foto-nic.jpg" alt="NIC (Network Interface Card)"> -->
+        <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NIC" font-family="Menlo,monospace" font-size="10"><rect x="20" y="30" width="150" height="60" rx="3" fill="#2f6f6b"/><rect x="170" y="26" width="10" height="68" fill="#c9c2a8"/><rect x="150" y="50" width="16" height="20" rx="2" fill="#fff"/><rect x="40" y="46" width="28" height="28" rx="2" fill="#16203a"/><rect x="34" y="90" width="4" height="12" fill="#c98a2c"/><rect x="41" y="90" width="4" height="12" fill="#c98a2c"/><rect x="48" y="90" width="4" height="12" fill="#c98a2c"/><rect x="55" y="90" width="4" height="12" fill="#c98a2c"/><rect x="62" y="90" width="4" height="12" fill="#c98a2c"/><rect x="69" y="90" width="4" height="12" fill="#c98a2c"/><rect x="76" y="90" width="4" height="12" fill="#c98a2c"/><rect x="83" y="90" width="4" height="12" fill="#c98a2c"/><rect x="90" y="90" width="4" height="12" fill="#c98a2c"/><rect x="97" y="90" width="4" height="12" fill="#c98a2c"/><rect x="104" y="90" width="4" height="12" fill="#c98a2c"/><rect x="111" y="90" width="4" height="12" fill="#c98a2c"/><text x="100" y="122" text-anchor="middle" fill="#16203a">chip jaringan &amp; port RJ45</text></svg>
+        <figcaption>Gambar 6. Ilustrasi NIC (Network Interface Card)</figcaption>
+      </figure>
+      <p>NIC adalah komponen di dalam komputer atau ponsel yang memungkinkan perangkat tersebut tersambung ke jaringan, baik lewat kabel (port Ethernet) maupun Wi-Fi.</p>
+      <p><b>Peran:</b> Setiap NIC memiliki alamat fisik unik yang disebut MAC address.</p>
+      <p><b>Catatan:</b> Pada laptop modern, NIC Wi-Fi dan Ethernet biasanya sudah terpasang pada papan induk.</p>
+    </div>
+    <div class="item">
+      <h3>Media Transmisi: Kabel Ethernet</h3><span class="role">Penghantar Data pada Jaringan Kabel</span>
+      <figure class="fig">
+        <!-- Untuk memakai foto sendiri, ganti seluruh tag svg di bawah dengan: <img src="foto-media.jpg" alt="Media Transmisi: Kabel Ethernet"> -->
+        <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kabel Ethernet" font-family="Menlo,monospace" font-size="10"><path d="M10 70 C50 40 90 100 130 70" fill="none" stroke="#2f6f6b" stroke-width="8"/><path d="M10 70 C50 40 90 100 130 70" fill="none" stroke="#c98a2c" stroke-width="2" stroke-dasharray="6 6"/><rect x="130" y="55" width="40" height="30" rx="3" fill="#16203a"/><rect x="135.0" y="76" width="2" height="8" fill="#c98a2c"/><rect x="139.4" y="76" width="2" height="8" fill="#c98a2c"/><rect x="143.8" y="76" width="2" height="8" fill="#c98a2c"/><rect x="148.2" y="76" width="2" height="8" fill="#c98a2c"/><rect x="152.6" y="76" width="2" height="8" fill="#c98a2c"/><rect x="157.0" y="76" width="2" height="8" fill="#c98a2c"/><rect x="161.4" y="76" width="2" height="8" fill="#c98a2c"/><rect x="165.8" y="76" width="2" height="8" fill="#c98a2c"/><text x="100" y="112" text-anchor="middle" fill="#16203a">kabel Ethernet + konektor RJ45</text></svg>
+        <figcaption>Gambar 7. Ilustrasi Media Transmisi: Kabel Ethernet</figcaption>
+      </figure>
+      <p>Kabel Ethernet (misalnya jenis UTP) membawa data antar perangkat dan memakai konektor RJ45 di kedua ujungnya.</p>
+      <p><b>Peran:</b> Umumnya lebih stabil dan lebih cepat dibanding Wi-Fi dan tidak mudah terganggu gangguan sinyal.</p>
+      <p><b>Catatan:</b> Pilihan nirkabel (Wi-Fi) lebih fleksibel, sedangkan kabel lebih diandalkan untuk komputer tetap atau server.</p>
+    </div>
+    <div class="callout">
+      <span class="ck">Poin Kunci</span>
+      Perangkat jaringan rumah sering digabung dalam satu kotak. Meski begitu, tiap fungsinya tetap berbeda: modem ke ISP, router mengarahkan lalu lintas, switch menghubungkan perangkat kabel, dan access point memancarkan Wi-Fi.
+    </div>
+  </section>
+
+  <footer>
+    <span>Pengantar Teknologi Informasi — Semester I</span>
+    <span>Sumber: Campbell et al., Discovering Computers, 17th Ed. (Cengage Learning, 2023)</span>
+  </footer>
+
+</div>
+</body>
+</html>
