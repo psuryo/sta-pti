@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesi 12 — Studi Kasus Memilih Model Pengembangan</title>
+<style>
+  :root{
+    --ink:#16203a;
+    --paper:#f1efe6;
+    --paper-2:#e8e4d4;
+    --line: #c9c2a8;
+    --teal:#2f6f6b;
+    --teal-dark:#204c49;
+    --amber:#c98a2c;
+    --amber-soft:#f3e3c4;
+    --red:#a4432c;
+    --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+    --font-body: 'Charter', Georgia, 'Iowan Old Style', serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(47,111,107,0.05), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(201,138,44,0.06), transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:880px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  .breadcrumb{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em;
+    padding:22px 0 0; color:#6b6552;
+  }
+  .breadcrumb a{color:var(--teal-dark); text-decoration:none; border-bottom:1px solid var(--teal);}
+
+  header.masthead{
+    border-bottom:3px solid var(--ink);
+    padding:18px 0 20px;
+    margin-bottom:36px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(30px,5vw,46px);
+    line-height:1.08;
+    margin:0 0 10px;
+    letter-spacing:-.01em;
+  }
+  h1.title em{
+    font-style:normal;
+    color:var(--teal-dark);
+    border-bottom:2px solid var(--amber);
+  }
+  .subtitle{
+    font-size:16px;
+    color:#4b4636;
+    max-width:60ch;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+  }
+  .meta-chip{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:.03em;
+    padding:5px 11px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:var(--paper-2);
+    color:var(--ink);
+  }
+
+  section{margin-bottom:52px;}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:18px;
+  }
+  .sec-num{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--amber);
+    border:1px solid var(--amber);
+    border-radius:50%;
+    width:26px; height:26px;
+    min-width:26px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sec-head h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:24px;
+    margin:0;
+    color:var(--ink);
+  }
+  .sec-head .sec-line{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  p{margin:0 0 14px;}
+  ul, ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:6px;}
+
+  .objectives{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  .obj-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    padding:16px 18px;
+    font-size:14.5px;
+  }
+  .obj-card .k{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--teal-dark);
+    letter-spacing:.06em;
+    display:block;
+    margin-bottom:4px;
+  }
+
+  .type-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+  }
+  .type-card{
+    border:1px solid var(--line);
+    background:#fff;
+    padding:14px 16px;
+  }
+  .type-card h3{
+    font-family:var(--font-display);
+    font-size:16px;
+    margin:0 0 6px;
+    font-weight:600;
+  }
+  .type-card p{font-size:13.5px; margin:0; color:#453f2f;}
+
+  .concept-card{
+    background:#fff; border:1px solid var(--line); border-left:4px solid var(--teal);
+    padding:16px 18px; margin-bottom:12px;
+  }
+  .concept-card h3{font-family:var(--font-display); font-size:16px; margin:0 0 4px; font-weight:600;}
+  .concept-card .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; display:block;}
+  .concept-card p{font-size:13.5px; margin:0; color:#453f2f;}
+
+  .compare-table{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; margin-bottom:8px;}
+  .compare-table th, .compare-table td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  .compare-table thead th{background:var(--ink); color:var(--paper); font-family:var(--font-mono); font-size:11px; text-transform:uppercase; font-weight:400;}
+
+  .callout{
+    background:var(--amber-soft);
+    border-left:4px solid var(--amber);
+    padding:16px 20px;
+    font-size:14.5px;
+    margin-bottom:20px;
+  }
+  .callout.warn{background:#f5e0da; border-left-color:var(--red);}
+  .callout .ck{
+    font-family:var(--font-mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--red);
+    display:block;
+    margin-bottom:6px;
+  }
+
+  dl.glossary{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:10px 18px;
+    font-size:14.5px;
+  }
+  dl.glossary dt{
+    font-weight:700;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--teal-dark);
+  }
+  dl.glossary dd{margin:0; color:#3a3527;}
+  .readmore{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:6px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--teal-dark);
+    text-decoration:none;
+    border-bottom:1px solid var(--teal);
+    padding-bottom:1px;
+  }
+  .readmore:hover{color:var(--amber); border-color:var(--amber);}
+
+  .checklist{list-style:none; padding:0; margin:0;}
+  .checklist li{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:9px 0; border-bottom:1px dashed var(--line); font-size:14.5px;
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .box{
+    width:16px; height:16px; border:1.5px solid var(--ink);
+    flex:none; margin-top:3px; border-radius:2px;
+  }
+
+  .prep-box{
+    background:var(--ink); color:var(--paper);
+    padding:24px 26px; border-radius:2px;
+  }
+  .prep-box h2{
+    font-family:var(--font-display); font-weight:400; font-size:20px;
+    margin:0 0 12px; color:var(--amber-soft);
+  }
+  .prep-box ol{padding-left:20px; margin:0;}
+  .prep-box li{margin-bottom:8px; font-size:14.5px;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:18px; margin-top:60px;
+    font-family:var(--font-mono); font-size:11.5px; color:#7a735c;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  @media (max-width:640px){
+    .objectives, .type-grid{grid-template-columns:1fr;}
+    dl.glossary{grid-template-columns:1fr;}
+    dl.glossary dt{margin-top:6px;}
+    .meta-row{gap:8px;}
+  }
+
+  .fig{margin:0 0 18px; background:#fff; border:1px solid var(--line); padding:14px 14px 10px;}
+  .fig svg{display:block; width:100%; max-width:360px; height:auto; margin:0 auto;}
+  .fig figcaption{font-family:var(--font-mono); font-size:11.5px; color:#6b6552; text-align:center; margin-top:6px;}
+  .fig img{display:block; max-width:100%; height:auto; margin:0 auto;}
+  .item{margin-bottom:34px; padding-bottom:6px;}
+  .item h3{font-family:var(--font-display); font-size:20px; font-weight:600; margin:0 0 4px;}
+  .item .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:10px;}
+  .pc{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:6px;}
+  .pc div{background:#fff; border:1px solid var(--line); padding:12px 14px; font-size:13.5px;}
+  .pc .pro{border-top:3px solid var(--teal);} .pc .con{border-top:3px solid var(--red);}
+  .pc b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:4px;}
+  .pc ul{margin:0; padding-left:18px;} .pc li{margin-bottom:3px;}
+  @media (max-width:640px){.pc{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="sesi12.html">← Kembali ke Sesi 12</a></div>
+
+  <header class="masthead">
+    <div class="eyebrow"><span>Sesi 12 · Tugas Kelas</span><span>Modul 11 — Pengembangan Sistem</span></div>
+    <h1 class="title">Studi Kasus — <em>Memilih Model</em> Pengembangan untuk Sebuah Proyek</h1>
+    <p class="subtitle">Pada tugas ini Anda menjadi pengelola proyek. Anda menyusun rencana tahapan pengembangan untuk sebuah aplikasi, lalu memilih waterfall atau agile dan membela pilihan Anda dengan alasan yang sesuai kondisi proyek.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Tugas Individu</span>
+      <span class="meta-chip">Dikerjakan di kelas · 60 menit</span>
+      <span class="meta-chip">Boleh membuka materi Sesi 12</span>
+      <span class="meta-chip">Pengumpulan: sesuai arahan dosen</span>
+    </div>
+  </header>
+
+  <section id="prinsip">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Cara Kerja Studi Kasus</h2><span class="sec-line"></span></div>
+    <div class="callout">
+      <span class="ck">Tidak Ada Jawaban Tunggal</span>
+      Setiap skenario memuat kondisi yang bisa mendukung waterfall maupun agile. Dua mahasiswa dapat memilih model yang berbeda dan keduanya dinilai baik, selama alasannya sesuai dengan kondisi skenario. Yang dinilai adalah kualitas pertimbangan Anda.
+    </div>
+    <div class="callout warn">
+      <span class="ck">Aturan Pengerjaan</span>
+      Kerjakan sendiri dengan kata-kata Anda sendiri. Anda boleh membuka materi Sesi 12 tetapi jangan menyalin jawaban teman. Semua skenario bersifat fiktif. Jawaban cukup berupa poin-poin singkat.
+    </div>
+  </section>
+
+  <section id="waktu">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Pembagian Waktu (60 Menit)</h2><span class="sec-line"></span></div>
+    <table class="compare-table">
+      <thead><tr><th>Tahap</th><th>Kegiatan</th><th>Waktu</th></tr></thead>
+      <tbody>
+        <tr><td>Tahap 1</td><td>Memahami skenario dan menyusun kebutuhan</td><td>10 menit</td></tr>
+        <tr><td>Tahap 2</td><td>Menyusun rencana tahapan SDLC</td><td>15 menit</td></tr>
+        <tr><td>Tahap 3</td><td>Memilih model dan memberi alasan</td><td>15 menit</td></tr>
+        <tr><td>Tahap 4</td><td>Risiko, mitigasi, dan rencana langkah pertama</td><td>12 menit</td></tr>
+        <tr><td>Penutup</td><td>Memeriksa jawaban dan mengumpulkan</td><td>8 menit</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="skenario">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Pilih Skenario Anda</h2><span class="sec-line"></span></div>
+    <p>Skenario ditentukan oleh angka terakhir NIM Anda.</p>
+    
+    <div class="concept-card">
+      <span class="role">Skenario A · angka terakhir NIM 0, 4, 8</span>
+      <h3>Aplikasi Pemesanan Kantin Kampus</h3>
+      <p>Kantin kampus ingin menyediakan aplikasi agar mahasiswa dapat memesan makanan dari ponsel dan mengambilnya tanpa antre.</p>
+      <ul style="margin:6px 0 0; font-size:13.5px"><li>Kebutuhan inti jelas (daftar menu, pesan, bayar), tetapi mahasiswa mungkin meminta fitur baru setelah mencoba</li><li>Target mulai dipakai: 3 bulan lagi</li><li>Tim: 4 orang; anggaran tetap</li><li>Pengelola kantin dan mahasiswa bisa dimintai masukan sewaktu-waktu</li></ul>
+    </div>
+    <div class="concept-card">
+      <span class="role">Skenario B · angka terakhir NIM 1, 5, 9</span>
+      <h3>Sistem Pendaftaran Kegiatan Mahasiswa</h3>
+      <p>Sebuah organisasi mahasiswa ingin sistem untuk mendaftarkan peserta kegiatan dan mengelola pembayaran biaya pendaftaran.</p>
+      <ul style="margin:6px 0 0; font-size:13.5px"><li>Aturan pendaftaran dan pembayaran sudah baku, tetapi tampilan yang disukai peserta belum diketahui</li><li>Kegiatan pertama berlangsung 2 bulan lagi dan tanggalnya tidak dapat diundur</li><li>Tim: 3 orang; anggaran sangat terbatas</li><li>Panitia sibuk dan hanya bisa bertemu seminggu sekali</li></ul>
+    </div>
+    <div class="concept-card">
+      <span class="role">Skenario C · angka terakhir NIM 2, 6</span>
+      <h3>Aplikasi Peminjaman Ruang dan Alat Laboratorium</h3>
+      <p>Sebuah laboratorium ingin aplikasi agar mahasiswa dan dosen dapat melihat jadwal, meminjam ruang, dan meminjam alat.</p>
+      <ul style="margin:6px 0 0; font-size:13.5px"><li>Proses peminjaman saat ini masih berupa buku catatan sehingga kebutuhan baru akan banyak bermunculan</li><li>Target selesai: 4 bulan, tetapi boleh diluncurkan bertahap</li><li>Tim: 5 orang; anggaran cukup</li><li>Laboran dan dosen bersedia mencoba versi awal</li></ul>
+    </div>
+    <div class="concept-card">
+      <span class="role">Skenario D · angka terakhir NIM 3, 7</span>
+      <h3>Aplikasi Pencatat Stok dan Penjualan Toko Kue</h3>
+      <p>Pemilik toko kue rumahan ingin aplikasi untuk mencatat stok bahan, pesanan pelanggan, dan penjualan harian.</p>
+      <ul style="margin:6px 0 0; font-size:13.5px"><li>Pemilik belum yakin fitur apa yang paling dibutuhkan</li><li>Pemilik ingin hasil yang bisa dipakai secepatnya, walau sederhana</li><li>Tim: 2 orang; anggaran kecil</li><li>Pemilik selalu dapat dihubungi dan mau mencoba</li></ul>
+    </div>
+  </section>
+
+  <section id="tahap">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Tahapan Pengerjaan</h2><span class="sec-line"></span></div>
+
+    <div class="concept-card">
+      <span class="role">Tahap 1 · Kebutuhan (10 menit)</span>
+      <h3>Apa yang dibutuhkan proyek ini?</h3>
+      <p>a) Tuliskan tujuan aplikasi dalam satu kalimat dan sebutkan tiga pihak yang berkepentingan (<em>stakeholder</em>).<br>
+      b) Tuliskan lima kebutuhan (fitur) aplikasi. Tandai tiga yang <b>wajib ada</b> sejak awal dan dua yang <b>boleh menyusul</b>.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tahap 2 · Rencana SDLC (15 menit)</span>
+      <h3>Apa yang dikerjakan pada tiap tahap?</h3>
+      <p>Isi tabel berikut: untuk setiap tahap SDLC, tuliskan satu atau dua kegiatan <b>konkret</b> untuk proyek Anda (bukan definisi umum).</p>
+      <table class="compare-table" style="margin-top:8px">
+        <thead><tr><th>Tahap</th><th>Kegiatan pada proyek saya</th></tr></thead>
+        <tbody>
+          <tr><td>Perencanaan</td><td>…</td></tr>
+          <tr><td>Analisis</td><td>…</td></tr>
+          <tr><td>Perancangan</td><td>…</td></tr>
+          <tr><td>Implementasi</td><td>…</td></tr>
+          <tr><td>Pengujian</td><td>…</td></tr>
+          <tr><td>Penerapan dan pemeliharaan</td><td>…</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tahap 3 · Pilih Model (15 menit)</span>
+      <h3>Waterfall atau agile?</h3>
+      <p>a) Pilih satu model: waterfall atau agile.<br>
+      b) Tuliskan <b>tiga alasan</b> yang masing-masing mengutip kondisi pada skenario Anda (misalnya kejelasan kebutuhan, tenggat, jumlah tim, keterlibatan pengguna).<br>
+      c) Tuliskan satu alasan mengapa model yang satunya <b>tidak Anda pilih</b>.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tahap 4 · Risiko dan Langkah Pertama (12 menit)</span>
+      <h3>Apa yang bisa salah dan apa langkah awalnya?</h3>
+      <p>a) Sebutkan satu kelemahan model pilihan Anda yang bisa mengganggu proyek ini, dan satu cara mengatasinya.<br>
+      b) Jika Anda memilih <b>agile</b>: tuliskan isi <i>sprint</i> pertama (tiga fitur dan hasil yang bisa dicoba pengguna). Jika Anda memilih <b>waterfall</b>: tuliskan hasil (dokumen atau rancangan) yang harus selesai sebelum tahap implementasi dimulai.</p>
+    </div>
+    <div class="concept-card" style="border-left-color:var(--amber)">
+      <span class="role" style="color:var(--amber)">Tantangan Tambahan (opsional, tidak dinilai)</span>
+      <h3>Bagaimana jika ada perubahan mendadak?</h3>
+      <p>Di tengah proyek, pihak pemilik meminta satu fitur penting yang baru. Apa yang terjadi pada model pilihan Anda, dan apa yang akan Anda lakukan?</p>
+    </div>
+  </section>
+
+  <section id="contoh">
+    <div class="sec-head"><span class="sec-num">5</span><h2>Contoh Jawaban yang Berbeda tetapi Sama-sama Baik</h2><span class="sec-line"></span></div>
+    <p>Misalkan pada Skenario C (Peminjaman Ruang dan Alat Lab):</p>
+    <table class="compare-table">
+      <thead><tr><th></th><th>Mahasiswa 1</th><th>Mahasiswa 2</th></tr></thead>
+      <tbody>
+        <tr><td>Model</td><td>Agile</td><td>Waterfall</td></tr>
+        <tr><td>Alasan</td><td>Kebutuhan akan banyak bermunculan dan laboran bersedia mencoba versi awal</td><td>Alur peminjaman cukup baku dan tim ingin dokumentasi lengkap karena ada pergantian laboran</td></tr>
+        <tr><td>Risiko dan cara mengatasi</td><td>Jadwal sulit diperkirakan, diatasi dengan membatasi isi tiap sprint</td><td>Perubahan kebutuhan sulit dimasukkan, diatasi dengan menggali kebutuhan lebih teliti di awal</td></tr>
+      </tbody>
+    </table>
+    <p>Keduanya dapat diterima karena alasannya terkait kondisi skenario. Jawaban yang hanya menyalin kelebihan model dari materi, tanpa mengaitkannya dengan skenario, akan bernilai rendah.</p>
+  </section>
+
+  <section id="format">
+    <div class="sec-head"><span class="sec-num">6</span><h2>Lembar Jawaban</h2><span class="sec-line"></span></div>
+    <ul class="checklist">
+      <li><span class="box"></span>Identitas: nama, NIM, program studi, dan skenario yang dikerjakan.</li>
+      <li><span class="box"></span>Tahap 1: tujuan, tiga stakeholder, dan lima kebutuhan (tiga wajib, dua boleh menyusul).</li>
+      <li><span class="box"></span>Tahap 2: tabel enam tahap SDLC dengan kegiatan konkret.</li>
+      <li><span class="box"></span>Tahap 3: model yang dipilih, tiga alasan, dan satu alasan tidak memilih model lain.</li>
+      <li><span class="box"></span>Tahap 4: satu kelemahan beserta cara mengatasi, dan isi sprint pertama atau hasil tahap awal waterfall.</li>
+    </ul>
+  </section>
+
+  <section id="rubrik">
+    <div class="sec-head"><span class="sec-num">7</span><h2>Rubrik Penilaian</h2><span class="sec-line"></span></div>
+    <table class="compare-table">
+      <thead><tr><th>Komponen</th><th>Yang Dinilai</th><th>Bobot</th></tr></thead>
+      <tbody>
+        <tr><td>Kebutuhan</td><td>Tujuan jelas, stakeholder tepat, dan pembagian kebutuhan wajib vs menyusul masuk akal</td><td>20</td></tr>
+        <tr><td>Rencana SDLC</td><td>Kegiatan tiap tahap konkret dan sesuai dengan proyek, bukan definisi umum</td><td>25</td></tr>
+        <tr><td>Pemilihan model dan alasan</td><td>Alasan mengutip kondisi skenario, tepat, dan memperlihatkan pemahaman waterfall dan agile</td><td>30</td></tr>
+        <tr><td>Risiko dan mitigasi</td><td>Kelemahan model relevan dan cara mengatasinya masuk akal</td><td>10</td></tr>
+        <tr><td>Langkah pertama</td><td>Isi sprint pertama atau hasil tahap awal sesuai dengan model yang dipilih</td><td>10</td></tr>
+        <tr><td>Kejelasan</td><td>Jawaban runtut, identitas lengkap, dan ditulis dengan kata-kata sendiri</td><td>5</td></tr>
+        <tr><td><b>Total</b></td><td></td><td><b>100</b></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="persiapan">
+    <div class="prep-box">
+      <h2>Sebelum Mengumpulkan</h2>
+      <ol>
+        <li>Pastikan setiap pilihan Anda disertai alasan yang mengutip kondisi skenario.</li>
+        <li>Periksa bahwa kegiatan pada tabel SDLC spesifik untuk proyek Anda.</li>
+        <li>Kumpulkan sesuai cara yang diarahkan dosen.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <span>Pengantar Teknologi Informasi — Semester I</span>
+    <span>Sumber: Campbell et al., Discovering Computers, 17th Ed. (Cengage Learning, 2023)</span>
+  </footer>
+
+</div>
+</body>
+</html>
