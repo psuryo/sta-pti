@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyek Akhir — Usulan Solusi TI untuk Masalah Nyata</title>
+<style>
+  :root{
+    --ink:#16203a;
+    --paper:#f1efe6;
+    --paper-2:#e8e4d4;
+    --line: #c9c2a8;
+    --teal:#2f6f6b;
+    --teal-dark:#204c49;
+    --amber:#c98a2c;
+    --amber-soft:#f3e3c4;
+    --red:#a4432c;
+    --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+    --font-body: 'Charter', Georgia, 'Iowan Old Style', serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(47,111,107,0.05), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(201,138,44,0.06), transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:880px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  .breadcrumb{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em;
+    padding:22px 0 0; color:#6b6552;
+  }
+  .breadcrumb a{color:var(--teal-dark); text-decoration:none; border-bottom:1px solid var(--teal);}
+
+  header.masthead{
+    border-bottom:3px solid var(--ink);
+    padding:18px 0 20px;
+    margin-bottom:36px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(30px,5vw,46px);
+    line-height:1.08;
+    margin:0 0 10px;
+    letter-spacing:-.01em;
+  }
+  h1.title em{
+    font-style:normal;
+    color:var(--teal-dark);
+    border-bottom:2px solid var(--amber);
+  }
+  .subtitle{
+    font-size:16px;
+    color:#4b4636;
+    max-width:60ch;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+  }
+  .meta-chip{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:.03em;
+    padding:5px 11px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:var(--paper-2);
+    color:var(--ink);
+  }
+
+  section{margin-bottom:52px;}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:18px;
+  }
+  .sec-num{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--amber);
+    border:1px solid var(--amber);
+    border-radius:50%;
+    width:26px; height:26px;
+    min-width:26px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sec-head h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:24px;
+    margin:0;
+    color:var(--ink);
+  }
+  .sec-head .sec-line{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  p{margin:0 0 14px;}
+  ul, ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:6px;}
+
+  .objectives{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  .obj-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    padding:16px 18px;
+    font-size:14.5px;
+  }
+  .obj-card .k{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--teal-dark);
+    letter-spacing:.06em;
+    display:block;
+    margin-bottom:4px;
+  }
+
+  .type-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+  }
+  .type-card{
+    border:1px solid var(--line);
+    background:#fff;
+    padding:14px 16px;
+  }
+  .type-card h3{
+    font-family:var(--font-display);
+    font-size:16px;
+    margin:0 0 6px;
+    font-weight:600;
+  }
+  .type-card p{font-size:13.5px; margin:0; color:#453f2f;}
+
+  .concept-card{
+    background:#fff; border:1px solid var(--line); border-left:4px solid var(--teal);
+    padding:16px 18px; margin-bottom:12px;
+  }
+  .concept-card h3{font-family:var(--font-display); font-size:16px; margin:0 0 4px; font-weight:600;}
+  .concept-card .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; display:block;}
+  .concept-card p{font-size:13.5px; margin:0; color:#453f2f;}
+
+  .compare-table{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; margin-bottom:8px;}
+  .compare-table th, .compare-table td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  .compare-table thead th{background:var(--ink); color:var(--paper); font-family:var(--font-mono); font-size:11px; text-transform:uppercase; font-weight:400;}
+
+  .callout{
+    background:var(--amber-soft);
+    border-left:4px solid var(--amber);
+    padding:16px 20px;
+    font-size:14.5px;
+    margin-bottom:20px;
+  }
+  .callout.warn{background:#f5e0da; border-left-color:var(--red);}
+  .callout .ck{
+    font-family:var(--font-mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--red);
+    display:block;
+    margin-bottom:6px;
+  }
+
+  dl.glossary{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:10px 18px;
+    font-size:14.5px;
+  }
+  dl.glossary dt{
+    font-weight:700;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--teal-dark);
+  }
+  dl.glossary dd{margin:0; color:#3a3527;}
+  .readmore{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:6px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--teal-dark);
+    text-decoration:none;
+    border-bottom:1px solid var(--teal);
+    padding-bottom:1px;
+  }
+  .readmore:hover{color:var(--amber); border-color:var(--amber);}
+
+  .checklist{list-style:none; padding:0; margin:0;}
+  .checklist li{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:9px 0; border-bottom:1px dashed var(--line); font-size:14.5px;
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .box{
+    width:16px; height:16px; border:1.5px solid var(--ink);
+    flex:none; margin-top:3px; border-radius:2px;
+  }
+
+  .prep-box{
+    background:var(--ink); color:var(--paper);
+    padding:24px 26px; border-radius:2px;
+  }
+  .prep-box h2{
+    font-family:var(--font-display); font-weight:400; font-size:20px;
+    margin:0 0 12px; color:var(--amber-soft);
+  }
+  .prep-box ol{padding-left:20px; margin:0;}
+  .prep-box li{margin-bottom:8px; font-size:14.5px;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:18px; margin-top:60px;
+    font-family:var(--font-mono); font-size:11.5px; color:#7a735c;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  @media (max-width:640px){
+    .objectives, .type-grid{grid-template-columns:1fr;}
+    dl.glossary{grid-template-columns:1fr;}
+    dl.glossary dt{margin-top:6px;}
+    .meta-row{gap:8px;}
+  }
+
+  .fig{margin:0 0 18px; background:#fff; border:1px solid var(--line); padding:14px 14px 10px;}
+  .fig svg{display:block; width:100%; max-width:360px; height:auto; margin:0 auto;}
+  .fig figcaption{font-family:var(--font-mono); font-size:11.5px; color:#6b6552; text-align:center; margin-top:6px;}
+  .fig img{display:block; max-width:100%; height:auto; margin:0 auto;}
+  .item{margin-bottom:34px; padding-bottom:6px;}
+  .item h3{font-family:var(--font-display); font-size:20px; font-weight:600; margin:0 0 4px;}
+  .item .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:10px;}
+  .pc{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:6px;}
+  .pc div{background:#fff; border:1px solid var(--line); padding:12px 14px; font-size:13.5px;}
+  .pc .pro{border-top:3px solid var(--teal);} .pc .con{border-top:3px solid var(--red);}
+  .pc b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:4px;}
+  .pc ul{margin:0; padding-left:18px;} .pc li{margin-bottom:3px;}
+  @media (max-width:640px){.pc{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="index.html">← Kembali ke Ruang Kelas</a></div>
+
+  <header class="masthead">
+    <div class="eyebrow"><span>Pengantar Teknologi Informasi · Semester I</span><span>Proyek Akhir</span></div>
+    <h1 class="title">Proyek Akhir — <em>Usulan Solusi TI</em> untuk Masalah Nyata</h1>
+    <p class="subtitle">Dalam proyek ini Anda bersama kelompok mengusulkan solusi teknologi informasi untuk satu masalah nyata di sekitar Anda. Anda merancangnya dengan materi yang sudah dipelajari sepanjang semester, membuat prototipe halaman webnya, lalu mempresentasikannya.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Kelompok 2–3 orang</span>
+      <span class="meta-chip">Diumumkan di Sesi 13</span>
+      <span class="meta-chip">Presentasi di Sesi 15</span>
+      <span class="meta-chip">Presentasi 5–7 menit</span>
+    </div>
+  </header>
+
+  <section id="gambaran">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Gambaran Proyek</h2><span class="sec-line"></span></div>
+    <p>Proyek ini menggabungkan materi Modul 1–12 dan tren teknologi dalam satu rancangan utuh. Anda tidak perlu membuat aplikasi yang berfungsi penuh. Yang dinilai adalah kemampuan Anda merancang solusi yang masuk akal, menjelaskannya dengan konsep yang tepat, dan memperlihatkan prototipe sederhananya.</p>
+    <div class="objectives">
+      <div class="obj-card"><span class="k">YANG ANDA LAKUKAN</span>Menemukan masalah nyata dan merumuskan kebutuhan penggunanya.</div>
+      <div class="obj-card"><span class="k">YANG ANDA LAKUKAN</span>Merancang model pengembangan, basis data, dan perangkat serta jaringan.</div>
+      <div class="obj-card"><span class="k">YANG ANDA LAKUKAN</span>Membuat prototipe halaman web dengan HTML dan CSS.</div>
+      <div class="obj-card"><span class="k">YANG ANDA LAKUKAN</span>Mempresentasikan solusi, termasuk keamanan, etika, dan tren teknologi.</div>
+    </div>
+  </section>
+
+  <section id="jadwal">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Jadwal</h2><span class="sec-line"></span></div>
+    <table class="compare-table">
+      <thead><tr><th>Pertemuan</th><th>Kegiatan</th></tr></thead>
+      <tbody>
+        <tr><td>Sesi 13</td><td>Proyek diumumkan. Kelompok terbentuk dan mengajukan topik</td></tr>
+        <tr><td>Antara Sesi 13 dan 14</td><td>Topik disetujui dosen, lalu kelompok mengerjakan rancangan dan prototipe</td></tr>
+        <tr><td>Sesi 14</td><td>Pengerjaan berlanjut dan penyelesaian akhir</td></tr>
+        <tr><td>Sesi 15</td><td>Presentasi kelompok. Laporan dan prototipe dikumpulkan</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <span class="ck">Catatan</span>
+      Batas waktu pengajuan topik dan pengumpulan berkas mengikuti pengumuman dosen. Mulailah dari topik yang cakupannya kecil dan dapat diselesaikan.
+    </div>
+  </section>
+
+  <section id="aturan">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Aturan Pengerjaan</h2><span class="sec-line"></span></div>
+    <div class="callout warn">
+      <span class="ck">Wajib Dipatuhi</span>
+      <ul style="margin:0">
+        <li>Kelompok beranggotakan 2–3 orang. Setiap kelompok memiliki topik yang berbeda dan harus disetujui dosen lebih dulu.</li>
+        <li>Gunakan data fiktif. Jangan memasukkan data pribadi sungguhan (nomor telepon, alamat, atau NIK) ke prototipe, basis data, maupun slide.</li>
+        <li>Anda boleh memakai alat bantu, termasuk alat AI, tetapi setiap anggota harus dapat menjelaskan sendiri isi rancangan dan prototipenya saat tanya jawab.</li>
+        <li>Mengunggah situs ke hosting atau mendaftarkan domain tidak wajib. Prototipe cukup berupa berkas HTML dan CSS yang dapat dibuka di komputer.</li>
+        <li>Kumpulkan <b>berkas</b>, bukan tautan ke dokumen pribadi, karena tautan dapat tidak terbuka bagi dosen.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="topik">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Contoh Arah Topik</h2><span class="sec-line"></span></div>
+    <p>Pilih masalah yang Anda kenal atau dapat Anda tanyai langsung kepada penggunanya. Berikut contoh arah topik (kelompok boleh memilih topik lain yang sebanding):</p>
+    <ul><li>Bank sampah di lingkungan RT atau kampus</li><li>Peminjaman peralatan atau ruang organisasi mahasiswa</li><li>Pencatatan penjualan dan stok usaha mikro (misalnya warung atau toko kue)</li><li>Jadwal dan pendaftaran les atau kursus kecil</li><li>Penitipan dan pencarian barang hilang di kampus</li><li>Pendataan kegiatan dan iuran komunitas atau karang taruna</li><li>Reservasi lapangan olahraga atau studio latihan</li><li>Katalog dan pemesanan hasil karya pelaku usaha kreatif</li></ul>
+    <div class="callout">
+      <span class="ck">Tips Memilih Topik</span>
+      Topik yang baik cukup kecil untuk dirancang dalam dua minggu, memiliki pengguna yang jelas, dan membutuhkan data yang dapat disimpan dalam sekitar tiga tabel.
+    </div>
+  </section>
+
+  <section id="komponen">
+    <div class="sec-head"><span class="sec-num">5</span><h2>Komponen Proyek</h2><span class="sec-line"></span></div>
+    <p>Proyek Anda memuat tujuh bagian berikut, masing-masing berkaitan dengan materi yang sudah dipelajari.</p>
+    
+    <div class="concept-card">
+      <span class="role">Bagian A · Sesi 1 dan Sesi 12</span>
+      <h3>Masalah, Pengguna, dan Kebutuhan</h3>
+      <p>Jelaskan masalah nyata, siapa penggunanya (minimal tiga stakeholder), dan daftar lima kebutuhan utama dengan penanda wajib dan boleh menyusul.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Bagian B · Sesi 12</span>
+      <h3>Model Pengembangan dan Rencana SDLC</h3>
+      <p>Pilih waterfall atau agile dengan tiga alasan yang terkait kondisi proyek, lalu tuliskan kegiatan konkret untuk enam tahap SDLC secara ringkas.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Bagian C · Sesi 11</span>
+      <h3>Rancangan Basis Data</h3>
+      <p>Rancang tiga tabel dengan primary key dan dua foreign key. Sertakan diagram relasi (boleh dari Schema Visualizer Supabase atau gambar sendiri) dan satu kueri JOIN yang relevan dengan solusi Anda.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Bagian D · Sesi 3 dan Sesi 10</span>
+      <h3>Rancangan Perangkat dan Jaringan</h3>
+      <p>Tentukan perangkat yang dibutuhkan pengguna dan pengelola (misalnya ponsel, laptop, router) dan gambarkan bagaimana perangkat terhubung ke internet dan ke sistem. Cukup satu diagram sederhana.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Bagian E · Sesi 13</span>
+      <h3>Prototipe Halaman Web</h3>
+      <p>Buat 1–2 halaman web statis dengan HTML dan CSS yang memperlihatkan tampilan solusi Anda (misalnya halaman beranda dan halaman formulir atau daftar). Tidak perlu berfungsi penuh dan tidak wajib dipublikasikan.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Bagian F · Sesi 5</span>
+      <h3>Keamanan, Etika, dan Privasi</h3>
+      <p>Sebutkan data apa yang dikumpulkan, dua risiko keamanan atau privasi yang mungkin terjadi, dan langkah perlindungannya.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Bagian G · Sesi 14</span>
+      <h3>Tren Teknologi dan Karier</h3>
+      <p>Pilih satu tren (misalnya AI, cloud computing, IoT, big data, atau keamanan siber) yang dapat dimanfaatkan solusi Anda di masa depan, dan satu peran profesi TI yang terlibat.</p>
+    </div>
+  </section>
+
+  <section id="contoh">
+    <div class="sec-head"><span class="sec-num">6</span><h2>Contoh Ringkas Cakupan yang Diharapkan</h2><span class="sec-line"></span></div>
+    <p>Sebagai gambaran besarnya, berikut cuplikan untuk topik "Bank Sampah RT":</p>
+    <table class="compare-table">
+      <thead><tr><th>Bagian</th><th>Cuplikan</th></tr></thead>
+      <tbody>
+        <tr><td>A. Masalah dan kebutuhan</td><td>Pencatatan setoran sampah masih di buku sehingga sulit direkap. Stakeholder: warga, pengurus, pengepul. Kebutuhan wajib: catat setoran, hitung saldo, lihat rekap</td></tr>
+        <tr><td>B. Model dan SDLC</td><td>Agile, karena warga baru bisa memberi masukan setelah mencoba versi awal</td></tr>
+        <tr><td>C. Basis data</td><td>Tabel warga, jenis_sampah, setoran (foreign key ke warga dan jenis_sampah)</td></tr>
+        <tr><td>D. Perangkat dan jaringan</td><td>Ponsel pengurus untuk input, laptop untuk rekap, koneksi Wi-Fi dari router balai RT</td></tr>
+        <tr><td>E. Prototipe</td><td>Halaman beranda dan halaman formulir setoran dengan HTML dan CSS</td></tr>
+        <tr><td>F. Keamanan dan privasi</td><td>Data nama dan saldo warga: risiko dilihat pihak lain, perlindungan lewat akses terbatas</td></tr>
+        <tr><td>G. Tren dan karier</td><td>Tren IoT (timbangan pintar), peran pengembang aplikasi dan analis data</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="luaran">
+    <div class="sec-head"><span class="sec-num">7</span><h2>Luaran yang Dikumpulkan</h2><span class="sec-line"></span></div>
+    <ul class="checklist">
+      <li><span class="box"></span><b>Laporan singkat (3–5 halaman)</b> memuat bagian A sampai G, identitas semua anggota, dan tabel pembagian tugas anggota.</li>
+      <li><span class="box"></span><b>Prototipe</b>: berkas HTML dan CSS (1–2 halaman) yang dapat dibuka dengan browser, dikumpulkan dalam satu folder atau berkas terkompres.</li>
+      <li><span class="box"></span><b>Slide presentasi</b>, sebaiknya tidak lebih dari 8 slide.</li>
+      <li><span class="box"></span><b>Diagram</b>: diagram relasi basis data (bagian C) dan diagram perangkat/jaringan (bagian D), di dalam laporan.</li>
+    </ul>
+  </section>
+
+  <section id="presentasi">
+    <div class="sec-head"><span class="sec-num">8</span><h2>Presentasi (Sesi 15)</h2><span class="sec-line"></span></div>
+    <p>Presentasi berlangsung 5–7 menit dan dilanjutkan tanya jawab singkat. Semua anggota ikut berbicara. Urutan yang disarankan:</p>
+    <ol>
+      <li>Masalah dan pengguna (bagian A)</li>
+      <li>Solusi, model pengembangan, dan basis data (bagian B dan C)</li>
+      <li>Demonstrasi prototipe halaman web (bagian E)</li>
+      <li>Perangkat dan jaringan, serta keamanan dan privasi (bagian D dan F)</li>
+      <li>Tren teknologi dan peran karier (bagian G)</li>
+    </ol>
+    <div class="callout">
+      <span class="ck">Tanya Jawab</span>
+      Dosen dapat meminta anggota mana pun menjelaskan bagian mana pun dari proyek. Pertanyaan ini juga dipakai untuk menilai kontribusi individu.
+    </div>
+  </section>
+
+  <section id="rubrik">
+    <div class="sec-head"><span class="sec-num">9</span><h2>Rubrik Penilaian</h2><span class="sec-line"></span></div>
+    <table class="compare-table">
+      <thead><tr><th>Komponen</th><th>Yang Dinilai</th><th>Bobot</th></tr></thead>
+      <tbody>
+        <tr><td>Masalah, pengguna, dan kebutuhan</td><td>Masalah nyata dan jelas, stakeholder tepat, kebutuhan masuk akal</td><td>15</td></tr>
+        <tr><td>Model pengembangan dan SDLC</td><td>Pilihan model beralasan sesuai kondisi proyek dan kegiatan tiap tahap konkret</td><td>15</td></tr>
+        <tr><td>Rancangan basis data</td><td>Tiga tabel, primary key dan foreign key benar, diagram relasi, dan kueri JOIN yang relevan</td><td>15</td></tr>
+        <tr><td>Prototipe halaman web</td><td>HTML dan CSS berjalan di browser, tampilan sesuai solusi, dan rapi</td><td>20</td></tr>
+        <tr><td>Keamanan, etika, dan tren</td><td>Risiko dan perlindungan relevan, serta tren dan peran karier yang masuk akal</td><td>10</td></tr>
+        <tr><td>Presentasi dan tanya jawab</td><td>Penyampaian runtut, tepat waktu, demonstrasi jelas, dan jawaban meyakinkan</td><td>15</td></tr>
+        <tr><td>Kontribusi individu</td><td>Peran nyata dalam pengerjaan dan kemampuan menjelaskan hasil kelompok</td><td>10</td></tr>
+        <tr><td><b>Total</b></td><td></td><td><b>100</b></td></tr>
+      </tbody>
+    </table>
+    <p>Sembilan puluh poin pertama dinilai sebagai nilai kelompok. Sepuluh poin kontribusi individu dinilai per anggota berdasarkan tabel pembagian tugas dan tanya jawab, sehingga anggota dalam satu kelompok dapat memperoleh nilai berbeda.</p>
+  </section>
+
+  <section id="persiapan">
+    <div class="prep-box">
+      <h2>Sebelum Mengumpulkan</h2>
+      <ol>
+        <li>Pastikan ketujuh bagian (A sampai G) ada di laporan dan topik Anda sudah disetujui dosen.</li>
+        <li>Buka prototipe di browser untuk memeriksa bahwa halaman tampil dengan benar dan tidak memuat data pribadi sungguhan.</li>
+        <li>Latih presentasi sampai muat dalam 5–7 menit dan pastikan setiap anggota tahu bagiannya.</li>
+        <li>Kumpulkan berkas sesuai cara yang diarahkan dosen.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <span>Pengantar Teknologi Informasi — Semester I</span>
+    <span>Sumber: Campbell et al., Discovering Computers, 17th Ed. (Cengage Learning, 2023)</span>
+  </footer>
+
+</div>
+</body>
+</html>
