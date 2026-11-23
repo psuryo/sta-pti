@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesi 14 — Tugas Analisis Tren dan Rencana Karier</title>
+<style>
+  :root{
+    --ink:#16203a;
+    --paper:#f1efe6;
+    --paper-2:#e8e4d4;
+    --line: #c9c2a8;
+    --teal:#2f6f6b;
+    --teal-dark:#204c49;
+    --amber:#c98a2c;
+    --amber-soft:#f3e3c4;
+    --red:#a4432c;
+    --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+    --font-body: 'Charter', Georgia, 'Iowan Old Style', serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(47,111,107,0.05), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(201,138,44,0.06), transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:880px; margin:0 auto; padding:0 28px 100px; position:relative; z-index:1;}
+
+  .breadcrumb{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.04em;
+    padding:22px 0 0; color:#6b6552;
+  }
+  .breadcrumb a{color:var(--teal-dark); text-decoration:none; border-bottom:1px solid var(--teal);}
+
+  header.masthead{
+    border-bottom:3px solid var(--ink);
+    padding:18px 0 20px;
+    margin-bottom:36px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(30px,5vw,46px);
+    line-height:1.08;
+    margin:0 0 10px;
+    letter-spacing:-.01em;
+  }
+  h1.title em{
+    font-style:normal;
+    color:var(--teal-dark);
+    border-bottom:2px solid var(--amber);
+  }
+  .subtitle{
+    font-size:16px;
+    color:#4b4636;
+    max-width:60ch;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+  }
+  .meta-chip{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:.03em;
+    padding:5px 11px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:var(--paper-2);
+    color:var(--ink);
+  }
+
+  section{margin-bottom:52px;}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:18px;
+  }
+  .sec-num{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--amber);
+    border:1px solid var(--amber);
+    border-radius:50%;
+    width:26px; height:26px;
+    min-width:26px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sec-head h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:24px;
+    margin:0;
+    color:var(--ink);
+  }
+  .sec-head .sec-line{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  p{margin:0 0 14px;}
+  ul, ol{margin:0 0 14px; padding-left:22px;}
+  li{margin-bottom:6px;}
+
+  .objectives{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  .obj-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    padding:16px 18px;
+    font-size:14.5px;
+  }
+  .obj-card .k{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--teal-dark);
+    letter-spacing:.06em;
+    display:block;
+    margin-bottom:4px;
+  }
+
+  .type-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+  }
+  .type-card{
+    border:1px solid var(--line);
+    background:#fff;
+    padding:14px 16px;
+  }
+  .type-card h3{
+    font-family:var(--font-display);
+    font-size:16px;
+    margin:0 0 6px;
+    font-weight:600;
+  }
+  .type-card p{font-size:13.5px; margin:0; color:#453f2f;}
+
+  .concept-card{
+    background:#fff; border:1px solid var(--line); border-left:4px solid var(--teal);
+    padding:16px 18px; margin-bottom:12px;
+  }
+  .concept-card h3{font-family:var(--font-display); font-size:16px; margin:0 0 4px; font-weight:600;}
+  .concept-card .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; display:block;}
+  .concept-card p{font-size:13.5px; margin:0; color:#453f2f;}
+
+  .compare-table{width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; margin-bottom:8px;}
+  .compare-table th, .compare-table td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  .compare-table thead th{background:var(--ink); color:var(--paper); font-family:var(--font-mono); font-size:11px; text-transform:uppercase; font-weight:400;}
+
+  .callout{
+    background:var(--amber-soft);
+    border-left:4px solid var(--amber);
+    padding:16px 20px;
+    font-size:14.5px;
+    margin-bottom:20px;
+  }
+  .callout.warn{background:#f5e0da; border-left-color:var(--red);}
+  .callout .ck{
+    font-family:var(--font-mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--red);
+    display:block;
+    margin-bottom:6px;
+  }
+
+  dl.glossary{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:10px 18px;
+    font-size:14.5px;
+  }
+  dl.glossary dt{
+    font-weight:700;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--teal-dark);
+  }
+  dl.glossary dd{margin:0; color:#3a3527;}
+  .readmore{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:6px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--teal-dark);
+    text-decoration:none;
+    border-bottom:1px solid var(--teal);
+    padding-bottom:1px;
+  }
+  .readmore:hover{color:var(--amber); border-color:var(--amber);}
+
+  .checklist{list-style:none; padding:0; margin:0;}
+  .checklist li{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:9px 0; border-bottom:1px dashed var(--line); font-size:14.5px;
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .box{
+    width:16px; height:16px; border:1.5px solid var(--ink);
+    flex:none; margin-top:3px; border-radius:2px;
+  }
+
+  .prep-box{
+    background:var(--ink); color:var(--paper);
+    padding:24px 26px; border-radius:2px;
+  }
+  .prep-box h2{
+    font-family:var(--font-display); font-weight:400; font-size:20px;
+    margin:0 0 12px; color:var(--amber-soft);
+  }
+  .prep-box ol{padding-left:20px; margin:0;}
+  .prep-box li{margin-bottom:8px; font-size:14.5px;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:18px; margin-top:60px;
+    font-family:var(--font-mono); font-size:11.5px; color:#7a735c;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  @media (max-width:640px){
+    .objectives, .type-grid{grid-template-columns:1fr;}
+    dl.glossary{grid-template-columns:1fr;}
+    dl.glossary dt{margin-top:6px;}
+    .meta-row{gap:8px;}
+  }
+
+  .fig{margin:0 0 18px; background:#fff; border:1px solid var(--line); padding:14px 14px 10px;}
+  .fig svg{display:block; width:100%; max-width:360px; height:auto; margin:0 auto;}
+  .fig figcaption{font-family:var(--font-mono); font-size:11.5px; color:#6b6552; text-align:center; margin-top:6px;}
+  .fig img{display:block; max-width:100%; height:auto; margin:0 auto;}
+  .item{margin-bottom:34px; padding-bottom:6px;}
+  .item h3{font-family:var(--font-display); font-size:20px; font-weight:600; margin:0 0 4px;}
+  .item .role{font-family:var(--font-mono); font-size:11px; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:10px;}
+  .pc{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:6px;}
+  .pc div{background:#fff; border:1px solid var(--line); padding:12px 14px; font-size:13.5px;}
+  .pc .pro{border-top:3px solid var(--teal);} .pc .con{border-top:3px solid var(--red);}
+  .pc b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:4px;}
+  .pc ul{margin:0; padding-left:18px;} .pc li{margin-bottom:3px;}
+  @media (max-width:640px){.pc{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="breadcrumb"><a href="sesi14.html">← Kembali ke Sesi 14</a></div>
+
+  <header class="masthead">
+    <div class="eyebrow"><span>Sesi 14 · Tugas Kelas</span><span>Tren Teknologi dan Karier</span></div>
+    <h1 class="title">Tugas — <em>Analisis Sebuah Tren</em> dan Rencana Karier Saya</h1>
+    <p class="subtitle">Pada tugas ini Anda memilih satu produk nyata yang memakai tren teknologi bagian Anda, menganalisis manfaat dan risikonya, lalu merencanakan langkah konkret menuju satu peran profesi di bidang TI. Jawaban tiap mahasiswa berbeda karena memakai pengalaman dan pilihan sendiri.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Tugas Individu</span>
+      <span class="meta-chip">Dikerjakan di kelas · 30 menit</span>
+      <span class="meta-chip">Boleh membuka materi Sesi 14</span>
+      <span class="meta-chip">Pengumpulan: sesuai arahan dosen</span>
+    </div>
+  </header>
+
+  <section id="aturan">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Aturan Pengerjaan</h2><span class="sec-line"></span></div>
+    <div class="callout warn">
+      <span class="ck">Wajib Dipatuhi</span>
+      <ul style="margin:0">
+        <li>Kerjakan sendiri dengan kata-kata Anda sendiri. Anda boleh membuka materi Sesi 14.</li>
+        <li>Jawaban berupa poin-poin atau kalimat singkat, sekitar satu halaman.</li>
+        <li>Jangan menuliskan data pribadi sensitif milik Anda atau orang lain.</li>
+        <li>Bila Anda memakai alat AI untuk mencari informasi, sebutkan alat itu dan jelaskan bagaimana Anda memeriksa kebenaran hasilnya.</li>
+      </ul>
+    </div>
+    <div class="callout">
+      <span class="ck">Hubungan dengan Proyek Akhir</span>
+      Bagian 3 dan Bagian 4 tugas ini dapat Anda kembangkan menjadi bagian G (tren teknologi dan karier) pada laporan proyek akhir kelompok.
+    </div>
+  </section>
+
+  <section id="tren">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Pilih Tren Anda</h2><span class="sec-line"></span></div>
+    <p>Tren ditentukan oleh angka terakhir NIM Anda.</p>
+    
+    <div class="concept-card">
+      <span class="role">Tren · angka terakhir NIM 0, 1</span>
+      <h3>Kecerdasan Buatan (AI)</h3>
+      <p>Contoh produk atau layanan yang dapat Anda analisis: asisten percakapan, rekomendasi di aplikasi video atau musik, penerjemah otomatis, atau fitur kamera ponsel. Anda boleh memilih contoh lain asalkan benar-benar memakai tren ini dan pernah Anda gunakan atau amati sendiri.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tren · angka terakhir NIM 2, 3</span>
+      <h3>Cloud Computing</h3>
+      <p>Contoh produk atau layanan yang dapat Anda analisis: penyimpanan berkas daring, dokumen kolaboratif, atau layanan cadangan foto. Anda boleh memilih contoh lain asalkan benar-benar memakai tren ini dan pernah Anda gunakan atau amati sendiri.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tren · angka terakhir NIM 4, 5</span>
+      <h3>Internet of Things (IoT)</h3>
+      <p>Contoh produk atau layanan yang dapat Anda analisis: jam tangan pintar, lampu atau kamera pintar, atau pelacak kendaraan. Anda boleh memilih contoh lain asalkan benar-benar memakai tren ini dan pernah Anda gunakan atau amati sendiri.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tren · angka terakhir NIM 6, 7</span>
+      <h3>Big Data dan Analitik</h3>
+      <p>Contoh produk atau layanan yang dapat Anda analisis: rekomendasi produk di toko daring, peta dengan informasi lalu lintas, atau iklan yang disesuaikan. Anda boleh memilih contoh lain asalkan benar-benar memakai tren ini dan pernah Anda gunakan atau amati sendiri.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tren · angka terakhir NIM 8, 9</span>
+      <h3>Keamanan Siber</h3>
+      <p>Contoh produk atau layanan yang dapat Anda analisis: verifikasi dua langkah, pengelola kata sandi, filter pesan penipuan, atau pembaruan keamanan ponsel. Anda boleh memilih contoh lain asalkan benar-benar memakai tren ini dan pernah Anda gunakan atau amati sendiri.</p>
+    </div>
+  </section>
+
+  <section id="tahap">
+    <div class="sec-head"><span class="sec-num">3</span><h2>Tahapan Pengerjaan (30 Menit)</h2><span class="sec-line"></span></div>
+
+    <div class="concept-card">
+      <span class="role">Tahap 1 · Produk Pilihan (7 menit)</span>
+      <h3>Teknologi ini bekerja di mana dalam hidup saya?</h3>
+      <p>a) Sebutkan satu produk atau layanan nyata yang memakai tren Anda.<br>
+      b) Jelaskan dengan kata-kata Anda sendiri bagaimana tren itu bekerja pada produk tersebut dan manfaat apa yang Anda rasakan.<br>
+      c) Tuliskan data apa yang kemungkinan dikumpulkan oleh produk itu.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tahap 2 · Manfaat dan Risiko (8 menit)</span>
+      <h3>Siapa yang diuntungkan dan apa yang perlu diwaspadai?</h3>
+      <p>a) Tuliskan dua manfaat produk itu bagi pengguna atau masyarakat.<br>
+      b) Tuliskan dua risiko (keamanan, privasi, etika, atau dampak sosial).<br>
+      c) Tuliskan satu langkah yang dapat Anda lakukan sebagai pengguna untuk mengurangi salah satu risiko itu.</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tahap 3 · Peran dan Keterampilan (10 menit)</span>
+      <h3>Peran apa yang berkaitan dengan tren ini?</h3>
+      <p>Pilih satu peran dari daftar berikut yang paling berkaitan dengan tren Anda:</p>
+      <ul style="margin:6px 0 8px; font-size:13.5px"><li>Pengembang Perangkat Lunak / Web</li><li>Analis Sistem</li><li>Administrator Basis Data / Analis Data</li><li>Administrator Jaringan dan Sistem</li><li>Spesialis Keamanan Siber</li><li>Insinyur Cloud</li><li>Insinyur AI / Machine Learning</li><li>Desainer UI/UX</li></ul>
+      <p>a) Jelaskan apa yang dikerjakan peran itu pada produk yang Anda pilih.<br>
+      b) Tuliskan dua keterampilan teknis dan dua keterampilan non-teknis yang perlu Anda kembangkan.<br>
+      c) Tuliskan <b>satu langkah konkret</b> dalam enam bulan ke depan (misalnya topik yang akan dipelajari dan hasil kecil yang akan dibuat sebagai portofolio).</p>
+    </div>
+    <div class="concept-card">
+      <span class="role">Tahap 4 · Pendapat dan Pemeriksaan (5 menit)</span>
+      <h3>Apa kesimpulan Anda?</h3>
+      <p>a) Dalam dua sampai tiga kalimat, nyatakan apakah menurut Anda manfaat tren ini lebih besar daripada risikonya, dan mengapa.<br>
+      b) Sebutkan satu sumber informasi yang Anda pakai (atau pengalaman pribadi) dan bagaimana Anda tahu bahwa sumber itu dapat dipercaya.</p>
+    </div>
+  </section>
+
+  <section id="contoh">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Contoh Jawaban yang Berbeda tetapi Sama-sama Baik</h2><span class="sec-line"></span></div>
+    <p>Misalkan dua mahasiswa dengan tren yang sama, yaitu cloud computing:</p>
+    <table class="compare-table">
+      <thead><tr><th></th><th>Mahasiswa 1</th><th>Mahasiswa 2</th></tr></thead>
+      <tbody>
+        <tr><td>Produk</td><td>Penyimpanan foto daring</td><td>Dokumen kolaboratif untuk tugas kelompok</td></tr>
+        <tr><td>Risiko</td><td>Foto pribadi bocor bila akun diretas</td><td>Terlalu bergantung pada koneksi internet saat tenggat</td></tr>
+        <tr><td>Peran dan langkah</td><td>Insinyur cloud, belajar dasar penyimpanan daring dan membuat proyek berkas bersama</td><td>Analis sistem, berlatih menggali kebutuhan dari teman sekelas dan membuat satu rancangan</td></tr>
+      </tbody>
+    </table>
+    <p>Keduanya dapat diterima karena memakai pengalaman sendiri, memberi alasan, dan menyebut langkah yang konkret. Jawaban yang hanya menyalin definisi dari materi, atau menyebut langkah yang terlalu umum seperti "belajar yang rajin", akan bernilai rendah.</p>
+  </section>
+
+  <section id="format">
+    <div class="sec-head"><span class="sec-num">5</span><h2>Lembar Jawaban</h2><span class="sec-line"></span></div>
+    <ul class="checklist">
+      <li><span class="box"></span>Identitas: nama, NIM, program studi, dan tren yang dikerjakan.</li>
+      <li><span class="box"></span>Tahap 1: produk, cara kerja tren pada produk itu, manfaat, dan data yang dikumpulkan.</li>
+      <li><span class="box"></span>Tahap 2: dua manfaat, dua risiko, dan satu langkah mengurangi risiko.</li>
+      <li><span class="box"></span>Tahap 3: peran pilihan, tugasnya, empat keterampilan, dan satu langkah konkret enam bulan.</li>
+      <li><span class="box"></span>Tahap 4: pendapat dan satu sumber yang dipakai beserta cara memeriksanya.</li>
+    </ul>
+  </section>
+
+  <section id="rubrik">
+    <div class="sec-head"><span class="sec-num">6</span><h2>Rubrik Penilaian</h2><span class="sec-line"></span></div>
+    <table class="compare-table">
+      <thead><tr><th>Komponen</th><th>Yang Dinilai</th><th>Bobot</th></tr></thead>
+      <tbody>
+        <tr><td>Pemahaman tren pada produk</td><td>Penjelasan cara kerja tepat, dengan kata-kata sendiri, dan sesuai produk yang dipilih</td><td>25</td></tr>
+        <tr><td>Analisis manfaat dan risiko</td><td>Manfaat dan risiko relevan, spesifik, dan langkah mitigasi masuk akal</td><td>25</td></tr>
+        <tr><td>Peran dan rencana karier</td><td>Peran sesuai tren, keterampilan relevan, dan langkah konkret yang realistis</td><td>30</td></tr>
+        <tr><td>Pendapat dan pemeriksaan sumber</td><td>Kesimpulan beralasan dan sumber diperiksa kebenarannya</td><td>10</td></tr>
+        <tr><td>Kejelasan dan identitas</td><td>Jawaban runtut, identitas lengkap, dan tidak menyalin definisi</td><td>10</td></tr>
+        <tr><td><b>Total</b></td><td></td><td><b>100</b></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="persiapan">
+    <div class="prep-box">
+      <h2>Sebelum Mengumpulkan</h2>
+      <ol>
+        <li>Pastikan jawaban memakai produk dan pengalaman Anda sendiri, bukan definisi umum.</li>
+        <li>Periksa bahwa langkah enam bulan Anda konkret dan dapat dikerjakan.</li>
+        <li>Kumpulkan sesuai cara yang diarahkan dosen.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <span>Pengantar Teknologi Informasi — Semester I</span>
+    <span>Sumber: Campbell et al., Discovering Computers, 17th Ed. (Cengage Learning, 2023)</span>
+  </footer>
+
+</div>
+</body>
+</html>
